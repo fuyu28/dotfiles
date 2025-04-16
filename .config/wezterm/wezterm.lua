@@ -25,9 +25,11 @@ config.use_ime = true
 -- 背景画像の設定
 config.background = {
   {
+    -- wezterm.luaと同じディレクトリに置く
     source = {
       File = wezterm.config_dir .. "./background.png",
     },
+    -- 画像の透明度(0~1)
     opacity = 0.5,
   }
 }
@@ -38,7 +40,7 @@ config.scrollback_lines = 3500
 -- スクロールを有効化
 config.enable_scroll_bar = true
 
--- シェルをNuShellに変更
+-- シェルをCMDに変更
 config.default_prog = { "cmd" }
 
 -- 閉じる際の確認を無効化
