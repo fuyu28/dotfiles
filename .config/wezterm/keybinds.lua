@@ -11,7 +11,6 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 return {
-  leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 },
   keys = {
     {
       -- workspaceの切り替え
