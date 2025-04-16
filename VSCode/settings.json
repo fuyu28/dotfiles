@@ -1,0 +1,171 @@
+{
+  //////////////////////////////////////////////////////////
+  // Editor 
+  //////////////////////////////////////////////////////////
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+  "editor.tabSize": 2,
+  "editor.minimap.enabled": false, // ミニマップを非表示にする
+  "editor.mouseWheelZoom": true,
+  "editor.renderControlCharacters": true, // 制御文字を表示する
+  "editor.suggestSelection": "first", // サジェスト一覧の初期表示項目設定
+  "editor.bracketPairColorization.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  //////////////////////////////////////////////////////////
+  // File
+  //////////////////////////////////////////////////////////
+  "files.autoGuessEncoding": true,
+
+  //////////////////////////////////////////////////////////
+  // Terminal
+  //////////////////////////////////////////////////////////
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+
+  //////////////////////////////////////////////////////////
+  // Theme & UI
+  //////////////////////////////////////////////////////////
+  "workbench.colorTheme": "One Dark Pro Mix",
+  "workbench.settings.openDefaultKeybindings": true,
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.background1": "#b22222",
+    "editorIndentGuide.background2": "#ff4500",
+    "editorIndentGuide.background3": "#ffd700",
+    "editorIndentGuide.background4": "#228b22",
+    "editorIndentGuide.background5": "#000080",
+    "editorIndentGuide.background6": "#8b008b",
+    "editorIndentGuide.activeBackground1": "#fff",
+    "editorIndentGuide.activeBackground2": "#fff",
+    "editorIndentGuide.activeBackground3": "#fff",
+    "editorIndentGuide.activeBackground4": "#fff",
+    "editorIndentGuide.activeBackground5": "#fff",
+    "editorIndentGuide.activeBackground6": "#fff"
+  },
+  "backgroundCover.imagePath": "c:\\background\\image.png",
+
+  //////////////////////////////////////////////////////////
+  // Security & Privacy
+  //////////////////////////////////////////////////////////
+  "security.workspace.trust.untrustedFiles": "open",
+  "security.allowedUNCHosts": ["wsl.localhost"],
+
+  //////////////////////////////////////////////////////////
+  // Git & GitHub Copilot
+  //////////////////////////////////////////////////////////
+  "git.autofetch": true,
+  "git.openRepositoryInParentFolders": "never",
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  },
+  "github.copilot.chat.localeOverride": "ja",
+  "github.copilot.nextEditSuggestions.enabled": true,
+
+  //////////////////////////////////////////////////////////
+  // Extension - Dart
+  //////////////////////////////////////////////////////////
+  "dart.openDevTools": "flutter",
+
+  //////////////////////////////////////////////////////////
+  // Extension - LaTeX Workshop
+  //////////////////////////////////////////////////////////
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (latexmkrc)",
+      "tools": ["latexmk_rconly"]
+    },
+    {
+      "name": "latexmk",
+      "tools": ["latexmk"]
+    },
+    {
+      "name": "latexmk (lualatex)",
+      "tools": ["lualatexmk"]
+    },
+    {
+      "name": "latexmk (xelatex)",
+      "tools": ["xelatexmk"]
+    },
+    {
+      "name": "pdflatex -> bibtex -> pdflatex * 2",
+      "tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"]
+    },
+    {
+      "name": "Compile Rnw files",
+      "tools": ["rnw2tex", "latexmk"]
+    },
+    {
+      "name": "Compile Jnw files",
+      "tools": ["jnw2tex", "latexmk"]
+    },
+    {
+      "name": "Compile Pnw files",
+      "tools": ["pnw2tex", "latexmk"]
+    },
+    {
+      "name": "tectonic",
+      "tools": ["tectonic"]
+    }
+  ],
+
+  //////////////////////////////////////////////////////////
+  // Extension - Code Runner
+  //////////////////////////////////////////////////////////
+  "code-runner.runInTerminal": true,
+
+  //////////////////////////////////////////////////////////
+  // Extension - Prettier
+  //////////////////////////////////////////////////////////
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+
+  //////////////////////////////////////////////////////////
+  // Extension - Neovim
+  //////////////////////////////////////////////////////////
+  "vscode-neovim.neovimExecutablePaths.win32": "C:\\Program Files\\Neovim\\bin\\nvim.exe",
+  "vscode-neovim.neovimInitVimPaths.win32": "~\\AppData\\Local\\vscode-nvim\\init.lua",
+  "vscode-neovim.compositeKeys": {
+    "jj": {
+      "command": "vscode-neovim.escape"
+    },
+    "jk": {
+      "command": "vscode-neovim.lua",
+      "args": [
+        [
+          "local code = require('vscode')",
+          "code.action('vscode-neovim.escape')",
+          "code.action('workbench.action.files.save')"
+        ]
+      ]
+    }
+  },
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+
+  //////////////////////////////////////////////////////////
+  // e.t.c.
+  //////////////////////////////////////////////////////////
+  "debug.onTaskErrors": "showErrors",
+  "interactiveWindow.executeWithShiftEnter": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.db": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.s3db": "${capture}.${extname}-*"
+  }
+}
