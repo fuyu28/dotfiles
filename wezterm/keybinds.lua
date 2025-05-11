@@ -57,9 +57,9 @@ return {
     -- Tab入れ替え
     { key = "{", mods = "LEADER", action = act({ MoveTabRelative = -1 }) },
     -- Tab新規作成
-    { key = "t", mods = "CTRL", action = act({ SpawnTab = "CurrentPaneDomain" }) },
+    { key = "t", mods = "CTRL|SHIFT", action = act({ SpawnTab = "CurrentPaneDomain" }) },
     -- Tabを閉じる
-    { key = "w", mods = "CTRL", action = act({ CloseCurrentTab = { confirm = true } }) },
+    { key = "w", mods = "CTRL|SHIFT", action = act({ CloseCurrentTab = { confirm = true } }) },
     { key = "}", mods = "CTRL", action = act({ MoveTabRelative = 1 }) },
 
     -- 画面フルスクリーン切り替え
