@@ -1,0 +1,305 @@
+[
+  // ----------------------------------
+  // コンテスト・競プロ用コマンド
+  // ----------------------------------
+  {
+    "key": "ctrl+shift+t",
+    "command": "command-runner.run",
+    "args": { "command": "oj test&compile" } // テスト実行（oj）
+  },
+  {
+    "key": "ctrl+shift+;",
+    "command": "command-runner.run",
+    "args": { "command": "acc submit" } // 提出（AtCoder）
+  },
+  {
+    "key": "ctrl+shift+e",
+    "command": "command-runner.run",
+    "args": { "command": "exec program" } // プログラム実行
+  },
+  {
+    "key": "ctrl+shift+y",
+    "command": "command-runner.run",
+    "args": { "command": "exec for sample" } // サンプル入力で実行
+  },
+  {
+    "key": "ctrl+shift+c",
+    "command": "command-runner.run",
+    "args": { "command": "editor to clipboard" } // コードをクリップボードにコピー
+  },
+  {
+    "key": "ctrl+shift+m",
+    "command": "command-runner.run",
+    "args": { "command": "compile program" } // コンパイル
+  },
+  {
+    "key": "ctrl+shift+w",
+    "command": "command-runner.run",
+    "args": { "command": "compile program with warning" } // ワーニング付きコンパイル
+  },
+  {
+    "key": "ctrl+shift+f",
+    "command": "command-runner.run",
+    "args": { "command": "create contest file" } // コンテスト用ファイル作成
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "command-runner.run",
+    "args": { "command": "open contest site" } // コンテストサイトを開く
+  },
+
+  // ----------------------------------
+  // ショートカットの無効化（暴発防止）
+  // ----------------------------------
+  {
+    "key": "ctrl+m",
+    "command": "-editor.action.toggleTabFocusMode"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "-workbench.action.newWindow"
+  },
+  {
+    "key": "ctrl+d",
+    "command": "-editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+enter",
+    "command": "-github.copilot.generate",
+    "when": "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+  },
+  {
+    "key": "ctrl+q",
+    "command": "-workbench.action.quickOpenNavigateNextInEditorPicker"
+  },
+  // ----------------------------------
+  // ファイル操作系
+  // ----------------------------------
+  {
+    "key": "ctrl+alt+s",
+    "command": "workbench.action.files.saveAs"
+  },
+  {
+    "key": "ctrl+alt+8",
+    "command": "editor.foldAllMarkerRegions",
+    "when": "editorTextFocus && foldingEnabled"
+  },
+  {
+    "key": "ctrl+alt+9",
+    "command": "editor.unfoldAllMarkerRegions",
+    "when": "editorTextFocus && foldingEnabled"
+  },
+  {
+    "key": "ctrl+shift+alt+n",
+    "command": "workbench.action.newWindow"
+  },
+  {
+    "key": "alt+d",
+    "command": "editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+
+  // ----------------------------------
+  // Neovim モード時の操作
+  // ----------------------------------
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.nextEditor",
+    "when": "!terminalFocus && !sideBarFocus && neovim.mode != insert"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.previousEditor",
+    "when": "!terminalFocus && !sideBarFocus && neovim.mode !== insert '"
+  },
+
+  // ----------------------------------
+  // LSP 関連操作（ノーマルモード）
+  // ----------------------------------
+  {
+    "key": "g d",
+    "command": "editor.action.goToDeclaration",
+    "when": "neovim.mode == normal && editorHasDefinitionProvider && editorTextFocus"
+  },
+  {
+    "key": "shift+k",
+    "command": "editor.action.showHover",
+    "when": "neovim.mode == normal && editorTextFocus"
+  },
+  {
+    "key": "space b",
+    "command": "workbench.action.navigateBack",
+    "when": "neovim.mode == normal && editorTextFocus"
+  },
+  {
+    "key": "space f",
+    "command": "workbench.action.navigateForward",
+    "when": "neovim.mode == normal && editorTextFocus"
+  },
+
+  // ----------------------------------
+  // エクスプローラー操作
+  // ----------------------------------
+  {
+    "key": "space e",
+    "command": "workbench.files.action.focusFilesExplorer",
+    "when": "neovim.mode !== insert && !filesExplorerFocus && editorTextFocus"
+  },
+  {
+    "key": "space e",
+    "command": "workbench.action.closeSidebar",
+    "when": "neovim.mode !== insert && filesExplorerFocus"
+  },
+  {
+    "key": "Enter",
+    "command": "list.toggleExpand",
+    "when": "explorerViewletFocus && explorerViewletVisible && explorerResourceIsFolder && !inputFocus"
+  },
+  {
+    "key": "shift+r",
+    "command": "renameFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+c",
+    "command": "filesExplorer.copy",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+p",
+    "command": "filesExplorer.paste",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+n",
+    "command": "explorer.newFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+d",
+    "command": "deleteFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+k",
+    "command": "explorer.newFolder",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+m",
+    "command": "filesExplorer.cut",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+
+  // ----------------------------------
+  // ターミナル操作（Ctrl+f を prefix に）
+  // ----------------------------------
+  {
+    "key": "ctrl+f space",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+f t",
+    "command": "workbench.action.terminal.focus"
+  },
+  {
+    "key": "ctrl+f d",
+    "command": "workbench.debug.action.focusRepl"
+  },
+  {
+    "key": "ctrl+f o",
+    "command": "workbench.panel.output.focus"
+  },
+  {
+    "key": "ctrl+f p",
+    "command": "workbench.panel.markers.view.focus"
+  },
+  {
+    "key": "ctrl+f c",
+    "command": "workbench.action.terminal.new"
+  },
+  {
+    "key": "ctrl+f l",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+f h",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+f x",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+f shift+\\",
+    "command": "workbench.action.terminal.split",
+    "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+  },
+  {
+    "key": "ctrl+f ctrl+f space",
+    "command": "vscode-neovim.ctrl-f",
+    "when": "editorTextFocus && neovim.ctrlKeysNormal.f && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'"
+  },
+
+  // ----------------------------------
+  // カーソル移動（Neovim ノーマルモード）
+  // ----------------------------------
+  {
+    "key": "g g",
+    "command": "cursorTop",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "g 0",
+    "command": "cursorHome",
+    "when": "editorTextFocus && neovim.mode != insert"
+  },
+  {
+    "key": "g shift+6",
+    "command": "cursorHomeSelect",
+    "when": "editorTextFocus && neovim.mode != insert"
+  },
+  {
+    "key": "g shift+4",
+    "command": "cursorEnd",
+    "when": "editorTextFocus && neovim.mode != insert"
+  },
+  {
+    "key": "g e",
+    "command": "cursorWordEndLeft",
+    "when": "editorTextFocus && neovim.mode == 'normal'"
+  },
+  {
+    "key": "g shift+e",
+    "command": "cursorWordEndLeftSelect",
+    "when": "editorTextFocus && neovim.mode == 'normal'"
+  },
+  {
+    "key": "g shift+f",
+    "command": "cursorWordStartRight",
+    "when": "editorTextFocus && neovim.mode == 'normal'"
+  },
+  {
+    "key": "g shift+shift+f",
+    "command": "cursorWordStartRightSelect",
+    "when": "editorTextFocus && neovim.mode == 'normal'"
+  },
+
+  // ----------------------------------
+  // 補完関連
+  // ----------------------------------
+  {
+    "key": "ctrl+n",
+    "command": "editor.action.triggerSuggest",
+    "when": "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible"
+  },
+  {
+    "key": "ctrl+q",
+    "command": "editor.action.inlineSuggest.hide",
+    "when": "editorTextFocus && inlineSuggestionVisible"
+  }
+]

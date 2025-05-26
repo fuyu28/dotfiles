@@ -1,0 +1,351 @@
+{
+  //////////////////////////////////////////////////////////
+  // Editor
+  //////////////////////////////////////////////////////////
+  "editor.fontFamily": "'HackGen Console NF', monospace",
+  "editor.tabSize": 2,
+  "editor.minimap.enabled": false,
+  "editor.mouseWheelZoom": true,
+  "editor.renderControlCharacters": true,
+  "editor.suggestSelection": "first",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[typescriptreact]": {
+    "editor.snippetSuggestions": "bottom"
+  },
+  "[javascriptreact]": {
+    "editor.snippetSuggestions": "bottom"
+  },
+  "editor.parameterHints.enabled": false,
+  "editor.autoClosingBrackets": "beforeWhitespace",
+  "editor.autoClosingQuotes": "beforeWhitespace",
+  "editor.autoSurround": "languageDefined",
+
+  //////////////////////////////////////////////////////////
+  // File
+  //////////////////////////////////////////////////////////
+  "files.autoGuessEncoding": true,
+
+  //////////////////////////////////////////////////////////
+  // Terminal
+  //////////////////////////////////////////////////////////
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+    "Git Bash": {
+      "source": "Git Bash"
+    },
+    "Nushell": {
+      "path": "${env:USERPROFILE}\\AppData\\Local\\Programs\\nu\\bin\\nu.EXE"
+    },
+    "Windows PowerShell": {
+      "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+  //////////////////////////////////////////////////////////
+  // Theme & UI
+  //////////////////////////////////////////////////////////
+  "workbench.colorTheme": "One Dark Pro Mix",
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.background1": "#b22222",
+    "editorIndentGuide.background2": "#ff4500",
+    "editorIndentGuide.background3": "#ffd700",
+    "editorIndentGuide.background4": "#228b22",
+    "editorIndentGuide.background5": "#000080",
+    "editorIndentGuide.background6": "#8b008b",
+    "editorIndentGuide.activeBackground1": "#fff",
+    "editorIndentGuide.activeBackground2": "#fff",
+    "editorIndentGuide.activeBackground3": "#fff",
+    "editorIndentGuide.activeBackground4": "#fff",
+    "editorIndentGuide.activeBackground5": "#fff",
+    "editorIndentGuide.activeBackground6": "#fff"
+  },
+  "glassit.alpha": 255,
+
+  //////////////////////////////////////////////////////////
+  // Security & Privacy
+  //////////////////////////////////////////////////////////
+  "security.workspace.trust.untrustedFiles": "open",
+  "security.allowedUNCHosts": ["wsl.localhost"],
+
+  //////////////////////////////////////////////////////////
+  // Git & GitHub Copilot
+  //////////////////////////////////////////////////////////
+  "git.autofetch": true,
+  "git.openRepositoryInParentFolders": "never",
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "github.copilot.chat.localeOverride": "ja",
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.editor.enableCodeActions": false,
+
+  //////////////////////////////////////////////////////////
+  // Extension - Python
+  //////////////////////////////////////////////////////////
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+
+  //////////////////////////////////////////////////////////
+  // Extension - Dart
+  //////////////////////////////////////////////////////////
+  "dart.openDevTools": "flutter",
+
+  //////////////////////////////////////////////////////////
+  // Extension - Java
+  //////////////////////////////////////////////////////////
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java",
+    "editor.formatOnSave": true
+  },
+  "java.format.settings.profile": "GoogleStyle",
+  "java.completion.guessMethodArguments": "off",
+  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+  "redhat.telemetry.enabled": true,
+
+  ///////////////////////////////////////////////////////////
+  // Extension - ESLint
+  ////////////////////////////////////////////////////////////
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  //////////////////////////////////////////////////////////
+  // Extension - LaTeX Workshop
+  //////////////////////////////////////////////////////////
+  "[tex]": {
+    // スニペット補完中にも補完を使えるようにする
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    // インデント幅を2にする
+    "editor.tabSize": 2
+  },
+
+  "[latex]": {
+    // スニペット補完中にも補完を使えるようにする
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    // インデント幅を2にする
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "James-Yu.latex-workshop"
+  },
+
+  "[bibtex]": {
+    // インデント幅を2にする
+    "editor.tabSize": 2
+  },
+  "latex-workshop.formatting.latex": "latexindent",
+  // 使用パッケージのコマンドや環境の補完を有効にする
+  "latex-workshop.intellisense.package.enabled": true,
+
+  // Linterの設定
+  "latex-workshop.linting.chktex.enabled": true,
+  "latex-workshop.linting.run": "onType",
+  "latex-workshop.linting.delay": 500,
+  "latex-workshop.linting.chktex.exec.path": "chktex",
+  "latex-workshop.linting.chktex.exec.args": [
+    "-wall",
+    "-n3",
+    "-n19",
+    "-n21",
+    "-n22",
+    "-n30",
+    "-e16",
+    "-q"
+  ],
+  "latex-workshop.linting.lacheck.enabled": true,
+  "latex-workshop.linting.lacheck.exec.path": "lacheck",
+
+  // 生成ファイルを削除するときに対象とするファイル
+  // デフォルト値に "*.synctex.gz" を追加
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux",
+    "*.bbl",
+    "*.blg",
+    "*.idx",
+    "*.ind",
+    "*.lof",
+    "*.lot",
+    "*.out",
+    "*.toc",
+    "*.acn",
+    "*.acr",
+    "*.alg",
+    "*.glg",
+    "*.glo",
+    "*.gls",
+    "*.ist",
+    "*.fls",
+    "*.log",
+    "*.fdb_latexmk",
+    "*.snm",
+    "*.nav",
+    "*.dvi",
+    "*.synctex.gz"
+  ],
+
+  // 生成ファイルを "out" ディレクトリに吐き出す
+  "latex-workshop.latex.outDir": "out",
+
+  // ビルドのレシピ
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk",
+      "tools": ["latexmk"]
+    }
+  ],
+
+  // ビルドのレシピに使われるパーツ
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-interaction=nonstopmode",
+        "-silent",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ]
+    }
+  ],
+
+  //////////////////////////////////////////////////////////
+  // Extension - Code Runner
+  //////////////////////////////////////////////////////////
+  "code-runner.runInTerminal": true,
+
+  //////////////////////////////////////////////////////////
+  // Extension - Prettier
+  //////////////////////////////////////////////////////////
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+
+  //////////////////////////////////////////////////////////
+  // Extension - Neovim
+  //////////////////////////////////////////////////////////
+  "vscode-neovim.neovimExecutablePaths.win32": "C:\\Program Files\\Neovim\\bin\\nvim.exe",
+  "vscode-neovim.neovimInitVimPaths.win32": "~\\AppData\\Local\\vscode-nvim\\init.lua",
+  "vscode-neovim.compositeKeys": {
+    "jj": {
+      "command": "vscode-neovim.escape"
+    },
+    "jk": {
+      "command": "vscode-neovim.lua",
+      "args": [
+        [
+          "local code = require('vscode')",
+          "code.action('vscode-neovim.escape')",
+          "code.action('workbench.action.files.save')"
+        ]
+      ]
+    }
+  },
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+
+  //////////////////////////////////////////////////////////
+  // Extension - cSpell
+  //////////////////////////////////////////////////////////
+  "cSpell.userWords": [
+    "Alpaquita",
+    "amsmath",
+    "amssymb",
+    "Artix",
+    "atcoder",
+    "bfseries",
+    "booktabs",
+    "Cachy",
+    "chktexrc",
+    "documentclass",
+    "dvipdfmx",
+    "Emscripten",
+    "fancyhdr",
+    "Garuda",
+    "graphicx",
+    "Hoge",
+    "hyperref",
+    "Illumos",
+    "Inconsolata",
+    "jsarticle",
+    "keybinds",
+    "latexmkrc",
+    "latexreport",
+    "LOCALAPPDATA",
+    "Mabox",
+    "maketitle",
+    "multirow",
+    "newpage",
+    "Nobara",
+    "Numpy",
+    "nushell",
+    "nvim",
+    "pagestyle",
+    "pxjahyper",
+    "tableofcontents",
+    "textbf",
+    "thepage",
+    "toprule",
+    "turbopack",
+    "usepackage",
+    "USERPROFILE",
+    "vercel",
+    "wezterm"
+  ],
+
+  //////////////////////////////////////////////////////////
+  // Extension - Tailwind CSS InteliSense
+  //////////////////////////////////////////////////////////
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  //////////////////////////////////////////////////////////
+  // Extension - Prisma
+  //////////////////////////////////////////////////////////
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+
+  //////////////////////////////////////////////////////////
+  // e.t.c.
+  //////////////////////////////////////////////////////////
+  "debug.onTaskErrors": "showErrors",
+  "interactiveWindow.executeWithShiftEnter": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.db": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.s3db": "${capture}.${extname}-*"
+  },
+  "techtrain-railway.optOutTelemetry": false,
+  "python.createEnvironment.trigger": "off",
+  "rubyLsp.rubyExecutablePath": "c:\\Ruby33-x64\\bin\\ruby.exe"
+}

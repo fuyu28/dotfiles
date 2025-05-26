@@ -1,0 +1,79 @@
+{
+	// Place your snippets for latex here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+  "LaTeX Report Template": {
+    "prefix": "latexreport",
+    "body": [
+      "\\documentclass[10pt,a4paper]{jsarticle}",
+      "",
+      "% ─── パッケージ読み込み ──────────────────────",
+      "\\usepackage{amsmath,amssymb}       % 数式・記号サポート",
+      "\\usepackage[dvipdfmx]{graphicx}    % 画像挿入",
+      "\\usepackage{float}                 % 図表の配置制御 [H] オプション",
+      "\\usepackage{booktabs}              % プロの表組み（\\toprule 等）",
+      "\\usepackage{multirow}              % 表のセル結合",
+      "\\usepackage{url}                   % URL 表示",
+      "\\usepackage[dvipdfmx]{hyperref}    % PDF 内リンク",
+      "\\usepackage{pxjahyper}             % 日本語対応のハイパーリンク",
+      "\\usepackage{fancyhdr}              % ヘッダ・フッタ制御",
+      "",
+      "% ─── ヘッダ・フッタ設定 ─────────────────────",
+      "\\pagestyle{fancy}",
+      "\\lhead[\\bfseries\\thepage]{\\textbf{＜レポートタイトル＞}}",
+      "\\rhead[\\bfseries\\thepage]{作成日：\\today}",
+      "\\lfoot{＜学籍番号 氏名＞}",
+      "\\cfoot{}",
+      "\\rfoot{\\thepage}",
+      "",
+      "% ─── タイトル情報 ───────────────────────────",
+      "\\title{\\LARGE ＜レポートタイトル＞}",
+      "\\author{{\\Large ＜学籍番号 氏名＞}}",
+      "\\date{作成日：\\today}",
+      "",
+      "%============================================",
+      "\\begin{document}",
+      "",
+      "\\maketitle       % タイトル出力",
+      "\\tableofcontents % 目次生成",
+      "\\newpage         % 目次後に改ページ",
+      "",
+      "%---------- ここから本文を記述 ----------",
+      "",
+      "\\section{はじめに}",
+      "% 目的・背景など",
+      "",
+      "\\section{理論}",
+      "% 理論的背景や数式",
+      "",
+      "\\section{実験方法}",
+      "% 実験手順、装置・条件など",
+      "",
+      "\\section{結果}",
+      "% 図表・データなど",
+      "",
+      "\\section{考察}",
+      "% 結果の解釈、誤差要因など",
+      "",
+      "\\section{結論}",
+      "% 総括、今後の課題など",
+      "",
+      "\\appendix",
+      "\\section{付録}",
+      "% ソースコードや追加資料",
+      "",
+      "\\end{document}"
+    ],
+    "description": "汎用的なLaTeXレポートテンプレート"
+  }
+}

@@ -52,8 +52,8 @@ return {
     -- コマンドパレット表示
     { key = "p", mods = "CTRL", action = act.ActivateCommandPalette },
     -- Tab移動
-    { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
-    { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
+    -- { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
+    -- { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
     -- Tab入れ替え
     { key = "{", mods = "LEADER", action = act({ MoveTabRelative = -1 }) },
     -- Tab新規作成
@@ -69,7 +69,19 @@ return {
     -- { key = 'X', mods = 'LEADER', action = act.ActivateKeyTable{ name = 'copy_mode', one_shot =false }, },
     { key = "[", mods = "LEADER", action = act.ActivateCopyMode },
     -- コピー
-    { key = "c", mods = "CTRL", action = act.CopyTo("Clipboard") },
+    {
+    key = 'c',
+    mods = 'CTRL',
+    action = wezterm.action_callback(function(window, pane)
+        selection_text = window:get_selection_text_for_pane(pane)
+        is_selection_active = string.len(selection_text) ~= 0
+        if is_selection_active then
+            window:perform_action(wezterm.action.CopyTo('ClipboardAndPrimarySelection'), pane)
+        else
+            window:perform_action(wezterm.action.SendKey{ key='c', mods='CTRL' }, pane)
+        end
+    end),
+    },
     -- 貼り付け
     { key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
 
