@@ -7,8 +7,6 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 -- ノーマル／ビジュアルで行頭・行末へ
-map("n", "<S-h>", "^", opts)
-map("n", "<S-l>", "$", opts)
 map("v", "<S-h>", "^", opts)
 map("v", "<S-l>", "$", opts)
 
@@ -19,12 +17,12 @@ map("n", "-", "<C-x>", opts)
 -- 全選択
 map("n", "<C-a>", "ggVG", opts)
 
--- クリップボード連携（行／選択コピー）
-map("n", "yy", '"+yy', opts)
-map("v", "y", '"+y', opts)
-
 -- Insert モードで 'jj' を押したら <Esc>
 map("i", "jj", "<Esc>", opts)
 
 -- Insert モードで 'jk' を押したら <Esc> + ファイル保存
 map("i", "jk", "<Esc>:w<CR>", opts)
+
+map("n", "<F5>", function()
+  vim.o.conceallevel = (vim.o.conceallevel == 0) and 2 or 0
+end, opts)
