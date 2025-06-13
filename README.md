@@ -9,7 +9,8 @@ These are the configuration files for my development environment. This repositor
 - **Visual Studio Code**
 - **VSCode NeoVim Extension**
 - **WezTerm**
-- NeoVim
+- **NeoVim**
+- **Z Shell**
 
 ---
 
@@ -28,3 +29,4 @@ Below is where each file should be placed on a Windows system:
 | **VSCode NeoVim**            | `init.lua`                                      | `%LOCALAPPDATA%\vscode-nvim\`       |
 | **WezTerm**                  | `background.png`, `keybinds.lua`, `wezterm.lua` | `%USERPROFILE%\.config\wezterm\`    |
 | **NeoVim** | `lua`, `.neoconf.json`, `init.lua`, `lazy-lock.json`, `lazyvim.json`, `LICENSE`, `README.md`, `stylua.toml` | `%LOCALAPPDATA\nvim` |
+| **Z Shell** | `.zshrc` | `~/` |
