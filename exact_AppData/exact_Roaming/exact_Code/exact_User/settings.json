@@ -1,0 +1,516 @@
+{
+  //////////////////////////////////////////////////////////
+  // Editor
+  //////////////////////////////////////////////////////////
+  "editor.fontFamily": "'HackGen Console NF', monospace",
+  "editor.tabSize": 2,
+  "editor.minimap.enabled": false,
+  "editor.mouseWheelZoom": true,
+  "editor.renderControlCharacters": true,
+  "editor.suggestSelection": "recentlyUsedByPrefix",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[typescriptreact]": {
+    "editor.snippetSuggestions": "bottom"
+  },
+  "[javascriptreact]": {
+    "editor.snippetSuggestions": "bottom"
+  },
+  "editor.parameterHints.enabled": false,
+  "editor.autoClosingBrackets": "beforeWhitespace",
+  "editor.autoClosingQuotes": "beforeWhitespace",
+  "editor.autoSurround": "languageDefined",
+  "files.eol": "\n",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  //////////////////////////////////////////////////////////
+  // File
+  //////////////////////////////////////////////////////////
+  "files.autoGuessEncoding": true,
+
+  //////////////////////////////////////////////////////////
+  // Terminal
+  //////////////////////////////////////////////////////////
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+    "Git Bash": {
+      "source": "Git Bash"
+    },
+    "Nushell": {
+      "path": "${env:USERPROFILE}\\AppData\\Local\\Programs\\nu\\bin\\nu.EXE"
+    },
+    "Windows PowerShell": {
+      "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.env.windows": {
+    "LANG": "en_US.UTF-8"
+  },
+
+  //////////////////////////////////////////////////////////
+  // Theme & UI
+  //////////////////////////////////////////////////////////
+  "workbench.colorTheme": "One Dark Pro Mix",
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.background1": "#b22222",
+    "editorIndentGuide.background2": "#ff4500",
+    "editorIndentGuide.background3": "#ffd700",
+    "editorIndentGuide.background4": "#228b22",
+    "editorIndentGuide.background5": "#000080",
+    "editorIndentGuide.background6": "#8b008b",
+    "editorIndentGuide.activeBackground1": "#fff",
+    "editorIndentGuide.activeBackground2": "#fff",
+    "editorIndentGuide.activeBackground3": "#fff",
+    "editorIndentGuide.activeBackground4": "#fff",
+    "editorIndentGuide.activeBackground5": "#fff",
+    "editorIndentGuide.activeBackground6": "#fff"
+  },
+  "glassit.alpha": 255,
+
+  //////////////////////////////////////////////////////////
+  // Security & Privacy
+  //////////////////////////////////////////////////////////
+  "security.workspace.trust.untrustedFiles": "open",
+  "security.allowedUNCHosts": ["wsl.localhost"],
+
+  //////////////////////////////////////////////////////////
+  // Git & GitHub Copilot
+  //////////////////////////////////////////////////////////
+  "git.autofetch": true,
+  "git.openRepositoryInParentFolders": "never",
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "java": true
+  },
+  "github.copilot.chat.localeOverride": "ja",
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.editor.enableCodeActions": false,
+
+  //////////////////////////////////////////////////////////
+  // Launguage - C
+  //////////////////////////////////////////////////////////
+  "[c]": {
+    "editor.defaultFormatter": "xaver.clang-format",
+    "editor.formatOnSave": true
+  },
+  "clang-format.executable": "/usr/bin/clang-format",
+  "C_Cpp.clang_format_style": "{BasedOnStyle: Google}",
+
+  //////////////////////////////////////////////////////////
+  // Language - Python
+  //////////////////////////////////////////////////////////
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "python.defaultInterpreterPath": "C:\\Users\\yuyam\\anaconda3\\envs\\pict\\python.exe",
+
+  "go.goroot": "C:\\Users\\yuyam\\AppData\\Local\\mise\\installs\\go\\1.25.3",
+
+  //////////////////////////////////////////////////////////
+  // Language - Dart
+  //////////////////////////////////////////////////////////
+  "dart.openDevTools": "flutter",
+
+  //////////////////////////////////////////////////////////
+  // Language - lua
+  //////////////////////////////////////////////////////////
+  "[lua]": {
+    "editor.defaultFormatter": "yinfei.luahelper"
+  },
+
+  //////////////////////////////////////////////////////////
+  // Language - Java
+  //////////////////////////////////////////////////////////
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java",
+    "editor.formatOnSave": true
+  },
+  "java.format.settings.profile": "GoogleStyle",
+  "java.completion.guessMethodArguments": "off",
+  "java.jdt.ls.java.home": "C:\\Program Files\\BellSoft\\LibericaJDK-11-Full",
+  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+  "redhat.telemetry.enabled": true,
+
+  //////////////////////////////////////////////////////////
+  // Language - JS and TS
+  //////////////////////////////////////////////////////////
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "**/node_modules/@electron-toolkit/preload/**"
+  ],
+  // JavaScript の自動インポート候補から除外
+  "javascript.preferences.autoImportFileExcludePatterns": [
+    "**/node_modules/@electron-toolkit/preload/**"
+  ],
+
+  //////////////////////////////////////////////////////////
+  // Language - Rust
+  //////////////////////////////////////////////////////////
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "rust-analyzer.checkOnSave": true,
+  "rust-analyzer.check.command": "clippy",
+  "rust-analyzer.check.extraArgs": ["--", "-A", "clippy::needless_return"],
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+
+  //////////////////////////////////////////////////////////
+  // Extension - Command Runner
+  //////////////////////////////////////////////////////////
+  "command-runner.commands": {
+    "compile program": "cd ${fileDirname} && g++ -std=gnu++23 -O2 -mtune=native -march=native ${fileBasename}",
+    "compile program with warning": "cd ${fileDirname} && g++ -std=gnu++23 -Wall -Wextra -DLOCAL -Wno-expansion-to-defined -Wno-sign-compare -Wfloat-equal -Winit-self -Wshadow -Wlogical-op -Werror=uninitialized -Werror=maybe-uninitialized -Werror=parentheses -Werror=logical-not-parentheses -Werror=multichar -Wno-unknown-pragmas -g -fsanitize=undefined -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC ${fileBasename}",
+    "oj test&compile": "cd ${fileDirname} && g++ -std=gnu++23 -O2 -mtune=native -march=native ${fileBasename} && oj t -N -e 1e-9 -c ./a.out -d test -N",
+    "oj test": "cd ${fileDirname} && oj t -N -e 1e-9 -c ./a.out -d test -N",
+    "acc submit": "cd ${fileDirname} && acc s",
+    "exec program": "cd ${fileDirname} && ./a.out",
+    "exec for sample": "cd ${fileDirname} && ./a.out < test/sample-${input:1}.in",
+    "editor to clipboard": "cd ${fileDirname} && cat ${fileBasename} | xclip -selection c",
+    "create contest file": "cd ${workspaceFolder}/atcoder_cpp && acc new ${input:1}",
+    "open contest site": "xdg-open https://atcoder.jp/contests/${input:1}"
+  },
+
+  ///////////////////////////////////////////////////////////
+  // Extension - ESLint
+  ////////////////////////////////////////////////////////////
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  //////////////////////////////////////////////////////////
+  // Extension - LaTeX Workshop
+  //////////////////////////////////////////////////////////
+  "[latex]": {
+    // スニペット補完中にも補完を使えるようにする
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    // インデント幅を2にする
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "James-Yu.latex-workshop"
+  },
+  "latex-workshop.formatting.latex": "latexindent",
+  // 使用パッケージのコマンドや環境の補完を有効にする
+  "latex-workshop.intellisense.package.enabled": true,
+
+  // Linterの設定
+  "latex-workshop.linting.chktex.enabled": true,
+  "latex-workshop.linting.run": "onType",
+  "latex-workshop.linting.delay": 500,
+  "latex-workshop.linting.chktex.exec.path": "chktex",
+  "latex-workshop.linting.chktex.exec.args": [
+    "-wall",
+    "-n3",
+    "-n8",
+    "-n12",
+    "-n19",
+    "-n21",
+    "-n22",
+    "-n24",
+    "-n30",
+    "-e16",
+    "-q"
+  ],
+  "latex-workshop.linting.lacheck.enabled": true,
+  "latex-workshop.linting.lacheck.exec.path": "lacheck",
+
+  // 生成ファイルを削除するときに対象とするファイル
+  // デフォルト値に "*.synctex.gz" を追加
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux",
+    "*.bbl",
+    "*.blg",
+    "*.idx",
+    "*.ind",
+    "*.lof",
+    "*.lot",
+    "*.out",
+    "*.toc",
+    "*.acn",
+    "*.acr",
+    "*.alg",
+    "*.glg",
+    "*.glo",
+    "*.gls",
+    "*.ist",
+    "*.fls",
+    "*.log",
+    "*.fdb_latexmk",
+    "*.snm",
+    "*.nav",
+    "*.dvi",
+    "*.synctex.gz"
+  ],
+
+  // 出力ディレクトリ
+  "latex-workshop.latex.outDir": "out",
+
+  // レシピの定義
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (platex+dvipdfmx)",
+      "tools": ["latexmk-platex"]
+    },
+    {
+      "name": "latexmk (lualatex)",
+      "tools": ["latexmk-lualatex"]
+    }
+  ],
+
+  // ツールの定義
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk-platex",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-outdir=out",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "latexmk-lualatex",
+      "command": "latexmk",
+      "args": [
+        "-lualatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-outdir=out",
+        "%DOC%"
+      ]
+    }
+  ],
+
+  // デフォルトで走らせるレシピ名を合わせる
+  // "latex-workshop.latex.recipe.default": "latexmk (lualatex)",
+  "latex-workshop.latex.recipe.default": "latexmk (platex+dvipdfmx)",
+
+  // 保存時に自動ビルド
+  "latex-workshop.latex.autoBuild.run": "onSave",
+
+  //////////////////////////////////////////////////////////
+  // Extension - Code Runner
+  //////////////////////////////////////////////////////////
+  "code-runner.runInTerminal": true,
+
+  //////////////////////////////////////////////////////////
+  // Extension - Neovim
+  //////////////////////////////////////////////////////////
+  "vscode-neovim.neovimExecutablePaths.win32": "C:\\Program Files\\Neovim\\bin\\nvim.exe",
+  "vscode-neovim.neovimInitVimPaths.win32": "~\\AppData\\Local\\nvim-vscode\\init.lua",
+  "vscode-neovim.compositeKeys": {
+    "jj": {
+      "command": "vscode-neovim.escape"
+    },
+    "jk": {
+      "command": "vscode-neovim.lua",
+      "args": [
+        [
+          "local code = require('vscode')",
+          "code.action('vscode-neovim.escape')",
+          "code.action('workbench.action.files.save')"
+        ]
+      ]
+    }
+  },
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+
+  //////////////////////////////////////////////////////////
+  // Extension - cSpell
+  //////////////////////////////////////////////////////////
+  "cSpell.userWords": [
+    "Alpaquita",
+    "amsmath",
+    "amssymb",
+    "Artix",
+    "asar",
+    "atcoder",
+    "autoincrement",
+    "bfseries",
+    "booktabs",
+    "bottomrule",
+    "Cachy",
+    "caramellatte",
+    "chakra",
+    "chktexrc",
+    "chmax",
+    "chmin",
+    "cloudflarestorage",
+    "columnwidth",
+    "cout",
+    "Creds",
+    "crxjs",
+    "daisyui",
+    "dirents",
+    "documentclass",
+    "dvipdfmx",
+    "electronjs",
+    "Emscripten",
+    "Errno",
+    "eslintcache",
+    "fancyhdr",
+    "Fdump",
+    "FLAC",
+    "Frontmatter",
+    "fuyu",
+    "Garuda",
+    "graphicx",
+    "Hoge",
+    "hyperref",
+    "Illumos",
+    "includegraphics",
+    "Inconsolata",
+    "javafx",
+    "jsarticle",
+    "keybinds",
+    "keytar",
+    "kodama",
+    "latexmkrc",
+    "latexreport",
+    "LOCALAPPDATA",
+    "lofi",
+    "Mabox",
+    "maketitle",
+    "Manabox",
+    "meijo",
+    "midrule",
+    "Mincho",
+    "multirow",
+    "NAND",
+    "newpage",
+    "nextjs",
+    "Nobara",
+    "nord",
+    "nsis",
+    "Numpy",
+    "nushell",
+    "nvim",
+    "pagestyle",
+    "Piapro",
+    "prefersdark",
+    "pxjahyper",
+    "rbegin",
+    "rgba",
+    "rootscrollgutter",
+    "spwave",
+    "stdc",
+    "subsubsection",
+    "Supabase",
+    "synthwave",
+    "tableofcontents",
+    "textbf",
+    "thepage",
+    "toprule",
+    "turbopack",
+    "ulint",
+    "unmaximize",
+    "usepackage",
+    "USERPROFILE",
+    "uuidv",
+    "vercel",
+    "vite",
+    "VOCALOID",
+    "wezterm",
+    "Wireshark"
+  ],
+
+  //////////////////////////////////////////////////////////
+  // Extension - Tailwind CSS InteliSense
+  //////////////////////////////////////////////////////////
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  //////////////////////////////////////////////////////////
+  // Extension - Prisma
+  //////////////////////////////////////////////////////////
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  //////////////////////////////////////////////////////////
+  // Extension - Trailing Spaces
+  //////////////////////////////////////////////////////////
+  "trailing-spaces.trimOnSave": true,
+
+  //////////////////////////////////////////////////////////
+  // e.t.c.
+  //////////////////////////////////////////////////////////
+  "debug.onTaskErrors": "showErrors",
+  "interactiveWindow.executeWithShiftEnter": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.db": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.s3db": "${capture}.${extname}-*"
+  },
+  "techtrain-railway.optOutTelemetry": false,
+  "rubyLsp.rubyExecutablePath": "c:\\Ruby33-x64\\bin\\ruby.exe",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.unicodeHighlight.allowedCharacters": {
+    "．": true,
+    "，": true
+  },
+  "database-client.autoSync": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "roo-cline.allowedCommands": [
+    "npm test",
+    "npm install",
+    "tsc",
+    "git log",
+    "git diff",
+    "git show",
+    "md Task7A\\src\\jp\\ac\\meijo_u\\id241205178",
+    "md Task7Asrcjpacmeijo_uid241205178",
+    "md",
+    "uv sync",
+    "cd",
+    "cd remove-blindfold",
+    "cd remove-blindfold && uv sync",
+    "uv run",
+    "mkdir",
+    "copy",
+    "del",
+    "mvn",
+    "Remove-Item",
+    "javac",
+    "java"
+  ],
+  "roo-cline.deniedCommands": [],
+  "python.analysis.typeCheckingMode": "standard",
+  "update.showReleaseNotes": false
+}

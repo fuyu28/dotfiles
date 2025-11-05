@@ -1,0 +1,99 @@
+{
+	// Place your snippets for latex here. Each snippet is defined under a snippet name and has a prefix, body and
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+  "LaTeX Figure Environment": {
+    "prefix": "insertfig",
+    "body": [
+      "\\begin{figure}[H]",
+      "\t\\centering",
+			"\t\\includegraphics[width=0.7\\\\columnwidth]{${1:filename}}",
+      "\t\\caption{${2:caption}}\\label{fig:${3:label}}",
+      "\\end{figure}"
+    ],
+    "description": "Insert a LaTeX figure environment with centering, caption, and label"
+  },
+  "LaTeX Chapter Template": {
+    "prefix": "chapterTemplate",
+    "body": [
+      "\\subsection{実験}",
+      "\\subsubsection{実験内容}",
+      "",
+      "",
+      "\\subsubsection{実験結果・考察}",
+      "",
+      ""
+    ]
+  },
+  "LaTeX Report Template": {
+    "prefix": "latexreport",
+    "body": [
+      "%===============================================================================",
+      "%   汎用実験レポートテンプレート（LuaLaTeX／ltjsarticle）",
+      "%===============================================================================",
+      "\\documentclass[10pt,a4paper]{ltjsarticle}",
+      "",
+      "%―――――― フォント設定 ―――――――",
+      "\\usepackage{fontspec}            % 欧文フォント",
+      "\\usepackage{luatexja-fontspec}   % 日本語フォント連携",
+      "\\setmainfont{Times New Roman}    % 欧文メインフォント",
+      "\\setmainjfont{IPAexMincho}       % 和文メインフォント",
+      "\\setsansjfont{IPAexGothic}       % サンセリフ（見出し等）",
+      "",
+      "%―――――― パッケージ群 ―――――――",
+      "\\usepackage{amsmath,amssymb}     % 数式",
+      "\\usepackage{graphicx,subcaption} % 画像／サブ図",
+      "\\usepackage{float}               % [H] オプション",
+      "\\usepackage{booktabs,multirow}   % 表組み",
+      "\\usepackage[hyphens]{url}        % URL 改行",
+      "\\usepackage{xurl}                % URL 柔軟改行",
+      "\\usepackage{hyperref}            % ハイパーリンク",
+      "\\usepackage{fancyhdr}            % ヘッダ・フッタ",
+      "\\usepackage{siunitx}             % 単位",
+      "",
+      "%―――――― ヘッダ・フッタ設定 ―――――――",
+      "\\pagestyle{fancy}",
+      "\\lhead[\\bfseries\\thepage]{\\textbf{実験レポート}} % 左ヘッダ",
+      "\\rhead[\\bfseries\\thepage]{作成日：\\today}        % 右ヘッダ",
+      "\\lfoot{学籍番号 氏名}                               % 左フッタ（要変更）",
+      "\\cfoot{}                                            % 中央フッタ",
+      "\\rfoot{\\thepage}                                   % 右フッタ",
+      "",
+      "%―――――― 各種設定 ―――――――",
+      "\\graphicspath{{images/}} % 画像フォルダ",
+      "\\sloppy                  % 行オーバーフロー回避",
+      "",
+      "%―――――― タイトル情報 ―――――――",
+      "\\title{\\LARGE 実験タイトルを書く}       % レポートタイトル",
+      "\\author{{\\Large 学籍番号 氏名}}         % 学籍番号と氏名",
+      "\\date{作成日：\\today}                   % 日付",
+      "",
+      "%===============================================================================",
+      "\\begin{document}",
+      "%===============================================================================",
+      "",
+      "\\maketitle       % タイトル出力",
+      "\\tableofcontents % 目次",
+      "\\newpage         % 改ページ",
+      "",
+      "%===============================================================================",
+      "",
+      "% ここから本文を記述",
+      "",
+      "%===============================================================================",
+      "\\end{document}",
+      "%==============================================================================="
+    ],
+    "description": "汎用的なLaTeXレポートテンプレート"
+	}
+}

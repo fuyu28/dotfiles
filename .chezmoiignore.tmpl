@@ -1,0 +1,37 @@
+﻿# まず広い場所を全ブロック
+AppData/**
+.appdata/**
+.config/**
+
+# ---- 親→子の順で穴あけ ----
+
+# AppData/Roaming/Code/User（VSCode）
+!AppData
+!AppData/Roaming
+!AppData/Roaming/Code
+!AppData/Roaming/Code/User
+!AppData/Roaming/Code/User/settings.json
+!AppData/Roaming/Code/User/keybindings.json
+!AppData/Roaming/Code/User/snippets/**
+
+# AppData/Roaming/nushell
+!AppData/Roaming/nushell
+!AppData/Roaming/nushell/config.nu
+!AppData/Roaming/nushell/env.nu
+
+# AppData/Local（NeoVim / VSCode NeoVim / clink）
+!AppData/Local
+!AppData/Local/nvim/**
+!AppData/Local/nvim-vscode/**
+!AppData/Local/clink
+!AppData/Local/clink/starship.lua
+
+# .config（wezterm / starship.toml）
+!.config
+!.config/wezterm
+!.config/wezterm/**
+!.config/starship.toml
+
+# ルート直下（LaTeX）
+!.chktexrc
+!.latexmkrc
