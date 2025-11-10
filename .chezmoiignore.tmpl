@@ -1,10 +1,14 @@
 ﻿# まず広い場所を全ブロック
+{{ if eq .chezmoi.os "linux" -}}
+# Linux環境ではAppDataを無視
 AppData/**
+{{ end -}}
 .appdata/**
 .config/**
 
 # ---- 親→子の順で穴あけ ----
 
+{{ if eq .chezmoi.os "windows" -}}
 # AppData/Roaming/Code/User（VSCode）
 !AppData
 !AppData/Roaming
@@ -25,6 +29,7 @@ AppData/**
 !AppData/Local/nvim-vscode/**
 !AppData/Local/clink
 !AppData/Local/clink/starship.lua
+{{ end -}}
 
 # .config（wezterm / starship.toml）
 !.config
@@ -69,6 +74,22 @@ AppData/**
 .config/systemd/**
 .config/QtProject.conf
 
+{{ if eq .chezmoi.os "windows" -}}
+# Windows環境ではLinux固有のdotfilesを無視
+.bashrc
+.bash_profile
+.bash_logout
+.xinitrc
+.xprofile
+.Xresources
+.gtkrc-2.0
+.dmenurc
+.fehbg
+.dir_colors
+.makepkg.conf
+pacman-aur.txt
+pacman-explicit.txt
+{{ else -}}
 # ルートディレクトリのdotfiles（Linux）
 !.bashrc
 !.bash_profile
@@ -79,7 +100,6 @@ AppData/**
 !.zprofile
 !.zlogin
 !.zlogout
-!.gitconfig
 !.xinitrc
 !.xprofile
 !.Xresources
@@ -88,16 +108,55 @@ AppData/**
 !.fehbg
 !.dir_colors
 !.makepkg.conf
+!pacman-aur.txt
+!pacman-explicit.txt
+{{ end -}}
 
+# 全環境で必要なファイル
+!.gitconfig
+!.chktexrc
+!.latexmkrc
+
+{{ if eq .chezmoi.os "windows" -}}
+# Windows環境ではLinux用設定を無視
+.config/i3/**
+.config/polybar/**
+.config/dunst/**
+.config/rofi/**
+.config/picom.conf
+.config/lazygit/**
+.config/neofetch/**
+.config/ranger/**
+.config/sheldon/**
+.config/mise/**
+.config/btop/**
+.config/gtk-3.0/**
+.config/Kvantum/**
+.config/nitrogen/**
+.config/pcmanfm/**
+.config/Thunar/**
+.config/qt5ct/**
+.config/viewnior/**
+.config/volumeicon/**
+.config/xfce4/**
+.config/fontconfig/**
+.config/user-dirs.dirs
+.config/user-dirs.locale
+.config/mimeapps.list
+.config/greenclip.toml
+.config/i3-scrot.conf
+.config/networkmanager-dmenu/**
+.config/dmenu-recent/**
+.config/morc_menu/**
+.config/morc_menu_v1.conf
+.local/bin/**
+{{ else -}}
 # Linux環境で追加する設定ファイル
 !.config/i3/**
 !.config/polybar/**
 !.config/dunst/**
 !.config/rofi/**
-!.config/nvim/**
 !.config/picom.conf
-!.config/starship.toml
-!.config/wezterm/**
 !.config/lazygit/**
 !.config/neofetch/**
 !.config/ranger/**
@@ -123,3 +182,8 @@ AppData/**
 !.config/dmenu-recent/**
 !.config/morc_menu/**
 !.config/morc_menu_v1.conf
+!.local/bin/**
+{{ end -}}
+!.config/nvim/**
+!.config/starship.toml
+!.config/wezterm/**
