@@ -1,0 +1,3 @@
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+# LC_ALL は空のままでOK（設定しない → 上書きしない）

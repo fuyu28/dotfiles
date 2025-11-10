@@ -35,3 +35,91 @@ AppData/**
 # ルート直下（LaTeX）
 !.chktexrc
 !.latexmkrc
+
+# ============================================
+# Linux環境用の除外設定
+# ============================================
+
+# セキュリティリスクのあるファイルを除外
+.bash_history
+.viminfo
+.Xauthority
+.claude.json*
+.git-credentials
+.lesshst
+.wget-hsts
+.sudo_as_admin_successful
+
+# キャッシュ・一時ファイル
+.cache/**
+.local/share/**
+.local/state/**
+
+# アプリケーションデータ（認証情報を含む可能性）
+.config/discord/**
+.config/spotify/**
+.config/Bitwarden/**
+.config/BraveSoftware/**
+.config/Electron/**
+.config/Code/**
+.config/zoom.conf
+.config/zoomus.conf
+.config/dconf/**
+.config/pulse/**
+.config/systemd/**
+.config/QtProject.conf
+
+# ルートディレクトリのdotfiles（Linux）
+!.bashrc
+!.bash_profile
+!.bash_logout
+!.profile
+!.zshrc
+!.zshenv
+!.zprofile
+!.zlogin
+!.zlogout
+!.gitconfig
+!.xinitrc
+!.xprofile
+!.Xresources
+!.gtkrc-2.0
+!.dmenurc
+!.fehbg
+!.dir_colors
+!.makepkg.conf
+
+# Linux環境で追加する設定ファイル
+!.config/i3/**
+!.config/polybar/**
+!.config/dunst/**
+!.config/rofi/**
+!.config/nvim/**
+!.config/picom.conf
+!.config/starship.toml
+!.config/wezterm/**
+!.config/lazygit/**
+!.config/neofetch/**
+!.config/ranger/**
+!.config/sheldon/**
+!.config/mise/**
+!.config/btop/**
+!.config/gtk-3.0/**
+!.config/Kvantum/**
+!.config/nitrogen/**
+!.config/pcmanfm/**
+!.config/Thunar/**
+!.config/qt5ct/**
+!.config/viewnior/**
+!.config/volumeicon/**
+!.config/xfce4/**
+!.config/fontconfig/**
+!.config/user-dirs.dirs
+!.config/user-dirs.locale
+!.config/mimeapps.list
+!.config/greenclip.toml
+!.config/i3-scrot.conf
+!.config/networkmanager-dmenu/**
+!.config/dmenu-recent/**
+!.config/morc_menu/**
+!.config/morc_menu_v1.conf

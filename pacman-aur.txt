@@ -1,0 +1,11 @@
+betterlockscreen 4.4.0-1
+brave-bin 1:1.84.132-1
+haskell-semigroups 0.20-1
+haskell-wordexp 0.2.2-2
+i3lock-color 2.13.c.5-3
+neofetch 7.1.0-2
+paru 2.1.0-1
+python-pywal16 1:3.8.9-3
+rofi-greenclip 4.2-3
+visual-studio-code-bin 1.105.1-1
+zoom 6.6.6-2
