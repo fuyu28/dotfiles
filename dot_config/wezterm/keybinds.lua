@@ -50,7 +50,7 @@ return {
 			}),
 		},
 		-- コマンドパレット表示
-		{ key = "p", mods = "CTRL", action = act.ActivateCommandPalette },
+		{ key = "p", mods = "CTRL|SHIFT", action = act.ActivateCommandPalette },
 		-- Tab移動
 		{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
 		{ key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
