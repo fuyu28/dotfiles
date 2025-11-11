@@ -2,4 +2,4 @@
 	email = 88916226+fuyu28@users.noreply.github.com
 	name = fuyu
 [credential]
-	helper = store
+	helper = libsecret
