@@ -87,6 +87,7 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 bindsym $mod+v exec --no-startup-id ~/.local/bin/rofi-clip-paste.sh
 bindsym $mod+p exec --no-startup-id code
 bindsym $mod+Shift+e exec --no-startup-id thunar
+bindsym $mod+Shift+n exec --no-startup-id terminal -e "nmtui"
 
 
 bindsym $mod+Escape exec --no-startup-id $term start -- btop
