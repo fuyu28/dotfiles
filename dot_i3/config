@@ -79,9 +79,9 @@ bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill picom
 bindsym $mod+Ctrl+t exec --no-startup-id picom -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id flameshot gui -p $shots
-bindsym $mod+Print exec --no-startup-id flameshot full -p $shots
-bindsym $mod+Shift+Print exec --no-startup-id flameshot screen -p $shots
+bindsym Print exec --no-startup-id ~/.local/bin/screenshot.sh region
+bindsym $mod+Print exec --no-startup-id ~/.local/bin/screenshot.sh full
+bindsym $mod+Shift+Print exec --no-startup-id ~/.local/bin/screenshot.sh window
 bindsym $mod+Shift+x exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 bindsym $mod+v exec --no-startup-id ~/.local/bin/rofi-clip-paste.sh
