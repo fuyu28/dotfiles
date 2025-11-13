@@ -5,19 +5,24 @@ shots="$HOME/Pictures/Screenshots"
 mkdir -p "$shots"
 timestamp="$(date +%F_%H-%M-%S)"
 file="$shots/$timestamp.png"
+fname="$(basename "$file")"
+
+send_notice() {
+  notify-send "📸 Screenshot" "$1\n$fname" -i "$file"
+}
 
 case "${1:-}" in
 region)
   maim -s | tee "$file" | xclip -selection clipboard -t image/png -i
-  notify-send "📸 Screenshot" "選択範囲を保存しました\n$file" -i "$file"
+  send_notice "Region captured"
   ;;
 full)
   maim | tee "$file" | xclip -selection clipboard -t image/png -i
-  notify-send "📸 Screenshot" "全画面を保存しました\n$file" -i "$file"
+  send_notice "Full screen captured"
   ;;
 window)
   maim -i "$(xdotool getactivewindow)" | tee "$file" | xclip -selection clipboard -t image/png -i
-  notify-send "📸 Screenshot" "ウィンドウを保存しました\n$file" -i "$file"
+  send_notice "Window captured"
   ;;
 *)
   echo "Usage: $0 {region|full|window}" >&2
