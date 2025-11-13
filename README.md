@@ -97,12 +97,30 @@ chezmoi apply -v
 
 ### 3. パッケージのインストール（Arch/Manjaro）
 
+#### 自動セットアップ（推奨）
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/fuyu28/dotfiles.git
+cd dotfiles
+
+# セットアップスクリプトを実行
+./executable_setup.sh
+```
+
+このスクリプトは以下を自動で実行します：
+- chezmoi apply
+- 不足パッケージの検出とインストール（公式リポジトリ + AUR）
+- paru のインストール（必要な場合）
+
+#### 手動インストール
+
 ```bash
 # 公式リポジトリから
-pacman -S --needed - < pacman-explicit.txt
+sudo pacman -S --needed $(cat pacman-explicit.txt | awk '{print $1}')
 
-# AUR パッケージ（yay または paru を使用）
-yay -S --needed - < pacman-aur.txt
+# AUR パッケージ（paru を使用）
+paru -S --needed $(cat pacman-aur.txt | awk '{print $1}')
 ```
 
 ## ディレクトリ構造
@@ -147,6 +165,17 @@ Rofi ベースの電源メニュー
 ### rofi-clip-paste.sh
 
 Rofi でクリップボード履歴から選択して貼り付け
+
+### update-pacman-lists.sh
+
+インストール済みパッケージリストを更新
+
+- `pacman-aur.txt`: AURパッケージのリスト
+- `pacman-explicit.txt`: 明示的にインストールされたパッケージのリスト
+
+```bash
+~/.local/bin/update-pacman-lists.sh
+```
 
 ## カスタマイズ
 
