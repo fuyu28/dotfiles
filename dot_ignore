@@ -1,0 +1,21 @@
+# よく邪魔なやつ
+.git/
+node_modules/
+dist/
+out/
+target/
+venv/
+__pycache__/
+.DS_Store
+
+# JS ビルド
+.next/
+.nuxt/
+.svelte-kit/
+
+# Rust
+target/
+
+# Go
+bin/
+
