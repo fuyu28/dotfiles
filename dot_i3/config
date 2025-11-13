@@ -5,18 +5,17 @@
 set $mod Mod4
 
 # set variable
-set $shots $HOME/Pictures/Screenshots
 set $term wezterm
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 1
-default_floating_border normal
+# default_border pixel 1
+# default_floating_border normal
 
 # Hide borders
-hide_edge_borders none
+# hide_edge_borders none
 
 # change borders
 bindsym $mod+u border none
@@ -49,7 +48,7 @@ bindsym $mod+z exec --no-startup-id morc_menu
 ################################################################################################
 
 exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+bindsym $mod+Ctrl+m exec $term -e 'alsamixer'
 #exec --no-startup-id pulseaudio
 #exec --no-startup-id pa-applet
 #bindsym $mod+Ctrl+m exec pavucontrol
@@ -70,11 +69,11 @@ bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl set +10% && not
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%- && notify-send "Brightness ↓"
 
 # Launch applications
-bindsym $mod+Ctrl+b      exec terminal -e 'bmenu'                     # open app menu
+bindsym $mod+Ctrl+b      exec $term -e 'bmenu'                     # open app menu
 bindsym $mod+F2          exec --no-startup-id brave                   # open browser
 bindsym $mod+F3          exec --no-startup-id thunar                  # open file manager
 bindsym $mod+Shift+F3    exec --no-startup-id pkexec thunar           # open file manager as root
-bindsym $mod+F5          exec terminal -e 'mocp'                      # open music player
+bindsym $mod+F5          exec $term -e 'mocp'                      # open music player
 
 # Compositor control
 bindsym $mod+t exec --no-startup-id pkill picom     # stop picom
@@ -95,7 +94,7 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill               # kill wi
 # Clipboard / editor / network
 bindsym $mod+v exec --no-startup-id copyq show                         # clipboard menu
 bindsym $mod+p exec --no-startup-id code                               # open vscode
-bindsym $mod+Shift+n exec --no-startup-id terminal -e "nmtui"          # open nmtui
+bindsym $mod+Shift+n exec --no-startup-id $term -e "nmtui"          # open nmtui
 
 # System monitoring
 bindsym $mod+Escape exec --no-startup-id $term start -- btop           # open btop
@@ -133,8 +132,8 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+o split h;exec notify-send 'tile horizontally'
-bindsym $mod+Shift+o split v;exec notify-send 'tile vertically'
+bindsym $mod+o split h; exec --no-startup-id notify-send 'tile horizontally'
+bindsym $mod+Shift+o split v; exec --no-startup-id notify-send 'tile vertically'
 bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
@@ -287,8 +286,7 @@ exec --no-startup-id picom -b                                                   
 exec --no-startup-id nm-applet                                                                              # network manager tray
 exec --no-startup-id xfce4-power-manager                                                                    # power management
 exec --no-startup-id pamac-tray                                                                             # package update tray
-exec --no-startup-id clipit                                                                                 # clipboard manager
-exec --no-startup-id copyq --start-server                                                                   # clipboard daemon
+exec --no-startup-id copyq --start-server                                                                   # clipboard manager
 exec --no-startup-id xss-lock -- betterlockscreen -l                                                        # auto lock integration
 exec_always --no-startup-id ff-theme-util                                                                   # apply firefox gtk theme
 exec_always --no-startup-id fix_xcursor                                                                     # fix cursor theme
@@ -344,7 +342,7 @@ client.focused_inactive #000000 #000000 #3a3a3a #3a3a3a #3a3a3a
 client.unfocused        #000000 #000000 #3a3a3a #3a3a3a #3a3a3a
 client.urgent           #000000 #000000 #ea6962 #ea6962 #ea6962
 
-  client.background       #2B2C2B
+client.background       #2B2C2B
 
 #############################
 ### settings for i3-gaps: ###
