@@ -66,11 +66,9 @@ eval "$(mise activate zsh)"
 alias b='bat'
 alias bc='bat --style=plain'
 
-alias z='zoxide query -l | fzf --tac --preview "eza -la --color=always {}" | xargs -r cd'
-alias zz='z'
-
-alias f='fd -HI'
-alias g='rg -uu --color=always'
+alias fd='fd -HI --ignore-file ~/.ignore'
+alias rg='rg --color=always --ignore-file ~/.ignore'
+alias rga='rg -uu --color=always'
 
 alias l='eza -a --icons'
 alias ll='eza -la --icons --git'
@@ -98,42 +96,108 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 
 ##############################################
-# 7. fzf 履歴検索 (Ctrl+R)
+# 7. 自作関数
 ##############################################
-if [[ $- == *i* ]]; then
-  fzf-history-widget() {
-    local selection
-    selection=$(fc -ln 1 | fzf --tac +s +m --query "$LBUFFER") || return
-    BUFFER=$selection
-    CURSOR=${#BUFFER}
-    zle reset-prompt
-  }
-  zle -N fzf-history-widget
-  bindkey '^R' fzf-history-widget
-fi
 
+# ff - fd + fzf でファイルを選んで $EDITOR で開く
+ff() {
+  local file
+  file=$(fd -H -t f \
+        --ignore-file ~/.ignore \
+    | fzf --preview 'bat --color=always --style=numbers {}') || return
 
-##############################################
-# 8. 自作関数
-##############################################
+  $EDITOR "$file"
+}
+
+# fr - ripgrep + fzf + bat でヒット位置にジャンプして $EDITOR で開く
+fr() {
+  [[ -z "${1:-}" ]] && echo "usage: fr <pattern>" && return 1
+
+  local out file line
+  out=$(rg -uu --line-number --color=always "$1" \
+    | fzf --ansi --delimiter : \
+      --preview 'bat --color=always --style=numbers {1} --line-range {2}:') || return
+
+  file=${out%%:*}
+  line=${out#*:}
+  line=${line%%:*}
+
+  [[ -f "$file" ]] && $EDITOR +"$line" "$file"
+}
+
+# v - fd + fzf でファイルを選んで $EDITOR で開く（最近使った順っぽく）
+v() {
+  local file
+  file=$(fd -H -t f . \
+    | sort -r \
+    | fzf --preview 'bat --color=always --style=numbers {}') || return
+
+  $EDITOR "$file"
+}
+
+# mkcd - ディレクトリを作成してそのまま移動する
+mkcd() {
+  [[ -z "${1:-}" ]] && echo "usage: mkcd <dir>" && return 1
+  mkdir -p "$1" && cd "$1"
+}
+
+# ports - 使用中ポート一覧からプロセスを選んで kill する
+ports() {
+  local line pid
+  line=$(sudo lsof -i -P -n | fzf) || return
+  pid=$(awk '{print $2}' <<< "$line")
+  [[ -n "$pid" ]] && sudo kill "$pid"
+}
+
+# hist - シェル履歴を fzf で選んで実行する
+hist() {
+  local cmd
+  cmd=$(history | fzf --tac) || return
+  eval "${cmd#* }"
+}
+
+# clip - copyq の履歴から fzf で選んでクリップボードに入れる
+clip() {
+  local text
+  text=$(copyq read 0.. | fzf) || return
+  printf '%s' "$text" | xclip -selection clipboard
+}
+
+# tmp - /tmp に一時ディレクトリを作って移動する
+tmp() {
+  local d="/tmp/tmp-$(date +%s)"
+  mkdir -p "$d"
+  cd "$d"
+}
+
+# cdf - fd + fzf でディレクトリを選んで cd する
 cdf() {
-  cd "$(fd -H --type d . | fzf)"
+  local dir
+  dir=$(fd -H -t d | fzf --preview 'eza -la --color=always {}') || return
+  [[ -n "$dir" ]] && cd "$dir"
 }
 
-rgfz() {
-  rg --color=always --line-number "$1" | \
-    fzf --ansi --delimiter : --preview 'bat --style=numbers --color=always {1} --line-range {2}:'
+# gr - ghq で管理しているリポジトリを fzf で選んで cd する
+gr() {
+  local root src
+  root="$(ghq root)"
+  src=$(ghq list \
+      | fzf --preview "bat --color=always --style=header,grid --line-range :80 $root/{}/README.*") || return
+  [[ -n "$src" ]] && cd "$root/$src"
 }
 
-alias zf='zoxide query -l | fzf --tac --preview "eza -l --color=always {}" | xargs -r cd'
+# Ctrl-g で gr（ghq リポジトリジャンプ）を呼ぶ
+zle -N gr
+bindkey '^g' gr
 
-ghq-fzf() {
-  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
-  if [ -n "$src" ]; then
-    BUFFER="cd $(ghq root)/$src"
-    zle accept-line
-  fi
-  zle -R -c
+# zz - zoxide の履歴を fzf で選んで cd するランチャー
+unalias zz 2>/dev/null
+zz() {
+  local dir
+  dir=$(zoxide query -l \
+      | fzf --tac \
+          --preview 'eza -la --color=always {}' \
+          --preview-window=right:60%) || return
+
+  [[ -n "$dir" ]] && cd "$dir"
 }
-zle -N ghq-fzf
-bindkey '^g' ghq-fzf
