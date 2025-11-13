@@ -1,7 +1,6 @@
 betterlockscreen 4.4.0-1
-brave-bin 1:1.84.132-1
-haskell-semigroups 0.20-1
-haskell-wordexp 0.2.2-2
+bluetuith 0.2.5_rc1-1
+brave-bin 1:1.84.135-1
 i3lock-color 2.13.c.5-3
 neofetch 7.1.0-2
 paru 2.1.0-1
