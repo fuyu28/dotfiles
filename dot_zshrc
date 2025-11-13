@@ -1,15 +1,24 @@
-#### 1. 環境変数設定 ####
+##############################################
+# 1. 基本環境変数
+##############################################
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:$PATH"
 export EDITOR=nvim
 export VISUAL=nvim
+export HISTSIZE=1000
+export HISTFILESIZE=2000
+setopt hist_ignore_dups share_history
 
-#### 2. Zinit起動 ####
+
+##############################################
+# 2. Zinit 初期化
+##############################################
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing ZDHARMA-CONTINUUM Zinit…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
+    command mkdir -p "$HOME/.local/share/zinit"
+    command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" \
+        && print -P "%F{33} %F{34}Installation successful.%f%b" \
+        || print -P "%F{160} The clone has failed.%f%b"
 fi
 
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
@@ -17,51 +26,66 @@ unalias zi 2>/dev/null
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-#### 3. 補完系（高速化） ####
+
+##############################################
+# 3. 補完設定（compinit）
+##############################################
 autoload -Uz compinit
 compinit -C
 
-#### 4. zinitプラグイン管理 ####
+
+##############################################
+# 4. Zinit プラグイン
+##############################################
 zinit light zsh-users/zsh-autosuggestions
 zinit light ajeetdsouza/zoxide
 zinit light zsh-users/zsh-syntax-highlighting
 
+
+##############################################
+# 5. 各ツール初期化
+##############################################
+# zoxide
 unalias z 2>/dev/null
 eval "$(zoxide init zsh)"
 
-#### 5. starshipプロンプト ####
+# starship
 eval "$(starship init zsh)"
 
-#### 6. 履歴設定 ####
-export HISTSIZE=1000
-export HISTFILESIZE=2000
-setopt hist_ignore_dups share_history
-
-#### 7. cargo環境変数 ####
+# cargo
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
-#### 8. mise ####
+# mise
 eval "$(mise activate zsh)"
 
-#### 9. 基本alias ####
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 
-alias cd='z'
-alias cat='bat'
-alias ls='eza --icons'
-alias ll='eza -l --icons --git'
+##############################################
+# 6. alias
+##############################################
+
+alias b='bat'
+alias bc='bat --style=plain'
+
+alias z='zoxide query -l | fzf --tac --preview "eza -la --color=always {}" | xargs -r cd'
+alias zz='z'
+
+alias f='fd -HI'
+alias g='rg -uu --color=always'
+
+alias l='eza -a --icons'
+alias ll='eza -la --icons --git'
 alias la='eza -la --icons --git'
 
-alias ..='cd ..'
-alias ...='cd ../..'
+alias p='procs'
+alias dus='dust'
+alias d='duf'
+alias pg='gping'
+alias fk='ps aux | fzf | awk "{print \$2}" | xargs kill'
 
-alias fd="fd -HI"
-
-alias ip='ip -c a'
-alias ports='ss -tulwn'
-alias ping='ping -c 5'
+alias h='http'
+alias td='tldr'
+alias sdr='sd'
+alias jf='fq'
 
 alias gs='git status'
 alias gc='git commit'
@@ -73,7 +97,9 @@ alias lg='lazygit'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//\'')"'
 
 
-#### 10. fzf履歴検索 (Ctrl+R強化) ####
+##############################################
+# 7. fzf 履歴検索 (Ctrl+R)
+##############################################
 if [[ $- == *i* ]]; then
   fzf-history-widget() {
     local selection
@@ -86,7 +112,10 @@ if [[ $- == *i* ]]; then
   bindkey '^R' fzf-history-widget
 fi
 
-#### 11. 実用関数系 ####
+
+##############################################
+# 8. 自作関数
+##############################################
 cdf() {
   cd "$(fd -H --type d . | fzf)"
 }
@@ -98,7 +127,7 @@ rgfz() {
 
 alias zf='zoxide query -l | fzf --tac --preview "eza -l --color=always {}" | xargs -r cd'
 
-function ghq-fzf() {
+ghq-fzf() {
   local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
   if [ -n "$src" ]; then
     BUFFER="cd $(ghq root)/$src"
