@@ -292,6 +292,7 @@ exec_always --no-startup-id ff-theme-util                                       
 exec_always --no-startup-id fix_xcursor                                                                     # fix cursor theme
 exec --no-startup-id setxkbmap jp                                                                           # set japanese keyboard layout
 exec --no-startup-id fcitx5 -d                                                                              # start fcitx5 input method
+exec --no-startup-id wezterm                                                                                # start wezterm
 exec_always --no-startup-id bash -lc "sleep 0.7; feh --bg-fill '$HOME/Pictures/wallpapers/background.png'"  # set wallpaper
 exec_always --no-startup-id bash ~/.config/polybar/launch.sh --shades                                       # launch polybar
 # exec --no-startup-id manjaro-hello                                                                        # manjaro welcome window 

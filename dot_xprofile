@@ -3,10 +3,8 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export INPUT_METHOD=fcitx
-export GLFW_IM_MODULE=ibus
 
-# fcitx を先に起動
-fcitx5 --replace -d &
+fcitx5 --replace -d
 
 # キー配置を日本語に固定
-setxkbmap -layout jp &
+setxkbmap -layout jp
