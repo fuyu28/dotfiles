@@ -74,6 +74,13 @@ AppData/**
 .config/systemd/**
 .config/QtProject.conf
 
+# 自動生成・頻繁に更新されるファイル
+.config/mimeapps.list
+.config/Thunar/**
+.config/wezterm/**
+.local/bin/claude
+.local/bin/rofi-clip-paste.sh
+
 {{ if eq .chezmoi.os "windows" -}}
 # Windows環境ではLinux固有のdotfilesを無視
 .bashrc

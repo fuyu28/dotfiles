@@ -1,305 +1,336 @@
-7zip 25.01-1
-accountsservice 23.13.9-2
-acpi 1.8-2
-acpid 2.0.34-2
-alsa-firmware 1.2.4-4
-alsa-plugins 1:1.2.12-4
-alsa-utils 1.2.14-1
-amd-ucode 20250917-1
-apparmor 4.1.2-1
-arandr 0.1.11-4
-artwork-i3 20190912-2
-atool 0.39.0-10
-autoconf 2.72-1
-automake 1.18.1-1
-avahi 1:0.9rc2-1
-b43-fwcutter 019-6
-base 3-3
-base-devel 1-3
-bat 0.25.0-4
-betterlockscreen 4.4.0-1
-bind 9.20.13-1
-bison 3.8.2-8
-bitwarden 2025.8.1-1
-blueman 2.4.6-1
-bluetuith 0.2.5_rc1-1
-bluez-utils 5.83-1
-bmenu 0.26-1
-bottom 0.11.1-1
-brave-bin 1:1.84.135-1
-brightnessctl 0.5.1-3
-btrfs-progs 6.16.1-1
-calc 2.15.1.1-1
-cantarell-fonts 1:0.303.1-2
-chezmoi 2.65.1-1
-clipit 1:1.4.5+25+gf35db54-1
-copyq 11.0.0-2
-cpupower 6.16-1
-cronie 1.7.2-1
-cryptsetup 2.8.1-1
-deluge 1:2.2.0-1
-device-mapper 2.03.35-1
-dfc 3.1.1-4
-diffutils 3.12-2
-discord 1:0.0.114-1
-dmidecode 3.6-1
-dmraid 1.0.0.rc16.3-15
-dnsmasq 2.91-1
-docker 1:28.4.0-1
-docker-compose 2.39.4-1
-dosfstools 4.2-5
-downgrade 11.5.4-1
-duf 0.9.1-1
-dust 1.2.3-1
-e2fsprogs 1.47.3-1
-ecryptfs-utils 111-9
-efibootmgr 18-3
-evince 48.1-1
-exfatprogs 1.2.9-1
-eza 0.23.3-1
-f2fs-tools 1.16.0-3
-fakeroot 1.37.1.2-1
-fcitx5 5.1.14-1
-fcitx5-configtool 5.1.10-1
-fcitx5-gtk 5.1.4-1
-fcitx5-mozc 2.31.5810.102.gb091429-1
-fcitx5-qt 5.1.10-2
-fcitx5-skk 5.1.7-1
-fd 10.3.0-1
-feh 3.11.2-1
-ffmpeg 2:7.1.1-5
-ffmpegthumbnailer 2.2.3-3
-firefox 145.0-1
-flac 1.5.0-1
-flameshot 13.1.0-1
-flex 2.6.4-5
-fq 0.15.1-1
-gcc 15.2.1+r22+gc4e96a094636-1
-gcolor3 2.4.0-9
-ghq 1.8.0-1
-gimp 3.0.4-4
-git 2.51.0-1
-git-delta 0.18.2-4
-github-cli 2.79.0-1
-glibc-locales 2.42+r17+gd7274d718e6f-1
-gnome-keyring 1:48.0-1
-gparted 1.7.0-1
-gping 1.20.1-1
-grub 2:2.12.r382.gee789e1a-2
-grub-theme-manjaro 20.2-16
-gst-libav 1.26.6-1
-gst-plugins-bad 1.26.6-1
-gst-plugins-base 1.26.6-1
-gst-plugins-good 1.26.6-1
-gst-plugins-ugly 1.26.6-1
-gstreamer 1.26.6-1
-gtk-engine-murrine 0.98.2-4
-gtksourceview-pkgbuild 5-3
-gufw 26.04-1
-gvfs 1.57.2-4
-gvfs-afc 1.57.2-4
-gvfs-gphoto2 1.57.2-4
-gvfs-mtp 1.57.2-4
-gvfs-smb 1.57.2-4
-hexchat 2.16.2-5
-htop 3.4.1-1
-httpie 3.2.4-1
-inetutils 2.6-1
-install-grub 2:2.12.r382.gee789e1a-2
-intel-ucode 20250812-1
-inxi 3.3.39.1-1
-jfsutils 1.1.15-9
-jq 1.8.1-1
-kvantum-manjaro 0.13.5+5+g0179d45-4
-lazygit 0.55.1-1
-less 1:679-1
-lib32-flex 2.6.4-5
-lib32-mesa-utils 9.0.0-4
-lib32-vulkan-intel 1:25.2.3-2
-lib32-vulkan-nouveau 1:25.2.3-2
-lib32-vulkan-radeon 1:25.2.3-2
-libdvdcss 1.4.3-2
-libgpod 0.8.3-18
-libtool 2.5.4+r62+g6389dce8-1
-lightdm-settings 2.0.9-1
-lightdm-slick-greeter 2.2.2-1
-linux-firmware-meta 20250917-1
-linux612 6.12.48-1
-logrotate 3.22.0-1
-lvm2 2.03.35-1
-lxappearance 0.6.4-1
-lxinput 0.3.6-1
-lxtask 0.1.12-1
-m4 1.4.20-1
-maia-console 1.2-7
-maim 5.8.1-2
-make 4.4.1-2
-man-db 2.13.1-1
-man-pages 6.15-1
-manjaro-alsa 20221002-1
-manjaro-application-utility 1.4.1-2
-manjaro-browser-settings 20231111-1
-manjaro-hello 0.8.1-2
-manjaro-i3-settings 1:20230912-1
-manjaro-printer 20240827-1
-manjaro-ranger-settings 20240626-1
-manjaro-release 25.0.10-1
-manjaro-settings-manager-notifier 0.5.8-6
-manjaro-system 20250814-1
-manjaro-zsh-config 0.26-2
-matcha-gtk-theme 20250411-1
-mdadm 4.4-1
-memtest86+ 7.20-2
-memtest86+-efi 7.20-2
-mesa-utils 9.0.0-7
-mhwd 0.6.6-6
-mhwd-db 20250929-2
-micro 2.0.14-1
-mise 2025.9.7-1
-mkinitcpio-openswap 0.1.1-1
-modemmanager 1.24.2-1
-morc_menu 1.0+3+g2d89cb6-1
-mousepad 0.6.5-1
-mupdf 1.26.8-1
-nano 8.6-1
-nano-syntax-highlighting 2025.07.01.r0.g256995b-2
-ncdu 2.8.2-3
-neofetch 7.1.0-2
-neovim 0.11.4-1
-netctl 1.29-2
-network-manager-applet 1.36.0-1
-networkmanager 1.54.1-1
-networkmanager-dmenu 2.6.1-1
-networkmanager-openconnect 1.2.10-4
-networkmanager-openvpn 1.12.3-1
-networkmanager-vpnc 1.4.0-2
-nfs-utils 2.8.4-1
-noto-fonts-cjk 20240730-1
-noto-fonts-emoji 1:2.051-1
-nss-mdns 0.15.1-2
-ntfs-3g 2022.10.3-2
-ntp 4.2.8.p18-4
-openssh 10.0p1-5
-os-prober 1.83-1
-palemoon 33.9.1-1
-pamac-gtk 11.7.3-5
-pamixer 1.6-3
-paru 2.1.0-1
-patch 2.8-1
-patchutils 0.4.2-3
-pavucontrol 1:6.2-1
-pcmanfm 1.4.0-1
-perl 5.42.0-1
-perl-file-mimeinfo 0.35-3
-pipewire 1:1.4.8-2
-pipewire-alsa 1:1.4.8-2
-pipewire-pulse 1:1.4.8-2
-pkgconf 2.5.1-1
-playerctl 2.4.1-4
-plocate 1.1.23-1
-polkit-gnome 0.105-11
-polybar 3.7.2-2
-poppler-data 0.4.12-2
-powertop 2.15-2
-procs 0.14.10-1
-python-pip 25.2-1
-python-pywal16 1:3.8.9-3
-qt5ct 1.9-1
-ranger 1.9.4-4
-ripgrep 14.1.1-1
-rofi 2.0.0-1
-rofi-greenclip 4.2-3
-rsync 3.4.1-2
-s-nail 14.9.25-1
-sbctl 0.17-1
-sbxkb 0.7.6-7
-screenfetch 3.9.9-1
-sd 1.0.0-1
-sheldon 0.8.5-1
-skk-jisyo 20231119-1
-slop 7.7-1
-snapd 2.71-1
-sof-firmware 2025.05.1-1
-spectacle 1:6.3.6-1
-speedtest-cli 2.1.3-9
-spotify-launcher 0.6.3-2
-starship 1.23.0-1
-subversion 1.14.5-4
-sudo 1.9.17.p1-1
-sysfsutils 2.1.1-2
-syslog-ng 4.9.0-3
-terminus-font 4.49.1-8
-texinfo 7.2-1
-texlive-langjapanese 2025.2-2
-texlive-latexextra 2025.2-2
-texlive-luatex 2025.2-2
-thunar 4.20.5-1
-thunar-archive-plugin 0.6.0-1
-tldr 3.4.2-1
-tlp 1.8.0-1
-tlp-rdw 1.8.0-1
-tree 2.2.1-1
-ttf-dejavu 2.37+18+g9b5d1b2f-7
-ttf-droid 20121017-11
-ttf-inconsolata 1:3.000-4
-ttf-indic-otf 0.2-12
-ttf-liberation 2.1.5-2
-ttf-nerd-fonts-symbols 3.4.0-1
-ttf-nerd-fonts-symbols-mono 3.4.0-1
-udev-usb-sync 1.0-1
-unzip 6.0-23
-update-grub 2:2.12.r382.gee789e1a-2
-upower 1.90.10-1
-usbutils 018-1
-uv 0.8.19-1
-valkey 8.1.3-1
-vi 1:070224-6
-vibrancy-icons-teal 2.7-2
-viewnior 1.8-6
-vim 9.1.1734-1
-visual-studio-code-bin 1.105.1-1
-vlc 3.0.21-28
-volumeicon 0.5.1-7
-vulkan-intel 1:25.2.3-2
-vulkan-nouveau 1:25.2.3-2
-vulkan-radeon 1:25.2.3-2
-w3m 0.5.3.git20230713_1-1
-wallpapers-juhraya 1.1-3
-wezterm 20240203.110809.5046fc22-2
-wget 1.25.0-2
-which 2.23-1
-whois 5.6.4-1
-wireless-regdb 2025.07.10-1
-wireplumber 0.5.11-1
-wmutils 1:1.7-1
-woff2-font-awesome 7.0.1-1
-wpa_supplicant 2:2.11-3
-xarchiver 0.5.4.25-1
-xcursor-maia 20160417-3
-xdg-user-dirs 0.18-2
-xdg-utils 1.2.1-1
-xdotool 3.20211022.1-2
-xf86-input-elographics 1.4.4-1
-xf86-input-evdev 2.11.0-1
-xf86-input-libinput 1.5.0-1
-xf86-input-void 1.4.2-2
-xf86-video-amdgpu 25.0.0-1
-xf86-video-ati 1:22.0.0-2
-xf86-video-intel 1:2.99.917+939+g4a64400e-1
-xf86-video-nouveau 1.0.18-1
-xfburn 0.8.0-1
-xfce4-power-manager 4.20.0-3
-xfsprogs 6.16.0-2
-xorg-server 21.1.18-2
-xorg-twm 1.0.13.1-1
-xorg-xev 1.2.6-1
-xorg-xhost 1.0.10-1
-xorg-xinit 1.4.4-1
-xorg-xkill 1.0.6-2
-xorg-xprop 1.2.8-1
-xss-lock 0.3.0.r30.gac39fdc-1
-xterm 402-1
-zensu 0.3-7
-zip 3.0-11
-zoom 6.6.6-2
-zoxide 0.9.8-2
+7zip
+accountsservice
+acpi
+acpid
+alsa-firmware
+alsa-plugins
+alsa-utils
+amd-ucode
+apparmor
+arandr
+artwork-i3
+atool
+autoconf
+automake
+autorandr
+avahi
+b43-fwcutter
+base
+base-devel
+bat
+betterlockscreen
+bind
+bison
+bitwarden
+blueman
+bluetuith
+bluez-utils
+bmenu
+bottom
+brave-bin
+brightnessctl
+btrfs-progs
+calc
+cantarell-fonts
+chezmoi
+clipit
+copyq
+cpupower
+cronie
+cryptsetup
+deluge
+device-mapper
+dfc
+diffutils
+discord
+dmidecode
+dmraid
+dnsmasq
+docker
+docker-compose
+dog
+dosfstools
+downgrade
+duf
+dust
+e2fsprogs
+ecryptfs-utils
+efibootmgr
+evince
+evtest
+exfatprogs
+eza
+f2fs-tools
+fakeroot
+fcitx5
+fcitx5-configtool
+fcitx5-gtk
+fcitx5-mozc
+fcitx5-qt
+fcitx5-skk
+fd
+feh
+felix-rs
+ffmpeg
+ffmpegthumbnailer
+firefox
+flac
+flameshot
+flatpak
+flex
+fq
+gcc
+gcolor3
+ghq
+gimp
+git
+git-delta
+github-cli
+glibc-locales
+gnome-keyring
+gparted
+gping
+grub
+grub-theme-manjaro
+gst-libav
+gst-plugins-bad
+gst-plugins-base
+gst-plugins-good
+gst-plugins-ugly
+gstreamer
+gtk-engine-murrine
+gtk3-demos
+gtk4-demos
+gtksourceview-pkgbuild
+gufw
+gvfs
+gvfs-afc
+gvfs-gphoto2
+gvfs-mtp
+gvfs-smb
+hexchat
+htop
+httpie
+inetutils
+install-grub
+intel-ucode
+inxi
+iwd
+jfsutils
+jq
+kitty
+kvantum-manjaro
+lazygit
+less
+lib32-flex
+lib32-mesa-utils
+lib32-vulkan-intel
+lib32-vulkan-nouveau
+lib32-vulkan-radeon
+libdvdcss
+libgpod
+libtool
+lightdm-settings
+lightdm-slick-greeter
+lightdm-webkit2-greeter
+lightdm-webkit2-theme-sapphire
+linux-firmware-meta
+linux612
+logrotate
+lvm2
+lxappearance
+lxinput
+lxtask
+m4
+maia-console
+maim
+make
+man-db
+man-pages
+manjaro-alsa
+manjaro-application-utility
+manjaro-browser-settings
+manjaro-hello
+manjaro-i3-settings
+manjaro-printer
+manjaro-ranger-settings
+manjaro-release
+manjaro-settings-manager-notifier
+manjaro-system
+manjaro-zsh-config
+matcha-gtk-theme
+mdadm
+memtest86+
+memtest86+-efi
+mesa-utils
+mhwd
+mhwd-db
+micro
+mise
+mkinitcpio-openswap
+modemmanager
+morc_menu
+mousepad
+mupdf
+nano
+nano-syntax-highlighting
+ncdu
+neofetch
+neovim
+netctl
+network-manager-applet
+networkmanager
+networkmanager-dmenu
+networkmanager-openconnect
+networkmanager-openvpn
+networkmanager-vpnc
+nfs-utils
+nkf
+noto-fonts-cjk
+noto-fonts-emoji
+nss-mdns
+ntfs-3g
+ntp
+openssh
+os-prober
+otf-latin-modern
+palemoon
+pamac-gtk
+pamixer
+paru
+patch
+patchutils
+pavucontrol
+pcmanfm
+perl
+perl-file-homedir
+perl-file-mimeinfo
+perl-rename
+perl-unicode-linebreak
+perl-yaml-tiny
+pipewire
+pipewire-alsa
+pipewire-pulse
+pkgconf
+playerctl
+plocate
+polkit-gnome
+polybar
+poppler-data
+powertop
+procs
+python-pip
+python-pywal16
+qt5ct
+ranger
+rclone
+rclone-browser
+ripgrep
+rofi
+rofi-greenclip
+rsync
+s-nail
+sbctl
+sbxkb
+screenfetch
+sd
+sheldon
+skk-jisyo
+slop
+snapd
+sof-firmware
+spectacle
+speedtest-cli
+spotify-launcher
+starship
+subversion
+sudo
+sysfsutils
+syslog-ng
+terminus-font
+texinfo
+texlive-binextra
+texlive-fontsrecommended
+texlive-langjapanese
+texlive-latexextra
+texlive-luatex
+texlive-mathscience
+thunar
+thunar-archive-plugin
+timeshift
+timeshift-autosnap-manjaro
+tldr
+tlp
+tlp-rdw
+tmux
+trash-cli
+tree
+ttf-dejavu
+ttf-droid
+ttf-inconsolata
+ttf-indic-otf
+ttf-liberation
+ttf-nerd-fonts-symbols
+ttf-nerd-fonts-symbols-mono
+udev-usb-sync
+unzip
+update-grub
+upower
+usbutils
+uv
+valkey
+vi
+vibrancy-icons-teal
+viewnior
+vim
+visual-studio-code-bin
+vlc
+volumeicon
+vulkan-intel
+vulkan-nouveau
+vulkan-radeon
+w3m
+wallpapers-juhraya
+wezterm
+wget
+which
+whois
+wireless-regdb
+wireplumber
+wmutils
+woff2-font-awesome
+wpa_supplicant
+xarchiver
+xcursor-maia
+xdg-desktop-portal-gtk
+xdg-user-dirs
+xdg-utils
+xdotool
+xf86-input-elographics
+xf86-input-evdev
+xf86-input-libinput
+xf86-input-void
+xf86-video-amdgpu
+xf86-video-ati
+xf86-video-intel
+xf86-video-nouveau
+xfburn
+xfce4-power-manager
+xfce4-settings
+xfsprogs
+xorg-server
+xorg-twm
+xorg-xev
+xorg-xhost
+xorg-xinit
+xorg-xkill
+xorg-xprop
+xplugd
+xss-lock
+xterm
+zathura
+zathura-pdf-mupdf
+zensu
+zip
+zoom
+zoxide

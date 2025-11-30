@@ -2,6 +2,7 @@ configuration {
     modi: "combi,drun,run,window";
     combi-modi: "drun,run,window";
     show-icons: true;
+    terminal: "kitty";
   }
 
-  @theme "slate-mod"
+@theme "slate-mod"

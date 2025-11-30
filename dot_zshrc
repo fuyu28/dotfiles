@@ -1,17 +1,18 @@
-##############################################
-# 1. 基本環境変数
-##############################################
+# =========================
+# 基本環境変数
+# =========================
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:$PATH"
 export EDITOR=nvim
 export VISUAL=nvim
 export HISTSIZE=1000
 export HISTFILESIZE=2000
+export TERMINAL=kitty
 setopt hist_ignore_dups share_history
 
 
-##############################################
-# 2. Zinit 初期化
-##############################################
+# =========================
+# Zinit 初期化
+# =========================
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing ZDHARMA-CONTINUUM Zinit…%f"
     command mkdir -p "$HOME/.local/share/zinit"
@@ -27,24 +28,24 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 
-##############################################
-# 3. 補完設定（compinit）
-##############################################
+# =========================
+# 補完設定（compinit）
+# =========================
 autoload -Uz compinit
 compinit -C
 
 
-##############################################
-# 4. Zinit プラグイン
-##############################################
+# =========================
+# Zinit プラグイン
+# =========================
 zinit light zsh-users/zsh-autosuggestions
 zinit light ajeetdsouza/zoxide
 zinit light zsh-users/zsh-syntax-highlighting
 
 
-##############################################
-# 5. 各ツール初期化
-##############################################
+# =========================
+# 各ツール初期化
+# =========================
 # zoxide
 unalias z 2>/dev/null
 eval "$(zoxide init zsh)"
@@ -59,9 +60,12 @@ eval "$(starship init zsh)"
 eval "$(mise activate zsh)"
 
 
-##############################################
-# 6. alias
-##############################################
+# =========================
+# alias
+# =========================
+alias kitty='GLFW_IM_MODULE=ibus kitty'
+alias prn='perl-rename'
+alias fe='felix'
 
 alias b='bat'
 alias bc='bat --style=plain'
@@ -70,9 +74,9 @@ alias fd='fd -HI --ignore-file ~/.ignore'
 alias rg='rg --color=always --ignore-file ~/.ignore'
 alias rga='rg -uu --color=always'
 
-alias l='eza -a --icons'
-alias ll='eza -la --icons --git'
-alias la='eza -la --icons --git'
+alias l='eza -a --icons=always'
+alias ll='eza -la --icons=always --git'
+alias la='eza -la --icons=always --git'
 
 alias p='procs'
 alias dus='dust'
@@ -95,10 +99,10 @@ alias lg='lazygit'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//\'')"'
 
 
-##############################################
-# 7. 自作関数
-##############################################
 
+# =========================
+# 自作関数
+# =========================
 # ff - fd + fzf でファイルを選んで $EDITOR で開く
 ff() {
   local file
@@ -186,10 +190,6 @@ gr() {
   [[ -n "$src" ]] && cd "$root/$src"
 }
 
-# Ctrl-g で gr（ghq リポジトリジャンプ）を呼ぶ
-zle -N gr
-bindkey '^g' gr
-
 # zz - zoxide の履歴を fzf で選んで cd するランチャー
 unalias zz 2>/dev/null
 zz() {
@@ -201,3 +201,5 @@ zz() {
 
   [[ -n "$dir" ]] && cd "$dir"
 }
+
+

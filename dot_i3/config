@@ -5,7 +5,7 @@
 set $mod Mod4
 
 # set variable
-set $term wezterm
+set $term env GLFW_IM_MODULE=ibus kitty
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
@@ -37,8 +37,8 @@ bindsym $mod+Return exec $term
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start program launcher
-bindsym $mod+d exec --no-startup-id "rofi -show combi"
+# start program launcher (rofi shades theme)
+bindsym $mod+d exec --no-startup-id ~/.local/bin/rofi-launcher.sh
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -241,20 +241,21 @@ bindsym $mod+Shift+r restart
 # bindsym $mod+Shift+e exec --no-startup-id ~/.local/bin/power-menu.sh
 
 # Set shut down, restart and locking features
-bindsym $mod+0 exec --no-startup-id sh ~/.local/bin/notify-system-mode.sh; mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (r)eboot, (Shift+s)hutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id sh -c 'zenity --question --text="Lock?" && betterlockscreen -l', mode "default"
-    bindsym s exec --no-startup-id sh -c 'zenity --question --text="Suspend?" && ~/.local/bin/suspend-lock.sh', mode "default"
-    bindsym u exec --no-startup-id sh -c 'zenity --question --text="Switch user?" && ( loginctl lock-session && gdmflexiserver )', mode "default"
-    bindsym e exec --no-startup-id sh -c 'zenity --question --text="Logout?" && i3exit logout', mode "default"
-    bindsym r exec --no-startup-id sh -c 'zenity --question --text="Reboot?" && systemctl reboot', mode "default"
-    bindsym Shift+s exec --no-startup-id sh -c 'zenity --question --text="Shutdown?" && systemctl poweroff', mode "default"
-
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+bindsym $mod+0 exec --no-startup-id ~/.local/bin/rofi-powermenu.sh
+# 下記は旧システムモード（必要なら復活用）
+# set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (r)eboot, (Shift+s)hutdown
+# mode "$mode_system" {
+#     bindsym l exec --no-startup-id sh -c 'zenity --question --text="Lock?" && betterlockscreen -l', mode "default"
+#     bindsym s exec --no-startup-id sh -c 'zenity --question --text="Suspend?" && ~/.local/bin/suspend-lock.sh', mode "default"
+#     bindsym u exec --no-startup-id sh -c 'zenity --question --text="Switch user?" && ( loginctl lock-session && gdmflexiserver )', mode "default"
+#     bindsym e exec --no-startup-id sh -c 'zenity --question --text="Logout?" && i3exit logout', mode "default"
+#     bindsym r exec --no-startup-id sh -c 'zenity --question --text="Reboot?" && systemctl reboot', mode "default"
+#     bindsym Shift+s exec --no-startup-id sh -c 'zenity --question --text="Shutdown?" && systemctl poweroff', mode "default"
+#
+#     # exit system mode: "Enter" or "Escape"
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -280,19 +281,23 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
+
+# Monitor hotplug → autorandr auto switch
+exec_always --no-startup-id xplugd -r 'autorandr --change'
+
+
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1                              # authentication agent
 exec --no-startup-id picom -b                                                                               # compositor
 exec --no-startup-id nm-applet                                                                              # network manager tray
 exec --no-startup-id xfce4-power-manager                                                                    # power management
 exec --no-startup-id pamac-tray                                                                             # package update tray
-exec --no-startup-id copyq --start-server                                                                   # clipboard manager
-exec --no-startup-id xss-lock -- betterlockscreen -l                                                        # auto lock integration
+exec --no-startup-id xss-lock -- betterlockscreen -l
 exec_always --no-startup-id ff-theme-util                                                                   # apply firefox gtk theme
 exec_always --no-startup-id fix_xcursor                                                                     # fix cursor theme
 exec --no-startup-id setxkbmap jp                                                                           # set japanese keyboard layout
 exec --no-startup-id fcitx5 -d                                                                              # start fcitx5 input method
-exec --no-startup-id wezterm                                                                                # start wezterm
+exec --no-startup-id copyq --start-server                                                                   # clipboard manager
 exec_always --no-startup-id bash -lc "sleep 0.7; feh --bg-fill '$HOME/Pictures/wallpapers/background.png'"  # set wallpaper
 exec_always --no-startup-id bash ~/.config/polybar/launch.sh --shades                                       # launch polybar
 # exec --no-startup-id manjaro-hello                                                                        # manjaro welcome window 
