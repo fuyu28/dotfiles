@@ -1,0 +1,30 @@
+configuration {
+    modi: "combi,drun,run,window";
+    combi-modi: "drun,run,window";
+    show-icons: true;
+    terminal: "kitty";
+  }
+
+* {
+    background: #282c33;
+    foreground: #c1c2c4;
+    normal-background: @background;
+    normal-foreground: @foreground;
+    selected-normal-background: #3d8ac2;
+    selected-normal-foreground: #ffffff;
+    urgent-background: #e53935;
+    urgent-foreground: #ffffff;
+    selected-urgent-background: @urgent-background;
+    selected-urgent-foreground: @urgent-foreground;
+    active-background: #478bbc;
+    active-foreground: #ffffff;
+    selected-active-background: @active-background;
+    selected-active-foreground: @active-foreground;
+    alternate-normal-background: @background;
+    alternate-normal-foreground: @foreground;
+    alternate-urgent-background: @urgent-background;
+    alternate-urgent-foreground: @urgent-foreground;
+    alternate-active-background: @active-background;
+    alternate-active-foreground: @active-foreground;
+    separatorcolor: #3a3f4b;
+}

@@ -1,0 +1,205 @@
+# =========================
+# 基本環境変数
+# =========================
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.bun/bin:/usr/local/sbin:/usr/local/bin:$PATH"
+export EDITOR=nvim
+export VISUAL=nvim
+export HISTSIZE=1000
+export HISTFILESIZE=2000
+export TERMINAL=kitty
+setopt hist_ignore_dups share_history
+
+
+# =========================
+# Zinit 初期化
+# =========================
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing ZDHARMA-CONTINUUM Zinit…%f"
+    command mkdir -p "$HOME/.local/share/zinit"
+    command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" \
+        && print -P "%F{33} %F{34}Installation successful.%f%b" \
+        || print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+unalias zi 2>/dev/null
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+
+# =========================
+# 補完設定（compinit）
+# =========================
+autoload -Uz compinit
+compinit -C
+
+
+# =========================
+# Zinit プラグイン
+# =========================
+zinit light zsh-users/zsh-autosuggestions
+zinit light ajeetdsouza/zoxide
+zinit light zsh-users/zsh-syntax-highlighting
+
+
+# =========================
+# 各ツール初期化
+# =========================
+# zoxide
+unalias z 2>/dev/null
+eval "$(zoxide init zsh)"
+
+# starship
+eval "$(starship init zsh)"
+
+# cargo
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# mise
+eval "$(mise activate zsh)"
+
+
+# =========================
+# alias
+# =========================
+alias kitty='GLFW_IM_MODULE=ibus kitty'
+alias prn='perl-rename'
+alias fe='felix'
+
+alias b='bat'
+alias bc='bat --style=plain'
+
+alias fd='fd -HI --ignore-file ~/.ignore'
+alias rg='rg --color=always --ignore-file ~/.ignore'
+alias rga='rg -uu --color=always'
+
+alias l='eza -a --icons=always'
+alias ll='eza -la --icons=always --git'
+alias la='eza -la --icons=always --git'
+
+alias p='procs'
+alias dus='dust'
+alias d='duf'
+alias pg='gping'
+alias fk='ps aux | fzf | awk "{print \$2}" | xargs kill'
+
+alias h='http'
+alias td='tldr'
+alias sdr='sd'
+alias jf='fq'
+
+alias gs='git status'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias gd='git diff'
+alias lg='lazygit'
+
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//\'')"'
+
+
+
+# =========================
+# 自作関数
+# =========================
+# ff - fd + fzf でファイルを選んで $EDITOR で開く
+ff() {
+  local file
+  file=$(fd -H -t f \
+        --ignore-file ~/.ignore \
+    | fzf --preview 'bat --color=always --style=numbers {}') || return
+
+  $EDITOR "$file"
+}
+
+# fr - ripgrep + fzf + bat でヒット位置にジャンプして $EDITOR で開く
+fr() {
+  [[ -z "${1:-}" ]] && echo "usage: fr <pattern>" && return 1
+
+  local out file line
+  out=$(rg -uu --line-number --color=always "$1" \
+    | fzf --ansi --delimiter : \
+      --preview 'bat --color=always --style=numbers {1} --line-range {2}:') || return
+
+  file=${out%%:*}
+  line=${out#*:}
+  line=${line%%:*}
+
+  [[ -f "$file" ]] && $EDITOR +"$line" "$file"
+}
+
+# v - fd + fzf でファイルを選んで $EDITOR で開く（最近使った順っぽく）
+v() {
+  local file
+  file=$(fd -H -t f . \
+    | sort -r \
+    | fzf --preview 'bat --color=always --style=numbers {}') || return
+
+  $EDITOR "$file"
+}
+
+# mkcd - ディレクトリを作成してそのまま移動する
+mkcd() {
+  [[ -z "${1:-}" ]] && echo "usage: mkcd <dir>" && return 1
+  mkdir -p "$1" && cd "$1"
+}
+
+# ports - 使用中ポート一覧からプロセスを選んで kill する
+ports() {
+  local line pid
+  line=$(sudo lsof -i -P -n | fzf) || return
+  pid=$(awk '{print $2}' <<< "$line")
+  [[ -n "$pid" ]] && sudo kill "$pid"
+}
+
+# hist - シェル履歴を fzf で選んで実行する
+hist() {
+  local cmd
+  cmd=$(history | fzf --tac) || return
+  eval "${cmd#* }"
+}
+
+# clip - copyq の履歴から fzf で選んでクリップボードに入れる
+clip() {
+  local text
+  text=$(copyq read 0.. | fzf) || return
+  printf '%s' "$text" | xclip -selection clipboard
+}
+
+# tmp - /tmp に一時ディレクトリを作って移動する
+tmp() {
+  local d="/tmp/tmp-$(date +%s)"
+  mkdir -p "$d"
+  cd "$d"
+}
+
+# cdf - fd + fzf でディレクトリを選んで cd する
+cdf() {
+  local dir
+  dir=$(fd -H -t d | fzf --preview 'eza -la --color=always {}') || return
+  [[ -n "$dir" ]] && cd "$dir"
+}
+
+# gr - ghq で管理しているリポジトリを fzf で選んで cd する
+gr() {
+  local root src
+  root="$(ghq root)"
+  src=$(ghq list \
+      | fzf --preview "bat --color=always --style=header,grid --line-range :80 $root/{}/README.*") || return
+  [[ -n "$src" ]] && cd "$root/$src"
+}
+
+# zz - zoxide の履歴を fzf で選んで cd するランチャー
+unalias zz 2>/dev/null
+zz() {
+  local dir
+  dir=$(zoxide query -l \
+      | fzf --tac \
+          --preview 'eza -la --color=always {}' \
+          --preview-window=right:60%) || return
+
+  [[ -n "$dir" ]] && cd "$dir"
+}
+
+
