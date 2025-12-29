@@ -23,11 +23,11 @@
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Inter 11
+font pango:Noto Sans 11
 
 # set the mod key to the winkey:
 set $mod Mod4
-set $term env GLFW_IM_MODULE=ibus kitty
+set $term kitty
 
 ##############################
 # workspace naming/behavior: #
@@ -49,8 +49,8 @@ set $ws10 "10"
 # use workspaces on different displays:
 # where you have to replace VGA-0/HDMI-0 with the names for your displays
 # you can get from xrandr command
-workspace $ws1 output DP-0
-workspace $ws2 output DP-2
+#workspace $ws1 output DP-0
+#workspace $ws2 output DP-2
 
 # bind program to workspace and focus to them on startup:
 # assign [class="Xfce4-terminal"] $ws1
@@ -416,7 +416,7 @@ exec --no-startup-id eos-welcome --startdelay=3
 #exec_always --no-startup-id conky
 
 # display layout
-exec_always --no-startup-id xrandr --output DP-0 --primary --left-of DP-2
+#exec_always --no-startup-id xrandr --output DP-0 --primary --left-of DP-2
 
 # common session helpers
 exec --no-startup-id picom -b
@@ -425,8 +425,8 @@ exec --no-startup-id fcitx5 -d
 exec --no-startup-id copyq --start-server
 
 # set wallpaper
-#exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
-exec --no-startup-id sleep 1 && ~/.local/bin/set-wallpaper.sh
+exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
+#exec --no-startup-id sleep 1 && ~/.local/bin/set-wallpaper.sh
 
 # Power management:
 #  - xidlehook handles idle detection, lock, and suspend
