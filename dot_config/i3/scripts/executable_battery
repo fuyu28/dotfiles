@@ -12,6 +12,18 @@ import re
 config = dict(os.environ)
 status = check_output(['acpi'], universal_newlines=True)
 
+def battery_icon(percent):
+    # Font Awesome (solid) battery icons
+    if percent <= 5:
+        return "\uf244"   # empty
+    if percent <= 25:
+        return "\uf243"   # quarter
+    if percent <= 50:
+        return "\uf242"   # half
+    if percent <= 75:
+        return "\uf241"   # three-quarters
+    return "\uf240"       # full
+
 if not status:
     # stands for no battery found
     color = config.get("color_10", "red")
@@ -59,7 +71,7 @@ else:
     FA_PLUG = "<span font='FontAwesome'>\uf1e6</span>"
 
     # stands for using battery
-    FA_BATTERY = "<span font='FontAwesome'>\uf240</span>"
+    FA_BATTERY = "<span font='FontAwesome'>{}</span>".format(battery_icon(percentleft))
 
     # stands for unknown status of battery
     FA_QUESTION = "<span font='FontAwesome'>\uf128</span>"
@@ -98,7 +110,7 @@ else:
 
     form =  '<span color="{}">{}%</span>'
     fulltext += form.format(color(percentleft), percentleft)
-    #fulltext += timeleft
+    fulltext += timeleft
 
 print(fulltext)
 print(fulltext)
