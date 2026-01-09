@@ -121,11 +121,13 @@ interval=persist
 #label=VPN:
 #i# Battery indicator
 
+{{ if eq .role "laptop" }}
 [battery]
 command=~/.config/i3/scripts/battery
 # change this to battery-pinebook-pro if you are running on pinebook-pro
 label=
 interval=30nterval=5
+{{ end }}
 
 [simple-2]
 full_text=: :
