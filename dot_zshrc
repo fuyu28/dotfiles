@@ -202,4 +202,23 @@ zz() {
   [[ -n "$dir" ]] && cd "$dir"
 }
 
+to_utf8() {
+  if [[ $# -lt 1 ]]; then
+    echo "usage: to_utf8 <file...>" >&2
+    return 1
+  fi
 
+  for f in "$@"; do
+    local enc tmp
+    enc=$(uchardet "$f") || continue
+    tmp="${f}.utf8"
+
+    if iconv -f "$enc" -t UTF-8 "$f" > "$tmp"; then
+      mv "$f" "$f.bak"
+      mv "$tmp" "$f"
+    else
+      echo "to_utf8: failed to convert $f" >&2
+      rm -f "$tmp"
+    fi
+  done
+}
