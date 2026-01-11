@@ -222,3 +222,27 @@ to_utf8() {
     fi
   done
 }
+
+
+# 壁紙切り替え
+change_bg() {
+  local link="$HOME/Pictures/current_wallpaper.png"
+
+  if [[ -z "$1" ]]; then
+    echo "usage: change_bg <fullpath>"
+    echo "example: change_bg ~/Pictures/Wallpapers/01.jpg"
+    echo "example: change_bg /mnt/storage/wp/01.webp"
+    return 1
+  fi
+
+  # zsh: ~ 展開 + 絶対パス化
+  local src="${1:A}"
+
+  if [[ ! -f "$src" ]]; then
+    echo "change_bg: no such file: $src"
+    return 1
+  fi
+
+  ln -sf "$src" "$link"
+  command -v set-wallpaper >/dev/null 2>&1 && set-wallpaper
+}
