@@ -1,0 +1,20 @@
+# fcitx5
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
+# kittyユーザーは必要
+export GLFW_IM_MODULE=ibus
+
+# デスクトップ偽装（GTK にダークテーマを使わせる）
+export XDG_CURRENT_DESKTOP=GNOME
+
+# PORTAL の有効化（Slack 外部ブラウザ対応）
+export GTK_USE_PORTAL=1
+
+# Portal backends の起動（i3 は自動起動しない）
+/usr/lib/xdg-desktop-portal &
+/usr/lib/xdg-desktop-portal-gtk &
+
+# XDG_DATA_DIRS の補完（Flatpak / icons / themes の検索パス）
+export XDG_DATA_DIRS="/home/fuyu/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
