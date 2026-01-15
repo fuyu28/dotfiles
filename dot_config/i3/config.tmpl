@@ -348,18 +348,17 @@ exec --no-startup-id sleep 1 && ~/.local/bin/set-wallpaper
 #  - X built-in screen saver / DPMS are disabled to avoid conflicts
 exec --no-startup-id xset s off
 exec --no-startup-id xset -dpms
-
-exec --no-startup-id xidlehook \
 {{ if eq .role "laptop" }}
+exec --no-startup-id xidlehook \
     --timer 600  'betterlockscreen -l' '' \
     --timer 120  'xset dpms force off' '' \
     --timer 900  'systemctl suspend' ''
 {{ else }}
+exec --no-startup-id xidlehook \
     --timer 1800 'betterlockscreen -l' '' \
     --timer 300 'xset dpms force off' '' \
     --timer 5100 'systemctl suspend' ''
 {{ end }}
-
 # Desktop notifications
 
 # dunst config used ~/.config/dunst/dunstrc
