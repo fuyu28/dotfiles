@@ -350,9 +350,15 @@ exec --no-startup-id xset s off
 exec --no-startup-id xset -dpms
 
 exec --no-startup-id xidlehook \
-  --timer 600 'betterlockscreen -l' '' \
-  --timer 180 'xset dpms force off' '' \
-  --timer 420 'systemctl suspend' ''
+{{ if eq .role "laptop" }}
+    --timer 600  'betterlockscreen -l' '' \
+    --timer 120  'xset dpms force off' '' \
+    --timer 900  'systemctl suspend' ''
+{{ else }}
+    --timer 1800 'betterlockscreen -l' '' \
+    --timer 300 'xset dpms force off' '' \
+    --timer 5100 'systemctl suspend' ''
+{{ end }}
 
 # Desktop notifications
 
