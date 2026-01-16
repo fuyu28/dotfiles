@@ -1,4 +1,4 @@
-# dotfiles-eos
+# dotfiles
 
 個人用 dotfiles リポジトリ。chezmoi で管理し、EndeavourOS + i3 のデスクトップ環境に最適化しています。
 
@@ -42,7 +42,7 @@ i3 を中心に、Polybar/rofi/picom/dunst などのデスクトップ周りと�
 ## インストール (chezmoi)
 
 ```sh
-chezmoi init --apply fuyu28/dotfiles-eos
+chezmoi init --apply fuyu28/dotfiles
 ```
 
 ### Roles
