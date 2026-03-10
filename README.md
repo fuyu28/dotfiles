@@ -1,109 +1,158 @@
-# dotfiles
+# dotfiles-eos
 
-個人用 dotfiles リポジトリ。chezmoi で管理し、EndeavourOS + i3 のデスクトップ環境に最適化しています。
+`chezmoi` で管理している個人用 dotfiles です。  
+EndeavourOS + i3 を前提に、普段使いのデスクトップ環境と開発環境をまとめています。
 
-## 概要
+## これは何か
 
-i3 を中心に、Polybar/rofi/picom/dunst などのデスクトップ周りと、zsh/kitty/tmux/Neovim の開発環境をまとめた設定群です。日常の作業で使う CLI ツールや小さな補助スクリプトも含みます。
+このリポジトリには、主に次の設定が入っています。
 
-## できること
+- デスクトップ環境: i3, Polybar, Rofi, Picom, Dunst, i3blocks
+- ターミナル周り: Kitty, Zsh, tmux, Starship
+- 開発環境: Neovim, mise
+- 補助スクリプト: スクリーンショット、電源メニュー、壁紙切り替え
 
-- **chezmoi 管理**: dotfiles の適用とテンプレート管理
-- **i3**: タイル型ウィンドウマネージャー設定
-- **Polybar**: 複数テーマ/スタイル
-- **Zsh**: zinit + starship + zoxide + mise
-- **Kitty + tmux**: 透過設定と `C-Space` プレフィックス
-- **Neovim**: LazyVim ベース
-- **カスタムスクリプト**: スクリーンショット、rofi パワーメニュー、壁紙切替
+「OS を入れ直したあとに、いつもの作業環境を早く戻す」ことを目的にしています。
 
-## 前提 (最低限)
+## 特徴
 
-- OS: EndeavourOSで動作確認
-- 必須ツール: `git`, `chezmoi`
-- 主要パッケージ: i3, rofi, polybar, picom, dunst, kitty, tmux, starship, zinit, zoxide, mise
-- フォント: Noto Sans, Iosevka Nerd Font, HackGen Console NF
+- `chezmoi` で dotfiles を一元管理
+- EndeavourOS の i3 設定をベースに、自分用に整理・拡張
+- Polybar は複数テーマを同梱
+- `CHEZMOI_ROLE` 相当の `role` データで desktop / laptop を切り替え
+- 壁紙パスや表示方法を `chezmoi` の data で管理
+- Zsh は `zinit` + `zoxide` + `starship` + `mise` を利用
+- Neovim は LazyVim ベース
 
-## インストール (chezmoi)
+## セットアップ
+
+### 1. リポジトリを適用する
 
 ```sh
-chezmoi init --apply fuyu28/dotfiles
+chezmoi init --apply fuyu28/dotfiles-eos
 ```
 
-## 使い始めるまでの手順
+### 2. 必要なら role を切り替える
 
-1) ロールと壁紙設定を用意
+このリポジトリは `role` に応じて一部設定を切り替えます。  
+初期値は `.chezmoi.toml.tmpl` で `laptop` になっています。
 
 ```toml
-# chezmoi edit-config
 [data]
 role = "laptop"
-# role = "desktop"
-
-[data.wallpaper]
-mode = "fill"
-path = "/home/user/Pictures/current_wallpaper.png"
 ```
 
-1) 壁紙のシンボリックリンクを作成
-
-```sh
-ln -sf /home/user/Pictures/current_wallpaper.png [好きな画像のパス]
-```
-
-1) 設定を適用
+たとえばデスクトップ機で使う場合は、`~/.config/chezmoi/chezmoi.toml` などで `role = "desktop"` に変更してから再適用します。
 
 ```sh
 chezmoi apply
 ```
 
-## よく使うコマンド
+現在のテンプレートでは、`laptop` のときだけ i3blocks にバッテリー表示が入ります。
 
-- 変更の取り込み: `chezmoi update`
-- 反映前の確認: `chezmoi diff`
-- 再適用: `chezmoi apply`
+### 3. 壁紙設定を必要に応じて変更する
 
-## 主要コンポーネント
+`set-wallpaper` は `chezmoi` の data を参照します。
 
-### ウィンドウマネージャー / デスクトップ
-
-- i3
-- Polybar
-- Picom
-- Dunst
-- Rofi
-- i3blocks
-
-### ターミナル / シェル
-
-- Kitty
-- Zsh (zinit)
-- Starship
-- tmux
-
-### エディタ / 開発ツール
-
-- Neovim (LazyVim)
-- mise
-
-## ディレクトリ構造
-
+```toml
+[data.wallpaper]
+mode = "fill"
+path = "/home/user/Pictures/current_wallpaper.png"
 ```
+
+変更後は再度 `chezmoi apply` を実行してください。
+
+## 主な内容
+
+### i3
+
+- `Mod` は `Super`
+- ターミナルは `kitty`
+- `rofi` ランチャー、音量調整、輝度調整、スクリーンショットなどを設定
+- `~/.local/bin/rofi-powermenu.sh` を使った電源メニューを用意
+
+### Polybar
+
+同梱テーマ:
+
+- `blocks`
+- `colorblocks`
+- `cuts`
+- `docky`
+- `forest`
+- `grayblocks`
+- `hack`
+- `material`
+- `panels`
+- `pwidgets`
+- `shades`
+- `shapes`
+
+### Zsh
+
+- プラグイン管理: `zinit`
+- プロンプト: `starship`
+- ディレクトリ移動: `zoxide`
+- ツールチェイン管理: `mise`
+- `fzf` を前提にした自作関数をいくつか定義
+
+### tmux
+
+- プレフィックスは `Ctrl-Space`
+- `vi` 風キーバインド
+- マウス操作を有効化
+
+### Neovim
+
+- LazyVim ベース
+- 詳細は [dot_config/nvim/README.md](/home/fuyu/.local/share/chezmoi/dot_config/nvim/README.md)
+
+## ディレクトリ構成
+
+```text
 .
-├── dot_config/          # ~/.config (i3, polybar, rofi, kitty, nvim, etc)
-├── dot_local/           # ~/.local (scripts)
-├── dot_zshrc            # ~/.zshrc
-├── dot_tmux.conf        # ~/.tmux.conf
-├── dot_xprofile         # ~/.xprofile
-└── dot_gitconfig        # ~/.gitconfig
+├── .chezmoi.toml.tmpl      # chezmoi data の初期値
+├── dot_config/             # ~/.config 配下
+├── dot_local/bin/          # ~/.local/bin 配下のスクリプト
+├── dot_gitconfig           # ~/.gitconfig
+├── dot_tmux.conf           # ~/.tmux.conf
+├── dot_xprofile            # ~/.xprofile
+└── dot_zshrc               # ~/.zshrc
 ```
 
-## カスタムスクリプト
+## 補助スクリプト
 
-- `dot_local/bin/executable_screenshot.sh`: maim + xclip で撮影・クリップボードコピー
-- `dot_local/bin/executable_rofi-powermenu.sh`: rofi ベースの電源メニュー
-- `dot_local/bin/executable_set-wallpaper.tmpl`: feh を使った壁紙切替 (chezmoi テンプレート)
+- `dot_local/bin/executable_screenshot.sh`: `maim` + `xclip` で画面キャプチャ
+- `dot_local/bin/executable_rofi-powermenu.sh`: `rofi` ベースの電源メニュー
+- `dot_local/bin/executable_rofi-launcher.sh`: `rofi` ランチャー
+- `dot_local/bin/executable_set-wallpaper.tmpl`: `feh` を使った壁紙反映
 
-## Notes
+## 前提にしているツール
 
-- `dot_local/bin/executable_set-wallpaper.tmpl` は `wallpaper.mode` と `wallpaper.path` の data を参照します。
-- `dot_xprofile` で fcitx5 / portal 関連の環境変数を設定しています。
+よく使うもの:
+
+- `chezmoi`
+- `i3`
+- `polybar`
+- `rofi`
+- `picom`
+- `dunst`
+- `kitty`
+- `tmux`
+- `nvim`
+- `starship`
+- `zinit`
+- `zoxide`
+- `mise`
+
+フォント:
+
+- Noto Sans
+- Iosevka Nerd Font
+- HackGen Console NF
+
+## 補足
+
+- `dot_xprofile` では `fcitx5`、`xdg-desktop-portal`、`GTK_USE_PORTAL` などを設定しています
+- 一部スクリプトやキーバインドは Arch / EndeavourOS 系のパッケージ構成を前提にしています
+- そのまま他環境でも使えますが、i3 周りは依存コマンドの調整が必要です
