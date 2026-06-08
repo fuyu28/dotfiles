@@ -246,3 +246,38 @@ change_bg() {
   ln -sf "$src" "$link"
   command -v set-wallpaper >/dev/null 2>&1 && set-wallpaper
 }
+
+# vi mode cursor shape
+# 1/2: block, 5/6: bar
+# 1,5 = blinking / 2,6 = steady
+
+function _cursor_block() {
+  printf '\e[1 q'
+}
+
+function _cursor_bar() {
+  printf '\e[5 q'
+}
+
+function zle-keymap-select() {
+  case $KEYMAP in
+    vicmd)
+      _cursor_block
+      ;;
+    viins|main)
+      _cursor_bar
+      ;;
+  esac
+}
+
+function zle-line-init() {
+  _cursor_bar
+}
+
+function zle-line-finish() {
+  _cursor_bar
+}
+
+zle -N zle-keymap-select
+zle -N zle-line-init
+zle -N zle-line-finish
