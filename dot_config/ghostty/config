@@ -5,14 +5,17 @@ font-size = 14
 adjust-cell-height = 10%
 # フォントファミリー
 font-family = "HackGen Console NF"
+# 一部の仮名（「の」など）が別フォントにフォールバックして化けるのを防ぐ。
+# ひらがな(U+3040-309F)・カタカナ(U+30A0-30FF)を必ず HackGen で描画する。
+font-codepoint-map = U+3040-U+30FF=HackGen Console NF
 
 # テーマ
 theme = TokyoNight
 
 # --- ウィンドウ・透明度 ---
 # 背景を透過させてブラー（すりガラス効果）を入れる
-background-opacity = 0.40
-# background-blur-radius = 20
+background-opacity = 0.80
+background-blur-radius = 20
 
 # ウィンドウ内の余白を入れて圧迫感を減らす
 # window-padding-x = 10
@@ -21,7 +24,7 @@ background-opacity = 0.40
 
 # --- Macネイティブな挙動 ---
 # タイトルバーを透明にしてスッキリさせる
-macos-titlebar-style = hidden
+# macos-titlebar-style = hidden
 # フルスクリーン時にMac標準の挙動にする
 macos-window-shadow = true
 
