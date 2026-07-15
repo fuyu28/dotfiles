@@ -1,7 +1,15 @@
 # =========================
 # 基本環境変数
 # =========================
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.bun/bin:/usr/local/sbin:/usr/local/bin:$PATH"
+# PATH の重複を防ぐ（ネストしたシェルでも増え続けない）
+typeset -U path PATH
+path=(
+  "$HOME/.local/bin"
+  "$HOME/.cargo/bin"
+  /usr/local/sbin
+  /usr/local/bin
+  $path
+)
 export EDITOR=nvim
 export VISUAL=nvim
 export HISTSIZE=1000
