@@ -298,6 +298,9 @@ exec_always $HOME/.config/i3/scripts/import-gsettings
 
 ## applications/services
 
+# Plasma 同居時: i3 では DrKonqi / Baloo 等を遮断（Plasma ログイン時は restore-plasma-units で復帰）
+exec --no-startup-id ~/.config/i3/scripts/block-plasma
+
 #get auth work with polkit-gnome
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 

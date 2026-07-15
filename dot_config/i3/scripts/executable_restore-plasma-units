@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Plasma セッション向け: i3 の block-plasma で mask したユニットを戻す。
+
+units=(
+  drkonqi-coredump-launcher.socket
+  drkonqi-sentry-postman.path
+  drkonqi-sentry-postman.timer
+  drkonqi-coredump-cleanup.timer
+  drkonqi-coredump-cleanup.service
+  drkonqi-coredump-pickup.service
+  kde-baloo.service
+)
+
+systemctl --user unmask -- "${units[@]}" 2>/dev/null || true
+systemctl --user start -- \
+  drkonqi-coredump-launcher.socket \
+  drkonqi-sentry-postman.path \
+  drkonqi-coredump-cleanup.timer \
+  2>/dev/null || true

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Restore Plasma user units (after i3 block)
+Comment=Unmask DrKonqi/Baloo units masked by i3 block-plasma
+Exec=/home/fuyu/.config/i3/scripts/restore-plasma-units
+OnlyShowIn=KDE;
+X-GNOME-Autostart-enabled=true
+NoDisplay=true

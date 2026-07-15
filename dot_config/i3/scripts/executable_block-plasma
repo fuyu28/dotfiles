@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# i3 セッション向け: Plasma / DrKonqi の漏れ込みを止める。
+# mask は user systemd に残るので、Plasma 側は restore-plasma-units で戻す。
+
+units=(
+  drkonqi-coredump-launcher.socket
+  drkonqi-sentry-postman.path
+  drkonqi-sentry-postman.timer
+  drkonqi-coredump-cleanup.timer
+  drkonqi-coredump-cleanup.service
+  drkonqi-coredump-pickup.service
+  kde-baloo.service
+)
+
+systemctl --user stop -- "${units[@]}" 2>/dev/null || true
+systemctl --user mask -- "${units[@]}" 2>/dev/null || true
+
+# Plasma セッション残骸があれば止める（mask はしない → Plasma ログインで再起動可）
+while read -r unit; do
+  [[ -n "${unit}" ]] || continue
+  systemctl --user stop -- "${unit}" 2>/dev/null || true
+done < <(
+  systemctl --user list-units --type=service,socket --state=running --no-legend \
+    'plasma-*' 'app-org.kde.*' 2>/dev/null | awk '{print $1}'
+)
+
+# Baloo プロセスが残っていれば落とす
+pkill -u "${UID}" -x baloo_file 2>/dev/null || true
+pkill -u "${UID}" -f '/usr/lib/baloo_file' 2>/dev/null || true
