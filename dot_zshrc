@@ -6,6 +6,9 @@ typeset -U path PATH
 path=(
   "$HOME/.local/bin"
   "$HOME/.cargo/bin"
+  "$HOME/.bun/bin"
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
   /usr/local/sbin
   /usr/local/bin
   $path
@@ -14,7 +17,11 @@ export EDITOR=nvim
 export VISUAL=nvim
 export HISTSIZE=1000
 export HISTFILESIZE=2000
-export TERMINAL=kitty
+if [[ "$OSTYPE" == darwin* ]]; then
+  export TERMINAL=ghostty
+else
+  export TERMINAL=kitty
+fi
 setopt hist_ignore_dups share_history
 
 
@@ -30,10 +37,12 @@ if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
         || print -P "%F{160} The clone has failed.%f%b"
 fi
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-unalias zi 2>/dev/null
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+if [[ -f "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
+  source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+  unalias zi 2>/dev/null
+  autoload -Uz _zinit
+  (( ${+_comps} )) && _comps[zinit]=_zinit
+fi
 
 
 # =========================
@@ -46,9 +55,10 @@ compinit -C
 # =========================
 # Zinit プラグイン
 # =========================
-zinit light zsh-users/zsh-autosuggestions
-zinit light ajeetdsouza/zoxide
-zinit light zsh-users/zsh-syntax-highlighting
+if (( $+functions[zinit] )); then
+  zinit light zsh-users/zsh-autosuggestions
+  zinit light zsh-users/zsh-syntax-highlighting
+fi
 
 
 # =========================
@@ -56,55 +66,55 @@ zinit light zsh-users/zsh-syntax-highlighting
 # =========================
 # zoxide
 unalias z 2>/dev/null
-eval "$(zoxide init zsh)"
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 
 # starship
-eval "$(starship init zsh)"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
 
 # cargo
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
 # mise
-eval "$(mise activate zsh)"
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 
 # =========================
 # alias
 # =========================
-alias kitty='GLFW_IM_MODULE=ibus kitty'
-alias prn='perl-rename'
-alias fe='felix'
+[[ "$OSTYPE" != darwin* ]] && alias kitty='GLFW_IM_MODULE=ibus kitty'
+(( $+commands[perl-rename] )) && alias prn='perl-rename'
+(( $+commands[felix] )) && alias fe='felix'
 
-alias b='bat'
-alias bc='bat --style=plain'
+(( $+commands[bat] )) && alias b='bat'
+(( $+commands[bat] )) && alias bc='bat --style=plain'
 
-alias fd='fd -HI --ignore-file ~/.ignore'
-alias rg='rg --color=always --ignore-file ~/.ignore'
-alias rga='rg -uu --color=always'
+(( $+commands[fd] )) && alias fd='fd -HI --ignore-file ~/.config/git/ignore'
+(( $+commands[rg] )) && alias rg='rg --color=always --ignore-file ~/.config/git/ignore'
+(( $+commands[rg] )) && alias rga='rg -uu --color=always'
 
-alias l='eza -a --icons=always'
-alias ll='eza -la --icons=always --git'
-alias la='eza -la --icons=always --git'
+(( $+commands[eza] )) && alias l='eza -a --icons=always'
+(( $+commands[eza] )) && alias ll='eza -la --icons=always --git'
+(( $+commands[eza] )) && alias la='eza -la --icons=always --git'
 
-alias p='procs'
-alias dus='dust'
-alias d='duf'
-alias pg='gping'
-alias fk='ps aux | fzf | awk "{print \$2}" | xargs kill'
+(( $+commands[procs] )) && alias p='procs'
+(( $+commands[dust] )) && alias dus='dust'
+(( $+commands[duf] )) && alias d='duf'
+(( $+commands[gping] )) && alias pg='gping'
+(( $+commands[fzf] )) && alias fk='ps aux | fzf | awk "{print \$2}" | xargs kill'
 
-alias h='http'
-alias td='tldr'
-alias sdr='sd'
-alias jf='fq'
+(( $+commands[http] )) && alias h='http'
+(( $+commands[tldr] )) && alias td='tldr'
+(( $+commands[sd] )) && alias sdr='sd'
+(( $+commands[fq] )) && alias jf='fq'
 
 alias gs='git status'
 alias gc='git commit'
 alias gp='git push'
 alias gl='git pull'
 alias gd='git diff'
-alias lg='lazygit'
+(( $+commands[lazygit] )) && alias lg='lazygit'
 
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//\'')"'
+(( $+commands[notify-send] )) && alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//\'')"'
 
 
 
@@ -115,7 +125,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 ff() {
   local file
   file=$(fd -H -t f \
-        --ignore-file ~/.ignore \
+        --ignore-file ~/.config/git/ignore \
     | fzf --preview 'bat --color=always --style=numbers {}') || return
 
   $EDITOR "$file"
@@ -169,11 +179,13 @@ hist() {
 }
 
 # clip - copyq の履歴から fzf で選んでクリップボードに入れる
-clip() {
-  local text
-  text=$(copyq read 0.. | fzf) || return
-  printf '%s' "$text" | xclip -selection clipboard
-}
+if (( $+commands[copyq] && $+commands[xclip] )); then
+  clip() {
+    local text
+    text=$(copyq read 0.. | fzf) || return
+    printf '%s' "$text" | xclip -selection clipboard
+  }
+fi
 
 # tmp - /tmp に一時ディレクトリを作って移動する
 tmp() {
@@ -232,28 +244,28 @@ to_utf8() {
 }
 
 
-# 壁紙切り替え
-change_bg() {
-  local link="$HOME/Pictures/current_wallpaper.png"
+if [[ "$OSTYPE" != darwin* ]]; then
+  # 壁紙切り替え
+  change_bg() {
+    local link="$HOME/Pictures/current_wallpaper.png"
 
-  if [[ -z "$1" ]]; then
-    echo "usage: change_bg <fullpath>"
-    echo "example: change_bg ~/Pictures/Wallpapers/01.jpg"
-    echo "example: change_bg /mnt/storage/wp/01.webp"
-    return 1
-  fi
+    if [[ -z "$1" ]]; then
+      echo "usage: change_bg <fullpath>"
+      echo "example: change_bg ~/Pictures/Wallpapers/01.jpg"
+      echo "example: change_bg /mnt/storage/wp/01.webp"
+      return 1
+    fi
 
-  # zsh: ~ 展開 + 絶対パス化
-  local src="${1:A}"
+    local src="${1:A}"
+    if [[ ! -f "$src" ]]; then
+      echo "change_bg: no such file: $src"
+      return 1
+    fi
 
-  if [[ ! -f "$src" ]]; then
-    echo "change_bg: no such file: $src"
-    return 1
-  fi
-
-  ln -sf "$src" "$link"
-  command -v set-wallpaper >/dev/null 2>&1 && set-wallpaper
-}
+    ln -sf "$src" "$link"
+    (( $+commands[set-wallpaper] )) && set-wallpaper
+  }
+fi
 
 # vi mode cursor shape
 # 1/2: block, 5/6: bar

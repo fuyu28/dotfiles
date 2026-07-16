@@ -1,0 +1,25 @@
+# Repository-only files
+README.md
+
+{{ if eq .chezmoi.os "darwin" }}
+# Linux desktop environment
+.config/dunst/**
+.config/i3/**
+.config/kitty/**
+.config/neofetch/**
+.config/picom/**
+.config/polybar/**
+.config/rofi/**
+.local/bin/rofi-launcher.sh
+.local/bin/rofi-powermenu.sh
+.local/bin/screenshot.sh
+.local/bin/set-wallpaper
+.xprofile
+{{ else }}
+# macOS applications and preferences
+.Brewfile
+.config/aerospace/**
+.zprofile
+Library/Application Support/Code/**
+Library/Application Support/Cursor/**
+{{ end }}
