@@ -1,35 +1,53 @@
 # Neovim
 
-このディレクトリは、この dotfiles で使っている Neovim 設定です。  
-ベースは LazyVim で、必要な差分だけこのリポジトリで管理しています。
+`lazy.nvim` でプラグインを管理するローカル設定です。
+LazyVim 由来の設定と独自設定は統合済みで、LazyVim 本体への依存はありません。
 
-## 方針
+## 構成
 
-- プラグイン管理は `lazy.nvim`
-- ディストリビューションは `LazyVim`
-- 独自設定は最小限にして、基本は上流の標準設定を使う
+```text
+init.lua
+lua/
+  config/        # 起動処理、オプション、キーマップ、autocmd
+  plugins/       # 用途別のプラグイン設定
+    init.lua     # 読み込むモジュールと順序
+    lang/        # Go、Python、TypeScript などの言語設定
+  util/          # LSP、整形、プロジェクトルートなどの共通処理
+queries/         # Tree-sitter クエリ
+licenses/        # 元コードのライセンス・変更記録
+tests/           # 起動と設定の検証
+lazy-lock.json
+stylua.toml
+```
 
-## 現在の独自差分
+## 設定の変更
 
-- 追加プラグイン: `fuyu28/textobj-entire.nvim`
-- `lua/config/options.lua`
-- `lua/config/keymaps.lua`
-- `lua/config/autocmds.lua`
+- オプションは `lua/config/options.lua`、キー操作は `lua/config/keymaps.lua` を編集します。
+- プラグイン設定は `lua/plugins/` の該当ファイルを直接編集します。
+- モジュールを追加・削除する場合は `lua/plugins/init.lua` の import 一覧を変更します。
+- 言語設定は `lua/plugins/lang/` にあります。TypeScript は `vtsls` を使用します。
+- Go の lint 設定は `lua/plugins/linting.lua` に統合しています。
 
-現状では `options.lua` と `keymaps.lua` はほぼ素のままで、今後の追加用の置き場になっています。
+`c / C / d / D / x / X` はレジスタを上書きせず変更・削除し、
+`<leader>d / <leader>D` はクリップボードに切り取ります。
 
-## 主要ファイル
-
-- `init.lua`: エントリーポイント
-- `lua/config/lazy.lua`: `lazy.nvim` と LazyVim の初期化
-- `lua/plugins/`: 追加・上書きするプラグイン設定
-- `lazy-lock.json`: プラグインの lockfile
-- `stylua.toml`: Lua の整形設定
+`lazyvim.json` と `:LazyExtras` は使用しません。ダッシュボードの `c` から設定ファイルを探せます。
+`:Lazy update` はプラグインのみを更新し、この設定自体は更新しません。
 
 ## セットアップ
 
-`chezmoi apply` 後に `nvim` を起動すると、必要なプラグインが自動で取得されます。  
-初回起動時は `git` と Neovim 本体が必要です。
+Neovim 0.11.2 以降と `git` が必要です。
+設定を配置して `nvim` を起動すると、`lazy.nvim` と必要なプラグインが取得されます。
+言語サーバーや外部ツールは各言語設定と Mason で管理します。
 
-LazyVim の前提条件や詳細は公式ドキュメントを参照してください。  
-https://lazyvim.github.io/installation
+## 検証
+
+プラグインのインストール後、このディレクトリで実行します。
+起動テストはプラグインの自動取得・更新を止め、一時ディレクトリにキャッシュと状態を保存します。
+
+```sh
+stylua --check init.lua lua tests
+nvim --headless -u NONE -i NONE -l tests/smoke.lua
+```
+
+元コードの出典と変更内容は `licenses/README.md` に記録しています。
