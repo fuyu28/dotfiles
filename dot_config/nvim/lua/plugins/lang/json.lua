@@ -6,7 +6,7 @@ return {
     opts = { ensure_installed = { "json5" } },
   },
 
-  -- yaml schema support
+  -- JSON/YAML schema support
   {
     "b0o/SchemaStore.nvim",
     lazy = true,
@@ -31,6 +31,22 @@ return {
                 enable = true,
               },
               validate = { enable = true },
+            },
+          },
+        },
+        yamlls = {
+          -- lazy-load schemastore when needed
+          before_init = function(_, new_config)
+            new_config.settings.yaml.schemas = new_config.settings.yaml.schemas or {}
+            vim.list_extend(new_config.settings.yaml.schemas, require("schemastore").yaml.schemas())
+          end,
+          settings = {
+            yaml = {
+              validate = true,
+              schemaStore = {
+                enable = false,
+                url = "",
+              },
             },
           },
         },

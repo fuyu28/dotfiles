@@ -14,7 +14,6 @@ return {
   { import = "plugins.lang.typescript" },
   { import = "plugins.snacks_explorer" },
   { import = "plugins.snacks_picker" },
-  { import = "plugins.yanky" },
   { import = "plugins.dial" },
   { import = "plugins.inc_rename" },
   { import = "plugins.lang.clangd" },
@@ -25,5 +24,4 @@ return {
   { import = "plugins.lang.tex" },
   { import = "plugins.dot" },
   { import = "plugins.mini_hipatterns" },
-  { import = "plugins.textobj_entire" },
 }

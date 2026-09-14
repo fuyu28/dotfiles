@@ -7,7 +7,7 @@ ConfigUtil.config = M
 
 ---@class ConfigUtilOptions
 local defaults = {
-  -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
+  -- colorscheme can be a string or a function that loads the colorscheme
   ---@type string|fun()
   colorscheme = function()
     require("tokyonight").load()

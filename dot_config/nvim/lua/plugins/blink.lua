@@ -1,28 +1,15 @@
 ---@diagnostic disable: missing-fields
 return {
   {
-    "hrsh7th/nvim-cmp",
-    optional = true,
-    enabled = false,
-  },
-  {
     "saghen/blink.cmp",
     version = not vim.g.config_blink_main and "*",
     build = vim.g.config_blink_main and "cargo build --release",
     opts_extend = {
       "sources.completion.enabled_providers",
-      "sources.compat",
       "sources.default",
     },
     dependencies = {
       "rafamadriz/friendly-snippets",
-      -- add blink.compat to dependencies
-      {
-        "saghen/blink.compat",
-        optional = true, -- make optional so it's only enabled if any extras need it
-        opts = {},
-        version = not vim.g.config_blink_main and "*",
-      },
     },
     event = { "InsertEnter", "CmdlineEnter" },
 
@@ -51,6 +38,17 @@ return {
           },
         },
         menu = {
+          -- Don't interrupt prose with code/snippet completions.
+          auto_show = function(ctx)
+            return not vim.tbl_contains({
+              "markdown",
+              "markdown.mdx",
+              "text",
+              "gitcommit",
+              "plaintex",
+              "typst",
+            }, vim.bo[ctx.buf].filetype)
+          end,
           draw = {
             treesitter = { "lsp" },
           },
@@ -68,10 +66,15 @@ return {
       -- signature = { enabled = true },
 
       sources = {
-        -- adding any nvim-cmp sources here will enable them
-        -- with blink.compat
-        compat = {},
         default = { "lsp", "path", "snippets", "buffer" },
+        per_filetype = {
+          markdown = { inherit_defaults = false, "buffer" },
+          ["markdown.mdx"] = { inherit_defaults = false, "buffer" },
+          text = { inherit_defaults = false, "buffer" },
+          gitcommit = { inherit_defaults = false, "buffer" },
+          plaintex = { inherit_defaults = false, "buffer" },
+          typst = { inherit_defaults = false, "buffer" },
+        },
       },
 
       cmdline = {
@@ -97,24 +100,11 @@ return {
         ["<C-y>"] = { "select_and_accept" },
       },
     },
-    ---@param opts blink.cmp.Config | { sources: { compat: string[] } }
+    ---@param opts blink.cmp.Config
     config = function(_, opts)
       if opts.snippets and opts.snippets.preset == "default" then
         opts.snippets.expand = ConfigUtil.cmp.expand
       end
-      -- setup compat sources
-      local enabled = opts.sources.default
-      for _, source in ipairs(opts.sources.compat or {}) do
-        opts.sources.providers[source] = vim.tbl_deep_extend(
-          "force",
-          { name = source, module = "blink.compat.source" },
-          opts.sources.providers[source] or {}
-        )
-        if type(enabled) == "table" and not vim.tbl_contains(enabled, source) then
-          table.insert(enabled, source)
-        end
-      end
-
       -- add ai_accept to <Tab> key
       if not opts.keymap["<Tab>"] then
         if opts.keymap.preset == "super-tab" then -- super-tab
@@ -130,9 +120,6 @@ return {
           }
         end
       end
-
-      -- Unset custom prop to pass blink.cmp validation
-      opts.sources.compat = nil
 
       -- check if we need to override symbol kinds
       for _, provider in pairs(opts.sources.providers or {}) do
@@ -193,14 +180,6 @@ return {
           },
         },
       },
-    },
-  },
-  -- catppuccin support
-  {
-    "catppuccin",
-    optional = true,
-    opts = {
-      integrations = { blink_cmp = true },
     },
   },
 }

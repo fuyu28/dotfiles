@@ -96,6 +96,79 @@ return {
               return require("which-key.extras").expand.win()
             end,
           },
+          -- language-specific plugin and LSP mappings
+          {
+            "<leader>cp",
+            desc = "Markdown Preview",
+            cond = function()
+              return vim.bo.filetype == "markdown"
+            end,
+          },
+          {
+            "<leader>cv",
+            desc = "Select VirtualEnv",
+            cond = function()
+              return vim.bo.filetype == "python"
+            end,
+          },
+          {
+            "<leader>dP",
+            group = "Python Debug",
+            cond = function()
+              return vim.bo.filetype == "python"
+            end,
+          },
+          {
+            "<leader>dPt",
+            desc = "Debug Method",
+            cond = function()
+              return vim.bo.filetype == "python"
+            end,
+          },
+          {
+            "<leader>dPc",
+            desc = "Debug Class",
+            cond = function()
+              return vim.bo.filetype == "python"
+            end,
+          },
+          {
+            "<leader>ch",
+            desc = "Switch Source/Header (C/C++)",
+            cond = function()
+              return vim.tbl_contains({ "c", "cpp", "objc", "objcpp" }, vim.bo.filetype)
+            end,
+          },
+          {
+            "<leader>cM",
+            desc = "Add missing imports",
+            cond = function()
+              return vim.tbl_contains(
+                { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+                vim.bo.filetype
+              )
+            end,
+          },
+          {
+            "<leader>cD",
+            desc = "Fix all diagnostics",
+            cond = function()
+              return vim.tbl_contains(
+                { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+                vim.bo.filetype
+              )
+            end,
+          },
+          {
+            "<leader>cV",
+            desc = "Select TS workspace version",
+            cond = function()
+              return vim.tbl_contains(
+                { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+                vim.bo.filetype
+              )
+            end,
+          },
           -- better descriptions
           { "gx", desc = "Open with system app" },
         },
@@ -248,24 +321,6 @@ return {
         end,
         desc = "Next Trouble/Quickfix Item",
       },
-    },
-  },
-
-  -- Finds and lists all of the TODO, HACK, BUG, etc comment
-  -- in your project and loads them into a browsable list.
-  {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
-    event = "LazyFile",
-    opts = {},
-    -- stylua: ignore
-    keys = {
-      { "]t", function() require("todo-comments").jump_next() end, desc = "Next Todo Comment" },
-      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous Todo Comment" },
-      { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
-      { "<leader>xT", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
     },
   },
 }
