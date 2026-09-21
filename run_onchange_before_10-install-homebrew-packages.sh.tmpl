@@ -1,0 +1,24 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# Brewfile checksum: {{ include "dot_Brewfile" | sha256sum }}
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrewをインストールします"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+brewfile="$(mktemp)"
+trap 'rm -f "$brewfile"' EXIT
+cat >"$brewfile" <<'BREWFILE'
+{{ include "dot_Brewfile" -}}
+BREWFILE
+
+brew bundle --file="$brewfile"
+{{- end }}

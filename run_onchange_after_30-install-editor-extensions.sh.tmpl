@@ -1,0 +1,34 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+cursor_extensions=(
+  anysphere.remote-ssh
+  asvetliakov.vscode-neovim
+  ms-ceintl.vscode-language-pack-ja
+  zhuangtongfa.material-theme
+)
+
+code_extensions=(
+  asvetliakov.vscode-neovim
+  bscan.perlnavigator
+  editorconfig.editorconfig
+  ms-vscode-remote.remote-ssh
+  ms-vscode-remote.remote-ssh-edit
+  ms-vscode.remote-explorer
+  vscodevim.vim
+  zhuangtongfa.material-theme
+)
+
+if command -v cursor >/dev/null 2>&1; then
+  for extension in "${cursor_extensions[@]}"; do
+    cursor --install-extension "$extension" --force
+  done
+fi
+
+if command -v code >/dev/null 2>&1; then
+  for extension in "${code_extensions[@]}"; do
+    code --install-extension "$extension" --force
+  done
+fi
+{{- end }}

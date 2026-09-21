@@ -1,0 +1,8 @@
+{
+    "workbench.colorTheme": "One Dark Pro",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "vscode-neovim.NVIM_APPNAME": "nvim-vscode",
+    "git.ignoreLegacyWarning": true
+}

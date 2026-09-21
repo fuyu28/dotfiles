@@ -1,158 +1,124 @@
-# dotfiles-eos
+# dotfiles
 
-`chezmoi` で管理している個人用 dotfiles です。  
-EndeavourOS + i3 を前提に、普段使いのデスクトップ環境と開発環境をまとめています。
+macOSとEndeavourOSの環境を[`chezmoi`](https://www.chezmoi.io/)で管理する個人用dotfilesです。
+シェル・Git・tmux・Neovimなどは共通化し、デスクトップ環境とパッケージ導入はOSごとに分離しています。
 
-## これは何か
+## 管理対象
 
-このリポジトリには、主に次の設定が入っています。
+### 共通
 
-- デスクトップ環境: i3, Polybar, Rofi, Picom, Dunst, i3blocks
-- ターミナル周り: Kitty, Zsh, tmux, Starship
-- 開発環境: Neovim, mise
-- 補助スクリプト: スクリーンショット、電源メニュー、壁紙切り替え
+- Zsh + zinit
+- Git / GitHub CLI
+- tmux
+- Neovim (LazyVim)
+- Starship
+- mise
+- Ghostty
 
-「OS を入れ直したあとに、いつもの作業環境を早く戻す」ことを目的にしています。
+### macOS
 
-## 特徴
+- Homebrewのformula・cask・tap
+- AeroSpace + borders
+- Cursor / VS Codeの汎用設定と拡張
+- Dock、Finder、キー入力の主要設定
 
-- `chezmoi` で dotfiles を一元管理
-- EndeavourOS の i3 設定をベースに、自分用に整理・拡張
-- Polybar は複数テーマを同梱
-- `CHEZMOI_ROLE` 相当の `role` データで desktop / laptop を切り替え
-- 壁紙パスや表示方法を `chezmoi` の data で管理
-- Zsh は `zinit` + `zoxide` + `starship` + `mise` を利用
-- Neovim は LazyVim ベース
+### Linux
 
-## セットアップ
+- EndeavourOS + i3
+- Polybar、Rofi、Picom、Dunst、i3blocks
+- KittyとX11用スクリプト
 
-### 1. リポジトリを適用する
+`.chezmoiignore.tmpl`がOSを判定するため、macOSへi3設定を配置したり、LinuxへAeroSpaceやBrewfileを配置したりすることはありません。
+
+## 新しいmacOSをセットアップする
+
+### 1. chezmoiで適用する
+
+Homebrewがなくても、chezmoiの公式インストーラーから初期化できます。
 
 ```sh
-chezmoi init --apply fuyu28/dotfiles-eos
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply fuyu28/dotfiles
 ```
 
-### 2. 必要なら role を切り替える
+適用時に次の処理が実行されます。
 
-このリポジトリは `role` に応じて一部設定を切り替えます。  
-初期値は `.chezmoi.toml.tmpl` で `laptop` になっています。
+1. Homebrewをインストール
+2. `Brewfile`のformula・caskをインストール
+3. dotfilesを配置
+4. `mise install`で言語・ツールチェインを導入
+5. Cursor / VS CodeのCLIがあれば拡張を導入
+6. 主要なmacOS設定を反映
+
+すでにchezmoiがある場合:
+
+```sh
+chezmoi init --apply fuyu28/dotfiles
+```
+
+### 2. 手動で戻すもの
+
+認証情報はリポジトリに保存していません。必要なものだけ再認証してください。
+
+```sh
+gh auth login
+```
+
+- SSH鍵を新規作成または安全なバックアップから復元
+- GitHub、Cursor、各アプリへログイン
+- Visual Studio Code、Google Chrome、SlackなどHomebrew管理外だったアプリを必要に応じて導入
+- フォント（HackGen Console NF）を導入
+- FileVaultとファイアウォールを用途に合わせて有効化
+
+`~/.config/gh/hosts.yml`、SSH秘密鍵、Keychain、シェル履歴、エディタ履歴は意図的に管理していません。
+
+## Linuxで使う
+
+```sh
+chezmoi init --apply fuyu28/dotfiles
+```
+
+初期値はlaptopです。desktopへ切り替える場合は、`~/.config/chezmoi/chezmoi.toml`を変更します。
 
 ```toml
 [data]
-role = "laptop"
+role = "desktop"
 ```
 
-たとえばデスクトップ機で使う場合は、`~/.config/chezmoi/chezmoi.toml` などで `role = "desktop"` に変更してから再適用します。
+Linuxのシステムパッケージはディストリビューション側で導入してください。i3周辺はArch / EndeavourOSを前提にしています。
+
+## 更新
 
 ```sh
-chezmoi apply
+chezmoi update
 ```
 
-現在のテンプレートでは、`laptop` のときだけ i3blocks にバッテリー表示が入ります。
+Homebrewパッケージを変更した場合は`~/.Brewfile`ではなく、chezmoi source stateの`dot_Brewfile`を編集します。内容が変わると次回適用時に`brew bundle`が再実行されます。
 
-### 3. 壁紙設定を必要に応じて変更する
+miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変更時に`mise install`が再実行されます。
 
-`set-wallpaper` は `chezmoi` の data を参照します。
-
-```toml
-[data.wallpaper]
-mode = "fill"
-path = "/home/user/Pictures/current_wallpaper.png"
-```
-
-変更後は再度 `chezmoi apply` を実行してください。
-
-## 主な内容
-
-### i3
-
-- `Mod` は `Super`
-- ターミナルは `kitty`
-- `rofi` ランチャー、音量調整、輝度調整、スクリーンショットなどを設定
-- `~/.local/bin/rofi-powermenu.sh` を使った電源メニューを用意
-
-### Polybar
-
-同梱テーマ:
-
-- `blocks`
-- `colorblocks`
-- `cuts`
-- `docky`
-- `forest`
-- `grayblocks`
-- `hack`
-- `material`
-- `panels`
-- `pwidgets`
-- `shades`
-- `shapes`
-
-### Zsh
-
-- プラグイン管理: `zinit`
-- プロンプト: `starship`
-- ディレクトリ移動: `zoxide`
-- ツールチェイン管理: `mise`
-- `fzf` を前提にした自作関数をいくつか定義
-
-### tmux
-
-- プレフィックスは `Ctrl-Space`
-- `vi` 風キーバインド
-- マウス操作を有効化
-
-### Neovim
-
-- LazyVim ベース
-- 詳細は [dot_config/nvim/README.md](/home/fuyu/.local/share/chezmoi/dot_config/nvim/README.md)
-
-## ディレクトリ構成
+## 主な構成
 
 ```text
 .
-├── .chezmoi.toml.tmpl      # chezmoi data の初期値
-├── dot_config/             # ~/.config 配下
-├── dot_local/bin/          # ~/.local/bin 配下のスクリプト
-├── dot_gitconfig           # ~/.gitconfig
-├── dot_tmux.conf           # ~/.tmux.conf
-├── dot_xprofile            # ~/.xprofile
-└── dot_zshrc               # ~/.zshrc
+├── .chezmoi.toml.tmpl
+├── .chezmoiignore.tmpl
+├── dot_Brewfile
+├── dot_config/
+│   ├── aerospace/
+│   ├── ghostty/
+│   ├── i3/
+│   ├── mise/
+│   ├── nvim/
+│   └── polybar/
+├── Library/Application Support/
+├── run_onchange_*.sh.tmpl
+├── dot_gitconfig
+├── dot_tmux.conf
+├── dot_xprofile
+├── dot_zprofile
+└── dot_zshrc
 ```
 
-## 補助スクリプト
+## 秘密情報の方針
 
-- `dot_local/bin/executable_screenshot.sh`: `maim` + `xclip` で画面キャプチャ
-- `dot_local/bin/executable_rofi-powermenu.sh`: `rofi` ベースの電源メニュー
-- `dot_local/bin/executable_rofi-launcher.sh`: `rofi` ランチャー
-- `dot_local/bin/executable_set-wallpaper.tmpl`: `feh` を使った壁紙反映
-
-## 前提にしているツール
-
-よく使うもの:
-
-- `chezmoi`
-- `i3`
-- `polybar`
-- `rofi`
-- `picom`
-- `dunst`
-- `kitty`
-- `tmux`
-- `nvim`
-- `starship`
-- `zinit`
-- `zoxide`
-- `mise`
-
-フォント:
-
-- Noto Sans
-- Iosevka Nerd Font
-- HackGen Console NF
-
-## 補足
-
-- `dot_xprofile` では `fcitx5`、`xdg-desktop-portal`、`GTK_USE_PORTAL` などを設定しています
-- 一部スクリプトやキーバインドは Arch / EndeavourOS 系のパッケージ構成を前提にしています
-- そのまま他環境でも使えますが、i3 周りは依存コマンドの調整が必要です
+このリポジトリは公開を前提としています。秘密情報は直接追加せず、`gh auth login`、SSH鍵、macOS Keychainなど各サービスの安全な認証フローで復元します。

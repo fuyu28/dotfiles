@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# 現在のMacで使っている、再現性の高いUI設定だけを適用する。
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock tilesize -int 56
+defaults write com.apple.dock wvous-br-corner -int 14
+
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+killall Dock >/dev/null 2>&1 || true
+killall Finder >/dev/null 2>&1 || true
+{{- end }}

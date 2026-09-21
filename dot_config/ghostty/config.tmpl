@@ -1,0 +1,25 @@
+# --- 見た目・フォント ---
+font-size = 14
+adjust-cell-height = 10%
+font-family = "HackGen Console NF"
+
+theme = TokyoNight
+
+# --- ウィンドウ・透明度 ---
+background-opacity = 0.40
+# background-blur-radius = 20
+# window-padding-x = 10
+# window-padding-y = 10
+# window-padding-balance = true
+
+{{- if eq .chezmoi.os "darwin" }}
+
+# --- macOSネイティブな挙動 ---
+macos-titlebar-style = hidden
+macos-window-shadow = true
+{{- end }}
+
+# --- 操作性 ---
+copy-on-select = true
+clipboard-read = allow
+clipboard-write = allow
