@@ -27,14 +27,13 @@ else
     echo "$device" > "$device_cache"
 fi
 
-# Uses regex to get volume from pactl
+# PipeWire/WirePlumber volume helpers
 function get_volume {
-    pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%d", $2 * 100}'
 }
 
-# Uses regex to get mute status from pactl
 function get_mute {
-    pactl get-sink-mute @DEFAULT_SINK@ | grep -Po '(?<=Mute: )(yes|no)'
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q '\[MUTED\]' && echo yes || echo no
 }
 
 # Get keyboard_brightness from brightnessctl
@@ -120,25 +119,20 @@ function show_screen_brightness_notif {
 case $1 in
     volume_up)
     # Unmutes and increases volume, then displays the notification
-    pactl set-sink-mute @DEFAULT_SINK@ 0
-    volume=$(get_volume)
-    if [ $(( "$volume" + "$volume_step" )) -gt $max_volume ]; then
-        pactl set-sink-volume @DEFAULT_SINK@ $max_volume%
-    else
-        pactl set-sink-volume @DEFAULT_SINK@ +$volume_step%
-    fi
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
+    wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ "${volume_step}%+"
     show_volume_notif
     ;;
 
     volume_down)
     # Raises volume and displays the notification
-    pactl set-sink-volume @DEFAULT_SINK@ -$volume_step%
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ "${volume_step}%-"
     show_volume_notif
     ;;
 
     volume_mute)
     # Toggles mute and displays the notification
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
     show_volume_notif
     ;;
 

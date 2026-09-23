@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+"""Apply per-device X11 layouts when the i3 session starts."""
+
+import re
+import subprocess
+
+
+layouts = {
+    "AT Translated Set 2 keyboard": "jp",
+    "MX Keys M Mac Keyboard": "us",
+}
+
+devices = subprocess.check_output(["xinput", "list", "--short"], text=True)
+for line in devices.splitlines():
+    match = re.search(r"↳\s+(.+?)\s+id=(\d+)\s+\[slave\s+keyboard", line)
+    if match is None:
+        continue
+    name, device_id = match.groups()
+    if name in layouts:
+        subprocess.run(
+            [
+                "setxkbmap", "-device", device_id,
+                "-layout", layouts[name], "-variant", "", "-option", "",
+            ],
+            check=True,
+        )

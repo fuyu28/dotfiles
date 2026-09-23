@@ -1,30 +1,22 @@
 #!/usr/bin/env bash
-# i3blocks volume block for PipeWire (PulseAudio compatible)
+# i3blocks volume block for PipeWire/WirePlumber.
 
 STEP=${1:-5%}
 
-# Default sink
-SINK=$(pactl info | awk '/Default Sink/ {print $3}')
-[[ -z "$SINK" ]] && { echo "No audio"; exit 0; }
-
 # Handle scroll/middle-click
 case "$BLOCK_BUTTON" in
-    3) pactl set-sink-mute "$SINK" toggle ;;   # right click = mute/unmute
-    4) pactl set-sink-volume "$SINK" +$STEP ;; # scroll up
-    5) pactl set-sink-volume "$SINK" -$STEP ;; # scroll down
+    3) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;  # right click = mute/unmute
+    4) wpctl set-volume @DEFAULT_AUDIO_SINK@ "${STEP}+" ;; # scroll up
+    5) wpctl set-volume @DEFAULT_AUDIO_SINK@ "${STEP}-" ;; # scroll down
 esac
 
-# Get current volume (front-left channel)
-VOL=$(pactl list sinks | awk -v s="$SINK" '
-    $0 ~ "Name: " s {found=1}
-    found && /Volume:/ {gsub("%","",$5); print $5; exit}
-')
-
-# Get mute state
-MUTED=$(pactl list sinks | awk -v s="$SINK" '
-    $0 ~ "Name: " s {found=1}
-    found && /Mute:/ {print $2; exit}
-')
+status=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null) || {
+    echo "No audio"
+    exit 0
+}
+VOL=$(awk '{printf "%d", $2 * 100}' <<<"$status")
+MUTED=no
+[[ "$status" == *"[MUTED]"* ]] && MUTED=yes
 
 # Choose symbol
 AUDIO_HIGH=''

@@ -86,9 +86,9 @@ bindsym $mod+z exec --no-startup-id morc_menu
 
 # sound controls
 bindsym $mod+Ctrl+m exec $term -e 'alsamixer'
-bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5 && notify-send "Vol ↑ $(pamixer --get-volume)%"
-bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5 && notify-send "Vol ↓ $(pamixer --get-volume)%"
-bindsym XF86AudioMute        exec --no-startup-id pamixer -t && notify-send "Mute $(pamixer --get-mute)"
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_up
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_down
+bindsym XF86AudioMute        exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_mute
 bindsym XF86AudioPlay        exec --no-startup-id playerctl play-pause
 
 # brightness controls
@@ -101,7 +101,6 @@ bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+F3 exec --no-startup-id thunar
 bindsym $mod+Shift+F3 exec --no-startup-id pkexec thunar
 bindsym $mod+F5 exec $term -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill picom
 bindsym $mod+Ctrl+t exec --no-startup-id picom -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'Restarted dunst'"
 bindsym Print exec --no-startup-id ~/.local/bin/screenshot.sh region
@@ -313,6 +312,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id dex --autostart --environment i3
 
 # manual autostart entries (from /etc/xdg/autostart), excluding duplicates/conflicts
+exec --no-startup-id solaar --window=hide
 exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/xapps/xapp-sn-watcher
 exec --no-startup-id xdg-user-dirs-update
@@ -339,8 +339,10 @@ workspace $ws2 output DP-2
 
 # common session helpers
 exec --no-startup-id picom -b
-exec --no-startup-id setxkbmap jp
+# Per-device layouts are configured in /etc/X11/xorg.conf.d/.
 exec --no-startup-id fcitx5 -d
+# Reapply them after login; Fcitx5 XCB layout overriding must stay disabled.
+exec_always --no-startup-id python3 ~/.config/i3/scripts/set-keyboard-layouts
 exec --no-startup-id copyq --start-server
 
 # set wallpaper
@@ -430,4 +432,3 @@ strip_workspace_numbers yes
         urgent_workspace    $urgentred          $urgentred  $white      $purple
     }
 }
-
