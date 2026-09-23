@@ -47,7 +47,7 @@ return {
               "gitcommit",
               "plaintex",
               "typst",
-            }, vim.bo[ctx.buf].filetype)
+            }, vim.bo[ctx.bufnr].filetype)
           end,
           draw = {
             treesitter = { "lsp" },
