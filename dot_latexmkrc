@@ -1,0 +1,15 @@
+# ==== LuaLaTeX を使用する設定 ====
+$pdf_mode = 4;
+$lualatex = 'lualatex -synctex=1 -interaction=nonstopmode -file-line-error %O %S';
+
+# ==== 中間生成ファイルの出力先 ====
+$aux_dir = 'build';
+
+# ==== PDF の出力先 ====
+$out_dir = '.';
+
+# ==== 最大再コンパイル回数 ====
+$max_repeat = 5;
+
+# ==== Clean targets ====
+$clean_full_ext = "%R.synctex.gz";

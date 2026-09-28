@@ -84,7 +84,7 @@ chezmoi init --apply fuyu28/dotfiles
 role = "desktop"
 ```
 
-Linuxのシステムパッケージはディストリビューション側で導入してください。i3周辺はArch / EndeavourOSを前提にしています。
+LuaLaTeX（日本語・`latexmk`・Zathura）は適用時にpacmanで導入します。その他のLinuxシステムパッケージはディストリビューション側で導入してください。i3周辺はArch / EndeavourOSを前提にしています。
 
 ## 更新
 
@@ -113,6 +113,7 @@ miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変
 ├── Library/Application Support/
 ├── run_onchange_*.sh.tmpl
 ├── dot_gitconfig
+├── dot_latexmkrc
 ├── dot_tmux.conf
 ├── dot_xprofile
 ├── dot_zprofile
