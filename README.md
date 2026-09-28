@@ -84,7 +84,7 @@ chezmoi init --apply fuyu28/dotfiles
 role = "desktop"
 ```
 
-LuaLaTeX（日本語・`latexmk`・Zathura）は適用時にpacmanで導入します。その他のLinuxシステムパッケージはディストリビューション側で導入してください。i3周辺はArch / EndeavourOSを前提にしています。
+Linux の明示インストール済み pacman パッケージと AUR パッケージは適用時に導入します。AUR は EndeavourOS リポジトリから導入される `paru` を使うため、i3 周辺を含め Arch / EndeavourOS を前提にしています。
 
 ## 更新
 
