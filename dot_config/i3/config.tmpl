@@ -340,7 +340,8 @@ workspace $ws2 output DP-2
 # common session helpers
 exec --no-startup-id picom -b
 # Per-device layouts are configured in /etc/X11/xorg.conf.d/.
-exec --no-startup-id fcitx5 -d
+# Start (or replace) Fcitx5 after both a fresh login and an i3 config reload.
+exec_always --no-startup-id fcitx5 -r -d
 # Reapply them after login; Fcitx5 XCB layout overriding must stay disabled.
 exec_always --no-startup-id python3 ~/.config/i3/scripts/set-keyboard-layouts
 exec --no-startup-id copyq --start-server
