@@ -1,11 +1,13 @@
-[credential "https://github.com"]
-	helper = 
-	helper = !gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !gh auth git-credential
 [user]
 	name = fuyu
-	email = 88916226+fuyu28@users.noreply.github.com
+	email = fuyu28.dev@gmail.com
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret
 [init]
 	defaultBranch = main
