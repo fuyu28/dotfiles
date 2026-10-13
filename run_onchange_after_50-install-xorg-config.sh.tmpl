@@ -1,0 +1,22 @@
+{{- if and (eq .chezmoi.os "linux") (eq .role "laptop") -}}
+#!/bin/bash
+# {{ include "xorg.conf.d/00-keyboard.conf" | sha256sum }}
+# {{ include "xorg.conf.d/30-touchpad.conf" | sha256sum }}
+# {{ include "xorg.conf.d/90-touchpad.conf" | sha256sum }}
+set -euo pipefail
+
+# Non-interactive apply cannot prompt for a password. The files are already
+# on this machine; a later apply from a terminal will refresh /etc.
+if ! sudo -n true 2>/dev/null && ! [ -t 0 ]; then
+  echo "xorg config install skipped: sudo needs a password" >&2
+  exit 0
+fi
+
+src="${CHEZMOI_SOURCE_DIR}/xorg.conf.d"
+sudo install -d -m 755 /etc/X11/xorg.conf.d
+sudo install -m 644 \
+  "$src/00-keyboard.conf" \
+  "$src/30-touchpad.conf" \
+  "$src/90-touchpad.conf" \
+  /etc/X11/xorg.conf.d/
+{{- end -}}
