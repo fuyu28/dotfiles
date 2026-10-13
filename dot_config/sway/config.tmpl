@@ -1,0 +1,243 @@
+# Sway config, ported from the i3 config.
+# Hardware blocks are laptop-only. Keybindings match i3.
+
+font pango:Noto Sans {{ if eq .role "laptop" }}11{{ else }}10{{ end }}
+
+set $mod Mod4
+set $term kitty
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+workspace_layout default
+default_border pixel 2
+gaps inner 6
+gaps outer 3
+floating_modifier $mod
+focus_follows_mouse no
+
+{{ if eq .role "laptop" }}
+# Built-in panel: native resolution, 60 Hz, 125% (Xft.dpi 120).
+# Wallpaper is set here so sway owns swaybg. A separate swaybg process logs
+# "Could not find config for output" and races with this.
+output eDP-1 mode 2880x1800@60Hz scale 1.25 bg {{ .wallpaper.path | quote }} {{ .wallpaper.mode }}
+
+# /etc/X11/xorg.conf.d/30-touchpad.conf and 90-touchpad.conf.
+# Tapping comes from the distro libinput snippet.
+input type:touchpad {
+    natural_scroll enabled
+    click_method clickfinger
+    tap enabled
+}
+
+# Built-in keyboard. MX Keys is applied by keyboard-layouts when present.
+input "1:1:AT_Translated_Set_2_keyboard" {
+    xkb_layout jp
+}
+
+seat * xcursor_theme Kiritan 48
+exec_always ~/.config/sway/keyboard-layouts
+{{ end }}
+
+bindsym $mod+u border none
+bindsym $mod+y border pixel 1
+bindsym $mod+n border normal
+
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
+
+bindsym $mod+Ctrl+m exec $term -e alsamixer
+bindsym XF86AudioRaiseVolume exec ~/.config/i3/scripts/volume_brightness.sh volume_up
+bindsym XF86AudioLowerVolume exec ~/.config/i3/scripts/volume_brightness.sh volume_down
+bindsym XF86AudioMute exec ~/.config/i3/scripts/volume_brightness.sh volume_mute
+bindsym XF86AudioPlay exec playerctl play-pause
+
+bindsym XF86MonBrightnessUp exec brightnessctl set +10% && notify-send "Brightness ↑"
+bindsym XF86MonBrightnessDown exec brightnessctl set 10%- && notify-send "Brightness ↓"
+
+bindsym $mod+Ctrl+b exec $term -e bmenu
+bindsym $mod+F2 exec firefox
+bindsym $mod+F3 exec thunar
+bindsym $mod+Shift+F3 exec pkexec thunar
+bindsym $mod+F5 exec $term -e mocp
+bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'Restarted dunst'"
+bindsym Print exec ~/.local/bin/screenshot.sh region
+bindsym $mod+Print exec ~/.local/bin/screenshot.sh full
+bindsym $mod+Shift+Print exec ~/.local/bin/screenshot.sh window
+bindsym $mod+Shift+x exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
+bindsym $mod+Ctrl+x --release exec swaymsg kill
+bindsym $mod+v exec copyq show
+bindsym $mod+p exec code
+bindsym $mod+Shift+n exec $term -e nmtui
+bindsym $mod+Escape exec $term start -- btop
+bindsym $mod+Shift+Escape exec lxtask
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+bindsym $mod+o split h; exec notify-send 'tile horizontally'
+bindsym $mod+Shift+o split v; exec notify-send 'tile vertically'
+bindsym $mod+q split toggle
+
+bindsym $mod+f fullscreen toggle
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+s sticky toggle
+bindsym $mod+a focus parent
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+
+bindsym $mod+Ctrl+1 move container to workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+0 exec ~/.local/bin/rofi-powermenu.sh
+bindsym $mod+r mode "resize"
+bindsym $mod+m bar mode toggle
+
+mode "resize" {
+    bindsym h resize shrink width 5 px or 5 ppt
+    bindsym l resize grow width 5 px or 5 ppt
+    bindsym j resize grow height 5 px or 5 ppt
+    bindsym k resize shrink height 5 px or 5 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+for_window [class="Yad" instance="yad"] floating enable
+for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
+for_window [app_id="pavucontrol"] floating enable
+for_window [class="qt5ct" instance="qt5ct"] floating enable
+for_window [class="copyq"] floating enable
+for_window [app_id="copyq"] floating enable
+for_window [window_role="About"] floating enable
+for_window [window_role="pop-up" title="Bitwarden"] floating enable
+for_window [window_role="pop-up" title="Bitwarden"] border pixel 2
+for_window [window_role="pop-up" title="Bitwarden"] focus
+
+exec_always $HOME/.config/i3/scripts/import-gsettings
+exec ~/.config/i3/scripts/block-plasma
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec nm-applet
+exec xdg-user-dirs-update
+exec /usr/bin/firewall-applet
+# xprofile sets XDG_CURRENT_DESKTOP=GNOME for i3. LightDM sources it before sway,
+# and fcitx then shows the GNOME Wayland diagnose. Force sway for the IME.
+exec_always env -u GLFW_IM_MODULE XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway fcitx5 -r -d
+exec copyq --start-server
+exec /usr/bin/dunst
+
+# xidlehook timers are consecutive: 600s lock, +120s screen off, +900s suspend.
+{{ if eq .role "laptop" }}
+exec swayidle -w \
+    timeout 600 'swaylock -f' \
+    timeout 720 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    timeout 1620 'systemctl suspend' \
+    before-sleep 'swaylock -f'
+{{ else }}
+exec swayidle -w \
+    timeout 1800 'swaylock -f' \
+    timeout 2100 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    timeout 7200 'systemctl suspend' \
+    before-sleep 'swaylock -f'
+{{ end }}
+
+set $darkbluetrans  #08052be6
+set $darkblue       #08052b
+set $lightblue      #5294e2
+set $urgentred      #e53935
+set $white          #ffffff
+set $black          #000000
+set $purple         #e345ff
+set $darkgrey       #383c4a
+set $grey           #b0b5bd
+set $mediumgrey     #8b8b8b
+set $yellowbrown    #e1b700
+
+client.focused          #d8a5ff #1e1b2e #ffffff #d8a5ff #d8a5ff
+client.focused_inactive #6e6a86 #1e1b2e #b8b3cc #6e6a86 #6e6a86
+client.unfocused        #4c4a63 #1e1b2e #9a97b0 #4c4a63 #4c4a63
+client.urgent           #e06c75 #1e1b2e #f6d6d9 #e06c75 #e06c75
+client.background       #1e1b2e
+
+bar {
+    font pango:Noto Sans Regular {{ if eq .role "laptop" }}11{{ else }}10{{ end }}
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    position bottom
+    tray_padding 0
+    strip_workspace_numbers yes
+    colors {
+        separator          $purple
+        background         $darkgrey
+        statusline         $white
+        focused_workspace   $mediumgrey $grey       $darkgrey
+        active_workspace    $lightblue  $mediumgrey $darkgrey
+        inactive_workspace  $darkgrey   $darkgrey   $grey
+        urgent_workspace    $urgentred  $urgentred  $white
+    }
+}

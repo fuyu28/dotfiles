@@ -1,0 +1,18 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export GTK_USE_PORTAL=1
+export XDG_SESSION_TYPE=wayland
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_DESKTOP=sway
+# ~/.xprofile sets this for kitty on X11. On Wayland it bypasses fcitx.
+unset GLFW_IM_MODULE
+export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
+{{ if eq .role "laptop" -}}
+export XCURSOR_THEME=Kiritan
+export XCURSOR_SIZE=48
+{{ end -}}
+exec sway "$@"
+{{ end }}
