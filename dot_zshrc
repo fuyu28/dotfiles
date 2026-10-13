@@ -237,7 +237,7 @@ to_utf8() {
 if [[ "$OSTYPE" != darwin* ]]; then
   # 壁紙切り替え
   change_bg() {
-    local link="$HOME/Pictures/current_wallpaper.png"
+    local link="$HOME/Pictures/bg.png"
 
     if [[ -z "$1" ]]; then
       echo "usage: change_bg <fullpath>"
