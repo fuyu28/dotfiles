@@ -24,11 +24,13 @@ gaps outer 3
 floating_modifier $mod
 focus_follows_mouse no
 
+# Every output, including ones plugged in later. A bg on eDP-1 alone leaves
+# HDMI blank, and reload does not invent a background for it.
+output * bg {{ .wallpaper.path | quote }} {{ .wallpaper.mode }}
+
 {{ if eq .role "laptop" }}
 # Built-in panel: native resolution, 60 Hz, 125% (Xft.dpi 120).
-# Wallpaper is set here so sway owns swaybg. A separate swaybg process logs
-# "Could not find config for output" and races with this.
-output eDP-1 mode 2880x1800@60Hz scale 1.25 bg {{ .wallpaper.path | quote }} {{ .wallpaper.mode }}
+output eDP-1 mode 2880x1800@60Hz scale 1.25
 
 # /etc/X11/xorg.conf.d/30-touchpad.conf and 90-touchpad.conf.
 # Tapping comes from the distro libinput snippet.
