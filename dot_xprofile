@@ -18,3 +18,9 @@ export GTK_USE_PORTAL=1
 
 # XDG_DATA_DIRS の補完（Flatpak / icons / themes の検索パス）
 export XDG_DATA_DIRS="/home/fuyu/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
+
+# カーソル
+
+export XCURSOR_THEME=Kiritan
+export XCURSOR_SIZE=48
+xrdb -merge "$HOME/.Xresources"

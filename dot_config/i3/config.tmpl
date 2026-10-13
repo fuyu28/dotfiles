@@ -82,7 +82,6 @@ bindsym $mod+n border normal
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
-bindsym $mod+z exec --no-startup-id morc_menu
 
 # sound controls
 bindsym $mod+Ctrl+m exec $term -e 'alsamixer'
@@ -275,6 +274,16 @@ for_window [window_role="pop-up" title="Bitwarden"] focus
 # make sure it loads gtk configs
 exec_always $HOME/.config/i3/scripts/import-gsettings
 
+{{ if eq .role "laptop" -}}
+# Built-in display: keep the panel at native resolution and use its 60 Hz mode.
+exec_always --no-startup-id xrandr --output eDP-1 --mode 2880x1800 --rate 60.00
+# Load the 150% HiDPI text/UI scaling from ~/.Xresources.
+exec_always --no-startup-id xrdb -merge ~/.Xresources
+
+# Cursor
+exec_always --no-startup-id env XCURSOR_THEME=Kiritan XCURSOR_SIZE=48 xsetroot -cursor_name left_ptr
+
+{{ end -}}
 ## compositor
 
 # aka transparency
@@ -314,7 +323,6 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # manual autostart entries (from /etc/xdg/autostart), excluding duplicates/conflicts
 exec --no-startup-id solaar --window=hide
 exec --no-startup-id nm-applet
-exec --no-startup-id /usr/lib/xapps/xapp-sn-watcher
 exec --no-startup-id xdg-user-dirs-update
 exec --no-startup-id /usr/bin/firewall-applet
 
@@ -407,7 +415,7 @@ client.background       #1e1b2e
 # Start i3bar to display a workspace bar
 # (plus the system information i3status finds out, if available)
 bar {
-        font pango: Noto Sans Regular 10
+        font pango: Noto Sans Regular {{ if eq .role "laptop" }}11{{ else }}10{{ end }}
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
             position bottom
 #           i3bar_command i3bar --transparency

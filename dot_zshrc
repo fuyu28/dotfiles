@@ -6,11 +6,6 @@ typeset -U path PATH
 path=(
   "$HOME/.local/bin"
   "$HOME/.cargo/bin"
-  "$HOME/.bun/bin"
-  /opt/homebrew/bin
-  /opt/homebrew/sbin
-  /usr/local/sbin
-  /usr/local/bin
   $path
 )
 export EDITOR=nvim
@@ -107,16 +102,11 @@ unalias z 2>/dev/null
 (( $+commands[sd] )) && alias sdr='sd'
 (( $+commands[fq] )) && alias jf='fq'
 
-alias gs='git status'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git pull'
-alias gd='git diff'
 (( $+commands[lazygit] )) && alias lg='lazygit'
 
 (( $+commands[notify-send] )) && alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//\'')"'
 
-
+(( $+commands[cursor-agent] )) && alias ca='cursor-agent'
 
 # =========================
 # 自作関数
