@@ -1,2 +1,9 @@
 #!/bin/sh
-feh --bg-{{ .wallpaper.mode }} "{{ .wallpaper.path }}"
+path="{{ .wallpaper.path }}"
+mode="{{ .wallpaper.mode }}"
+if [ -n "${WAYLAND_DISPLAY:-}" ]; then
+  pkill -x swaybg 2>/dev/null || true
+  swaybg -m "$mode" -i "$path" >/dev/null 2>&1 &
+else
+  feh --bg-"$mode" "$path"
+fi

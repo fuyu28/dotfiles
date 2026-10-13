@@ -37,7 +37,9 @@ case "$chosen" in
   is_yes "$ans" && systemctl reboot || msg
   ;;
 "$lock")
-  if command -v betterlockscreen >/dev/null 2>&1; then
+  if [ -n "${SWAYSOCK:-}" ] && command -v swaylock >/dev/null 2>&1; then
+    swaylock -f
+  elif command -v betterlockscreen >/dev/null 2>&1; then
     betterlockscreen -l
   else
     loginctl lock-session
@@ -46,7 +48,10 @@ case "$chosen" in
 "$suspend")
   ans="$(confirm_exit)" || exit 0
   if is_yes "$ans"; then
-    if command -v betterlockscreen >/dev/null 2>&1; then
+    if [ -n "${SWAYSOCK:-}" ] && command -v swaylock >/dev/null 2>&1; then
+      swaylock -f
+      systemctl suspend
+    elif command -v betterlockscreen >/dev/null 2>&1; then
       betterlockscreen -s
     else
       loginctl lock-session
@@ -59,10 +64,12 @@ case "$chosen" in
 "$hibernate")
   ans="$(confirm_exit)" || exit 0
   if is_yes "$ans"; then
-    if command -v betterlockscreen >/dev/null 2>&1; then
+    if [ -n "${SWAYSOCK:-}" ] && command -v swaylock >/dev/null 2>&1; then
+      swaylock -f
+      systemctl hibernate
+    elif command -v betterlockscreen >/dev/null 2>&1; then
       betterlockscreen -l && systemctl hibernate
     else
-      # ロック無し休止が嫌ならここで拒否するのが安全
       loginctl lock-session
       systemctl hibernate
     fi
@@ -72,6 +79,14 @@ case "$chosen" in
   ;;
 "$logout")
   ans="$(confirm_exit)" || exit 0
-  is_yes "$ans" && i3-msg exit || msg
+  if is_yes "$ans"; then
+    if [ -n "${SWAYSOCK:-}" ]; then
+      swaymsg exit
+    else
+      i3-msg exit
+    fi
+  else
+    msg
+  fi
   ;;
 esac
