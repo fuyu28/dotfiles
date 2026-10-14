@@ -3,17 +3,13 @@
 -- Respect plugin key handlers; mappings are silent and non-recursive by default.
 local map = ConfigUtil.safe_keymap_set
 
--- Change/delete without overwriting registers
+-- Change without overwriting registers
 map({ "n", "x" }, "c", '"_c', { desc = "Change Without Yanking" })
 map({ "n", "x" }, "C", '"_C', { desc = "Change to End Without Yanking" })
-map({ "n", "x" }, "d", '"_d', { desc = "Delete Without Yanking" })
-map({ "n", "x" }, "D", '"_D', { desc = "Delete to End Without Yanking" })
+
+-- x / X delete without overwriting registers
 map({ "n", "x" }, "x", '"_x', { desc = "Delete Character Without Yanking" })
 map({ "n", "x" }, "X", '"_X', { desc = "Delete Backward Without Yanking" })
-
--- Explicit clipboard register also works when 'clipboard' is empty (e.g. SSH).
-map({ "n", "x" }, "<leader>d", '"+d', { desc = "Cut to Clipboard" })
-map({ "n", "x" }, "<leader>D", '"+D', { desc = "Cut to End to Clipboard" })
 
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })

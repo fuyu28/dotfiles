@@ -1,8 +1,12 @@
+# DO NOT EDIT! This file will be overwritten by nwg-look.
+# Any customization should be done in ~/.gtkrc-2.0.mine instead.
+
+include "/home/joe/.gtkrc-2.0.mine"
 gtk-theme-name={{ index .gtk "gtk-theme-name" | quote }}
 gtk-icon-theme-name={{ index .gtk "gtk-icon-theme-name" | quote }}
 gtk-font-name={{ index .gtk "gtk-font-name" | quote }}
-gtk-cursor-theme-name={{ index .gtk "gtk-cursor-theme-name" | quote }}
-gtk-cursor-theme-size={{ index .gtk "gtk-cursor-theme-size" }}
+gtk-cursor-theme-name={{ index .gtk2 "gtk-cursor-theme-name" | quote }}
+gtk-cursor-theme-size={{ index .gtk2 "gtk-cursor-theme-size" }}
 gtk-toolbar-style={{ index .gtk "gtk-toolbar-style" }}
 gtk-toolbar-icon-size={{ index .gtk "gtk-toolbar-icon-size" }}
 gtk-button-images={{ index .gtk "gtk-button-images" }}

@@ -1,4 +1,5 @@
-# Shared GTK appearance settings. DPI stays machine-specific.
+# Shared GTK appearance settings; toolkit-specific values follow below.
+# DPI stays machine-specific.
 [gtk]
 gtk-theme-name = "Arc-Dark"
 gtk-icon-theme-name = "Qogir-Dark"
@@ -16,3 +17,16 @@ gtk-xft-hinting = 1
 gtk-xft-hintstyle = "hintslight"
 gtk-xft-rgba = "rgb"
 gtk-application-prefer-dark-theme = 1
+
+# Preserve the current local appearance for each toolkit.
+[gtk2]
+gtk-cursor-theme-name = "Qogir-Dark"
+gtk-cursor-theme-size = 24
+
+[gtk3]
+gtk-cursor-theme-name = "Kiritan"
+gtk-cursor-theme-size = 48
+
+[xsettings]
+icon-theme-name = "Qogir-dark"
+cursor-theme-name = "Qogir-dark"

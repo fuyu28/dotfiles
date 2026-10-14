@@ -3,34 +3,9 @@ README.md
 # Installed to /etc/X11/xorg.conf.d by run_onchange_after_50-install-xorg-config.sh
 xorg.conf.d/**
 
-{{ if eq .chezmoi.os "darwin" }}
-# Linux desktop environment
-.config/gtk-3.0/**
-.config/gtk-4.0/**
-.config/xsettingsd/**
-.gtkrc-2.0
-.config/dunst/**
-.config/i3/**
-.config/sway/**
-.config/swaylock/**
-.config/xdg-desktop-portal/sway-portals.conf
-.local/bin/start-sway
-.local/share/wayland-sessions/**
-.config/kitty/**
-.config/neofetch/**
-.config/picom/**
-.config/polybar/**
-.config/rofi/**
-.local/bin/rofi-launcher.sh
-.local/bin/rofi-powermenu.sh
-.local/bin/screenshot.sh
-.local/bin/set-wallpaper
-.xprofile
-{{ else }}
-# macOS applications and preferences
-.Brewfile
-.config/aerospace/**
-.zprofile
-Library/Application Support/Code/**
-Library/Application Support/Cursor/**
-{{ end }}
+{{ if ne .chezmoi.os "linux" -}}
+{{ template "ignore/linux" . }}
+{{- end }}
+{{ if ne .chezmoi.os "darwin" -}}
+{{ template "ignore/darwin" . }}
+{{- end }}

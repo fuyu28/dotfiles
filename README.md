@@ -84,7 +84,7 @@ chezmoi init --apply fuyu28/dotfiles
 role = "desktop"
 ```
 
-Linux の明示インストール済み pacman パッケージと AUR パッケージは適用時に導入します。AUR は EndeavourOS リポジトリから導入される `paru` を使うため、i3 周辺を含め Arch / EndeavourOS を前提にしています。
+EndeavourOS の明示インストール済み pacman パッケージと AUR パッケージは適用時に導入します。AUR は EndeavourOS リポジトリから導入される `paru` を使うため、i3 周辺を含め Arch / EndeavourOS を前提にしています。
 
 ## 更新
 
@@ -102,6 +102,9 @@ miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変
 .
 ├── .chezmoi.toml.tmpl
 ├── .chezmoiignore.tmpl
+├── .chezmoitemplates/
+│   ├── ignore/{darwin,linux}
+│   └── zsh/{darwin,linux}
 ├── dot_Brewfile
 ├── dot_config/
 │   ├── aerospace/
@@ -117,8 +120,16 @@ miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変
 ├── dot_tmux.conf
 ├── dot_xprofile
 ├── dot_zprofile
-└── dot_zshrc
+└── dot_zshrc.tmpl
 ```
+
+## OS ごとの設定を追加する
+
+共通設定は `dot_config/` などの配置先に対応するファイルで管理します。差分が数行なら Ghostty のようにテンプレート内で分岐し、まとまった差分は `.chezmoitemplates/` に切り出します。Zsh は `dot_zshrc.tmpl` が共通設定を持ち、`zsh/darwin` または `zsh/linux` を適用時に埋め込みます。
+
+OS 専用のファイルを追加したら、`.chezmoitemplates/ignore/darwin` または `ignore/linux` に**配置先のパス**を追加します（例: `dot_aerospace.toml` → `.aerospace.toml`）。`.chezmoiignore.tmpl` が現在の OS に不要な一覧を読み込みます。共通ファイルには登録不要です。
+
+パッケージ導入スクリプトは OS ごとに分けています。Linux のパッケージ一覧には EndeavourOS 固有のパッケージも含むため、自動導入は EndeavourOS のみに限定しています。`role` と壁紙のパスは引き続き各端末の `~/.config/chezmoi/chezmoi.toml` で指定します。
 
 ## 秘密情報の方針
 
@@ -126,6 +137,6 @@ miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変
 
 ## GTKの外観設定
 
-GTK 2・3・4とxsettingsdの共通設定は `.chezmoidata.toml` の `[gtk]` で管理します。テーマ・アイコン・フォント・カーソルなどはここを変更すると各設定へ反映されます。i3起動時はGTK 3設定からGSettingsへフォント・テーマ・カーソル（サイズを含む）を同期します。DPIは端末固有のため管理しません。
+GTK 2・3・4とxsettingsdの共通値は `.chezmoidata.toml` の `[gtk]` で管理します。現在のローカル環境に合わせ、GTK 2 のカーソルは `[gtk2]`、GTK 3 のカーソルは `[gtk3]`、xsettingsd のアイコン・カーソルは `[xsettings]` に分けています。GTK 4 はテーマ名のみ管理します。DPIは端末固有のため管理しません。
 
-テーマ・アイコン・フォント自体は各端末にインストールする必要があります。`nwg-look` で変更した場合は、共通設定にも反映してください。
+i3起動時はGTK 3設定からGSettingsへフォント・テーマ・カーソル（サイズを含む）を同期します。テーマ・アイコン・フォント自体は各端末にインストールする必要があります。`nwg-look` で変更した場合は、対応するデータにも反映してください。

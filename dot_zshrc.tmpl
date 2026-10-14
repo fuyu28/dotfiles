@@ -12,11 +12,11 @@ export EDITOR=nvim
 export VISUAL=nvim
 export HISTSIZE=1000
 export HISTFILESIZE=2000
-if [[ "$OSTYPE" == darwin* ]]; then
-  export TERMINAL=ghostty
-else
-  export TERMINAL=kitty
-fi
+{{ if eq .chezmoi.os "darwin" -}}
+{{ template "zsh/darwin" . }}
+{{- else if eq .chezmoi.os "linux" -}}
+{{ template "zsh/linux" . }}
+{{- end }}
 setopt hist_ignore_dups share_history
 
 
@@ -76,7 +76,6 @@ unalias z 2>/dev/null
 # =========================
 # alias
 # =========================
-[[ "$OSTYPE" != darwin* ]] && alias kitty='GLFW_IM_MODULE=ibus kitty'
 (( $+commands[perl-rename] )) && alias prn='perl-rename'
 (( $+commands[felix] )) && alias fe='felix'
 
@@ -234,28 +233,6 @@ to_utf8() {
 }
 
 
-if [[ "$OSTYPE" != darwin* ]]; then
-  # 壁紙切り替え
-  change_bg() {
-    local link="$HOME/Pictures/bg.png"
-
-    if [[ -z "$1" ]]; then
-      echo "usage: change_bg <fullpath>"
-      echo "example: change_bg ~/Pictures/Wallpapers/01.jpg"
-      echo "example: change_bg /mnt/storage/wp/01.webp"
-      return 1
-    fi
-
-    local src="${1:A}"
-    if [[ ! -f "$src" ]]; then
-      echo "change_bg: no such file: $src"
-      return 1
-    fi
-
-    ln -sf "$src" "$link"
-    (( $+commands[set-wallpaper] )) && set-wallpaper
-  }
-fi
 
 # vi mode cursor shape
 # 1/2: block, 5/6: bar

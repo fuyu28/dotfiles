@@ -1,0 +1,6 @@
+# macOS 専用の配置先（Linux では除外）
+.Brewfile
+.aerospace.toml
+.zprofile
+Library/Application Support/Code/**
+Library/Application Support/Cursor/**
