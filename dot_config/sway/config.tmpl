@@ -6,6 +6,9 @@ font pango:Noto Sans {{ if eq .role "laptop" }}11{{ else }}10{{ end }}
 set $mod Mod4
 set $term kitty
 
+# Give D-Bus/systemd services the Sway display for portal file dialogs.
+exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
