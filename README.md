@@ -13,12 +13,12 @@ macOSとEndeavourOSの環境を[`chezmoi`](https://www.chezmoi.io/)で管理す�
 - Neovim (LazyVim)
 - Starship
 - mise
-- Ghostty
 
 ### macOS
 
 - Homebrewのformula・cask・tap
 - AeroSpace + borders
+- Ghostty
 - Cursor / VS Codeの汎用設定と拡張
 - Dock、Finder、キー入力の主要設定
 
