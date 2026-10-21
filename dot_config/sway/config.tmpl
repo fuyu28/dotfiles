@@ -69,21 +69,19 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86MonBrightnessUp exec brightnessctl set +10% && notify-send "Brightness ↑"
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%- && notify-send "Brightness ↓"
 
-bindsym $mod+Ctrl+b exec $term -e bmenu
 bindsym $mod+F2 exec firefox
 bindsym $mod+F3 exec thunar
 bindsym $mod+Shift+F3 exec pkexec thunar
-bindsym $mod+F5 exec $term -e mocp
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'Restarted dunst'"
 bindsym Print exec ~/.local/bin/screenshot.sh region
 bindsym $mod+Print exec ~/.local/bin/screenshot.sh full
 bindsym $mod+Shift+Print exec ~/.local/bin/screenshot.sh window
-bindsym $mod+Shift+x exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
+bindsym $mod+Shift+x exec $term -e man 5 sway
 bindsym $mod+Ctrl+x --release exec swaymsg kill
 bindsym $mod+v exec copyq show
 bindsym $mod+p exec code
 bindsym $mod+Shift+n exec $term -e nmtui
-bindsym $mod+Escape exec $term start -- btop
+bindsym $mod+Escape exec $term -e btop
 bindsym $mod+Shift+Escape exec lxtask
 
 bindsym $mod+h focus left
@@ -159,8 +157,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
 
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r reload
 # Left hand only: Super, Shift, and e.
 bindsym $mod+Shift+e exec ~/.local/bin/rofi-powermenu.sh
 bindsym $mod+r mode "resize"
