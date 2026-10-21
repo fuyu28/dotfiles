@@ -103,22 +103,22 @@ interval=30
 # where SENSOR_CHIP can be find with sensors output
 # can be used also for GPU temperature or other temperature sensors lm-sensors detects.
 
-# showing name of connected network (enable for wifi use)
-#[net]
-#label= 
-#command=echo "$(LANG=C nmcli d | grep connected  | awk '{print $4}')"
-#interval=30
+# Connected Wi-Fi SSID (use cached scan results).
+[net]
+command=~/.config/i3blocks/scripts/wifi-ssid
+markup=none
+interval=10
 
-[bandwidth]
-command=~/.config/i3blocks/scripts/bandwidth2
-interval=persist
+#[bandwidth]
+#command=~/.config/i3blocks/scripts/bandwidth2
+#interval=persist
 
-#[vpn]
-#command=~/.config/i3blocks/scripts/vpn
-#init_color=#FFFF00
-#on_color=#00FF00
-#label=VPN:
-#i# Battery indicator
+[vpn]
+command=~/.config/i3blocks/scripts/vpn
+markup=none
+interval=5
+
+# Battery indicator
 
 {{ if eq .role "laptop" }}
 [battery]
@@ -149,33 +149,33 @@ interval=2
 #command=~/.config/i3blocks/scripts/keyboard-layout
 #interval=2
 
-[keybindings]
-full_text= 
-command=~/.config/i3blocks/scripts/keyhint
+#[keybindings]
+#full_text= 
+#command=~/.config/i3blocks/scripts/keyhint
 
 # power-profiles-daemon implementation:
 # needs package power-profiles-daemon installed and the service running see here:
 # https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon
 
 #set power-profile
-[ppd_menu]
-full_text=
-command=~/.config/i3blocks/scripts/power-profiles
-color=#407437
+#[ppd_menu]
+#full_text=
+#command=~/.config/i3blocks/scripts/power-profiles
+#color=#407437
 
 #Show the current power-profile
-[ppd-status]
-command=~/.config/i3blocks/scripts/ppd-status
-interval=5
+#[ppd-status]
+#command=~/.config/i3blocks/scripts/ppd-status
+#interval=5
 
 [time]
 #label=
 command=date '+%a %d %b %H:%M'
 interval=1
 
-[shutdown_menu]
-full_text= 
-command=~/.local/bin/rofi-powermenu.sh
+#[shutdown_menu]
+#full_text= 
+#command=~/.local/bin/rofi-powermenu.sh
 [simple-2]
 full_text=: :
 color=#717171

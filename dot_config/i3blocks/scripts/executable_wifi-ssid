@@ -1,0 +1,6 @@
+#!/bin/sh
+# Read the actual SSID, rather than the NetworkManager connection profile name.
+# Avoid triggering a Wi-Fi scan on each bar update.
+LC_ALL=C nmcli -t --escape no -f IN-USE,SSID device wifi list --rescan no 2>/dev/null |
+    awk 'index($0, "*:") == 1 { print " " substr($0, 3); found = 1; exit }
+         END { if (!found) print "Wi-Fi disconnected" }'

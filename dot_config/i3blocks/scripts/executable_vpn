@@ -1,25 +1,20 @@
-#!/usr/bin/env sh
+#!/usr/bin/env python3
+"""Show active VPN connection names managed or detected by NetworkManager."""
 
-# Parses output from nmcli to show the current connected VPN name/status for i3block
-# Source: https://github.com/vivien/i3blocks-contrib/tree/master/nm-vpn
-# uncomment in $HOME/.config/i3blocks/config if you want to use it
+import subprocess
 
-init_color=${init_color:-#FFFF00}
-on_color=${on_color:-#00FF00}
-export init_color on_color
-nmcli -t connection show --active | awk -F ':' '
-BEGIN {
-    init_color=ENVIRON["init_color"]
-    on_color=ENVIRON["on_color"]
-}
-$3=="vpn" {
-    name=$1
-    status="INIT"
-    color=init_color
-}
-$3=="tun" || ($4~/^tap/ || $3~/^tap/) {
-    if(!name) name=$1
-    status="ON"
-    color=on_color
-}
-END {if(status) printf("%s\n%s\n%s\n", name, status, color)}'
+try:
+    result = subprocess.run(
+        ["nmcli", "-t", "--escape", "no", "-f", "TYPE,NAME",
+         "connection", "show", "--active"],
+        capture_output=True, text=True, check=True, timeout=4,
+    )
+except (OSError, subprocess.SubprocessError):
+    print("VPN: Unknown")
+else:
+    names = []
+    for line in result.stdout.splitlines():
+        kind, separator, name = line.partition(":")
+        if separator and kind in {"vpn", "wireguard", "tun"} and name not in names:
+            names.append(name)
+    print("VPN: " + ", ".join(names) if names else "")
