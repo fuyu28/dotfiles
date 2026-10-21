@@ -1,4 +1,10 @@
 #!/bin/sh
+
+# Open NetworkManager's terminal UI on left click without blocking bar updates.
+if [ "${BLOCK_BUTTON:-}" = 1 ]; then
+    kitty -e nmtui </dev/null >/dev/null 2>&1 &
+fi
+
 # Read the actual SSID, rather than the NetworkManager connection profile name.
 # Avoid triggering a Wi-Fi scan on each bar update.
 LC_ALL=C nmcli -t --escape no -f IN-USE,SSID device wifi list --rescan no 2>/dev/null |
