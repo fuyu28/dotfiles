@@ -4,7 +4,7 @@
 # power-profiles-daemon implementation:
 # needs package power-profiles-daemon installed and the service running see here:
 # https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon
-# used in i3-blocks: ~/.config/i3/i3blocks.conf together with: ~/.config/i3/scripts/power-profiles
+# used in i3-blocks: ~/.config/i3blocks/config together with: ~/.config/i3blocks/scripts/power-profiles
 
 
 # assign tags or translations to each profile

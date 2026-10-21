@@ -422,7 +422,7 @@ client.background       #1e1b2e
 # (plus the system information i3status finds out, if available)
 bar {
         font pango: Noto Sans Regular {{ if eq .role "laptop" }}11{{ else }}10{{ end }}
-        status_command i3blocks -c ~/.config/i3/i3blocks.conf
+        status_command i3blocks -c ~/.config/i3blocks/config
             position bottom
 #           i3bar_command i3bar --transparency
 # it could be that you have no primary display set: set one (xrandr --output <output> --primary)

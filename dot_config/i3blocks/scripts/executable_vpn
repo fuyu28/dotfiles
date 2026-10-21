@@ -2,7 +2,7 @@
 
 # Parses output from nmcli to show the current connected VPN name/status for i3block
 # Source: https://github.com/vivien/i3blocks-contrib/tree/master/nm-vpn
-# uncomment in $HOME/.config/i3/i3blocks.conf if you want to use it
+# uncomment in $HOME/.config/i3blocks/config if you want to use it
 
 init_color=${init_color:-#FFFF00}
 on_color=${on_color:-#00FF00}
