@@ -22,6 +22,7 @@ return {
   { import = "plugins.lang.markdown" },
   { import = "plugins.lang.python" },
   { import = "plugins.lang.tex" },
+  { import = "plugins.vimtex" },
   { import = "plugins.dot" },
   { import = "plugins.mini_hipatterns" },
 }
