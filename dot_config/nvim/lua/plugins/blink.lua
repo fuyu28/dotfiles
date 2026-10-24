@@ -60,6 +60,11 @@ return {
         ghost_text = {
           enabled = vim.g.ai_cmp,
         },
+        list = {
+          selection = {
+            preselect = false,
+          },
+        },
       },
 
       -- experimental signature help support
