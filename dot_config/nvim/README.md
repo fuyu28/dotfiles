@@ -66,7 +66,6 @@ nvim --headless -u NONE -i NONE -l tests/smoke.lua
 | `folke/noice.nvim`                            | メッセージ、コマンドライン、通知の表示を改善                   |
 | `MunifTanjim/nui.nvim`                        | UI 部品を提供する noice などの依存ライブラリ                   |
 | `folke/which-key.nvim`                        | `<leader>` などのキーバインド候補を表示                        |
-| `catppuccin/nvim`                             | Catppuccin カラースキーム                                      |
 | `folke/tokyonight.nvim`                       | TokyoNight カラースキーム（現在の既定）                        |
 | `MagicDuck/grug-far.nvim`                     | プロジェクト内の検索・置換 UI                                  |
 | `folke/flash.nvim`                            | 移動先を素早く選ぶジャンプ・検索操作                           |
@@ -80,6 +79,8 @@ nvim --headless -u NONE -i NONE -l tests/smoke.lua
 | `rafamadriz/friendly-snippets`                | 各言語のスニペット集                                           |
 | `nvim-mini/mini.pairs`                        | 括弧や引用符を自動で対にする                                   |
 | `nvim-mini/mini.ai`                           | Treesitter 対応の拡張テキストオブジェクト                      |
+| `nvim-mini/mini.hipatterns`                   | カラーコードや Tailwind CSS の色クラスを実際の色で表示         |
+| `nvim-mini/mini.trailspace`                   | 行末の空白をハイライト                                         |
 | `folke/ts-comments.nvim`                      | TypeScript 系ファイルのコメント記法を補正                      |
 | `folke/lazydev.nvim`                          | Lua 設定を編集する際の開発用補完・型情報                       |
 | `neovim/nvim-lspconfig`                       | LSP サーバーを Neovim に接続・設定                             |
