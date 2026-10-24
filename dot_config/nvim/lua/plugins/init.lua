@@ -25,4 +25,5 @@ return {
   { import = "plugins.vimtex" },
   { import = "plugins.dot" },
   { import = "plugins.mini_hipatterns" },
+  { import = "plugins.trailspace" },
 }
