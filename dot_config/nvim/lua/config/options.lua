@@ -37,6 +37,17 @@ vim.g.deprecation_warnings = false
 -- You can disable this for a buffer by setting `vim.b.trouble_lualine = false`
 vim.g.trouble_lualine = true
 
+--- for Ansible
+vim.filetype.add({
+  pattern = {
+    [".*/inventory/.*%.ya?ml"] = "yaml.ansible",
+    [".*/playbooks/.*%.ya?ml"] = "yaml.ansible",
+    [".*/roles/.*%.ya?ml"] = "yaml.ansible",
+    [".*/group_vars/.*%.ya?ml"] = "yaml.ansible",
+    [".*/host_vars/.*%.ya?ml"] = "yaml.ansible",
+  },
+})
+
 local opt = vim.opt
 
 opt.autowrite = true -- Enable auto write
