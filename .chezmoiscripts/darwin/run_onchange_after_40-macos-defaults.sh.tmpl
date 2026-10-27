@@ -1,4 +1,3 @@
-{{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 set -euo pipefail
 
@@ -13,4 +12,3 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 killall Dock >/dev/null 2>&1 || true
 killall Finder >/dev/null 2>&1 || true
-{{- end }}

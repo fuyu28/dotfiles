@@ -1,4 +1,4 @@
-{{- if and (eq .chezmoi.os "linux") (eq .role "laptop") -}}
+{{- if eq .role "laptop" -}}
 #!/bin/bash
 # {{ include "xorg.conf.d/00-keyboard.conf" | sha256sum }}
 # {{ include "xorg.conf.d/30-touchpad.conf" | sha256sum }}

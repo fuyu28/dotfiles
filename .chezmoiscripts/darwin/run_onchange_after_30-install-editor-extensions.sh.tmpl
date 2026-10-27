@@ -1,4 +1,3 @@
-{{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 set -euo pipefail
 
@@ -31,4 +30,3 @@ if command -v code >/dev/null 2>&1; then
     code --install-extension "$extension" --force
   done
 fi
-{{- end }}

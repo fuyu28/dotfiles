@@ -1,7 +1,8 @@
 # macOS 専用の配置先（Linux では除外）
+# ディレクトリはディレクトリ名ごと除外し、空ディレクトリも作らせない
+.chezmoiscripts/darwin/**
 .Brewfile
 .aerospace.toml
-.config/ghostty/**
+.config/ghostty
 .zprofile
-Library/Application Support/Code/**
-Library/Application Support/Cursor/**
+Library

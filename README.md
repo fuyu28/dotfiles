@@ -102,6 +102,7 @@ miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変
 .
 ├── .chezmoi.toml.tmpl
 ├── .chezmoiignore.tmpl
+├── .chezmoiscripts/{darwin,linux}/
 ├── .chezmoitemplates/
 │   ├── ignore/{darwin,linux}
 │   └── zsh/{darwin,linux}
@@ -114,7 +115,6 @@ miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変
 │   ├── nvim/
 │   └── polybar/
 ├── Library/Application Support/
-├── run_onchange_*.sh.tmpl
 ├── dot_gitconfig
 ├── dot_latexmkrc
 ├── dot_tmux.conf
@@ -127,7 +127,7 @@ miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変
 
 共通設定は `dot_config/` などの配置先に対応するファイルで管理します。差分が数行なら Ghostty のようにテンプレート内で分岐し、まとまった差分は `.chezmoitemplates/` に切り出します。Zsh は `dot_zshrc.tmpl` が共通設定を持ち、`zsh/darwin` または `zsh/linux` を適用時に埋め込みます。
 
-OS 専用のファイルを追加したら、`.chezmoitemplates/ignore/darwin` または `ignore/linux` に**配置先のパス**を追加します（例: `dot_aerospace.toml` → `.aerospace.toml`）。`.chezmoiignore.tmpl` が現在の OS に不要な一覧を読み込みます。共通ファイルには登録不要です。
+OS 専用のファイルを追加したら、`.chezmoitemplates/ignore/darwin` または `ignore/linux` に**配置先のパス**を追加します（例: `dot_aerospace.toml` → `.aerospace.toml`）。ディレクトリは `dir/**` ではなく `dir` で書きます。`dir/**` だと中身だけが除外され、空のディレクトリが作られます。OS 専用の run スクリプトは `.chezmoiscripts/darwin/` または `.chezmoiscripts/linux/` に置けば、もう一方の OS では丸ごと除外されます。`.chezmoiignore.tmpl` が現在の OS に不要な一覧を読み込みます。共通ファイルには登録不要です。
 
 パッケージ導入スクリプトは OS ごとに分けています。Linux のパッケージ一覧には EndeavourOS 固有のパッケージも含むため、自動導入は EndeavourOS のみに限定しています。`role` と壁紙のパスは引き続き各端末の `~/.config/chezmoi/chezmoi.toml` で指定します。
 
