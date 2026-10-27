@@ -5,6 +5,8 @@
 # by joekamprad [Aug 2025]
 
 bar_color="#7f7fff"
+mute_color="#ff7f7f"
+mute_bar_color="#5a4a6a"
 volume_step=1
 brightness_step=5
 max_volume=100
@@ -50,9 +52,19 @@ function get_brightness_icon {
 }
 
 function show_volume_notif {
+    # i3blocksのvolumeブロック(signal=10)を即時更新する
+    pkill -RTMIN+10 -x i3blocks
     volume=$(get_volume)
-    get_volume_icon
-    notify-send -t "$notification_timeout" "$volume_icon Volume: $volume%" -h int:value:"$volume" -h string:x-canonical-private-synchronous:volume
+    if [ "$(get_mute)" == "yes" ]; then
+        # ミュート中は音量表示と見分けがつくよう、文言・アイコン・色を変える
+        notify-send -t "$notification_timeout" -i audio-volume-muted \
+            -h string:fgcolor:"$mute_color" -h string:frcolor:"$mute_color" -h string:hlcolor:"$mute_bar_color" \
+            -h int:value:"$volume" -h string:x-canonical-private-synchronous:volume \
+            "MUTED" "Volume: $volume%"
+    else
+        get_volume_icon
+        notify-send -t "$notification_timeout" "$volume_icon Volume: $volume%" -h int:value:"$volume" -h string:x-canonical-private-synchronous:volume
+    fi
 }
 
 

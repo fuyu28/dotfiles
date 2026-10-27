@@ -34,5 +34,12 @@ else
     SYMB=$AUDIO_MUTED
 fi
 
-# Single-line output for i3blocks
-echo "${SYMB} ${VOL}%"
+# i3blocks output: full_text, short_text, color
+if [[ "$MUTED" == "yes" ]]; then
+    # 音量表示と見分けがつくよう、ミュート中は赤字でMUTEDと出す
+    echo "${SYMB} MUTED"
+    echo "${SYMB} MUTED"
+    echo "#ff7f7f"
+else
+    echo "${SYMB} ${VOL}%"
+fi
