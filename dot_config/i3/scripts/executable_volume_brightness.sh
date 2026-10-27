@@ -52,14 +52,14 @@ function get_brightness_icon {
 function show_volume_notif {
     volume=$(get_volume)
     get_volume_icon
-    notify-send   -i volume_icon -t 1000 "Volume" "$volume_icon $volume%" -h int:value:$volume -h string:x-canonical-private-synchronous:volume
+    notify-send -t "$notification_timeout" "$volume_icon Volume: $volume%" -h int:value:"$volume" -h string:x-canonical-private-synchronous:volume
 }
 
 
 function show_brightness_notif {
     get_brightness_icon
     brightness=$(get_brightness_percent)
-    notify-send  -i brightness_icon -t $notification_timeout -h string:x-dunst-stack-tag:brightness_notif -h int:value:$brightness "$brightness_icon $brightness%"
+    notify-send -t "$notification_timeout" -h string:x-dunst-stack-tag:brightness_notif -h int:value:"$brightness" "$brightness_icon Brightness: $brightness%"
 }
 
 
