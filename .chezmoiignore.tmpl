@@ -3,6 +3,13 @@ README.md
 # Installed to /etc/X11/xorg.conf.d by .chezmoiscripts/linux/run_onchange_after_50-install-xorg-config.sh
 xorg.conf.d/**
 
+{{ if not .skk -}}
+# SKK を使わないマシンでは設定・辞書を置かない
+.config/fcitx5/conf/skk.conf
+.config/libskk
+.local/share/fcitx5/skk
+{{- end }}
+
 {{ if ne .chezmoi.os "linux" -}}
 {{ template "ignore/linux" . }}
 {{- end }}

@@ -1,7 +1,10 @@
+{{- /* 解像度などマシン固有の値は role で切り替える */ -}}
+{{- $role := promptChoiceOnce . "role" "Machine role" (list "desktop" "laptop") -}}
+{{- $skk := promptBoolOnce . "skk" "Use SKK for Japanese input (false: mozc)" true -}}
 [data]
-role = "laptop"
-#role = "desktop"
+role = {{ $role | quote }}
+skk = {{ $skk }}
 
 [data.wallpaper]
 mode = "fill"
-path = "/home/user/Pictures/bg.png"
+path = {{ joinPath .chezmoi.homeDir "Pictures/bg.png" | quote }}
