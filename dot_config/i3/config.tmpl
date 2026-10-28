@@ -111,7 +111,6 @@ bindsym $mod+v exec --no-startup-id copyq show
 bindsym $mod+p exec --no-startup-id code
 bindsym $mod+Shift+n exec --no-startup-id $term -e "nmtui"
 bindsym $mod+Escape exec --no-startup-id $term start -- btop
-bindsym $mod+Shift+Escape exec --no-startup-id lxtask
 
 # focus movement
 bindsym $mod+h focus left
@@ -287,9 +286,6 @@ exec_always --no-startup-id xrandr --output eDP-1 --mode 2880x1800 --rate 60.00
 exec_always --no-startup-id xrdb -merge ~/.Xresources
 
 {{ end -}}
-# Cursor
-exec_always --no-startup-id env XCURSOR_THEME={{ (index .cursor .role).theme }} XCURSOR_SIZE={{ (index .cursor .role).size }} xsetroot -cursor_name left_ptr
-
 ## compositor
 
 # aka transparency
