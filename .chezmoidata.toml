@@ -2,14 +2,12 @@
 # them still applies; values in chezmoi.toml take precedence.
 skk = true
 
-# Shared GTK appearance settings; toolkit-specific values follow below.
-# DPI stays machine-specific.
+# Shared GTK appearance settings. The cursor depends on the display and
+# lives under [cursor.<role>].
 [gtk]
 gtk-theme-name = "Arc-Dark"
 gtk-icon-theme-name = "Qogir-Dark"
 gtk-font-name = "Noto Sans 10"
-gtk-cursor-theme-name = "Bibata-Modern-Classic"
-gtk-cursor-theme-size = 32
 gtk-toolbar-style = "GTK_TOOLBAR_ICONS"
 gtk-toolbar-icon-size = "GTK_ICON_SIZE_LARGE_TOOLBAR"
 gtk-button-images = 0
@@ -21,14 +19,6 @@ gtk-xft-hinting = 1
 gtk-xft-hintstyle = "hintslight"
 gtk-xft-rgba = "rgb"
 gtk-application-prefer-dark-theme = 1
-
-# Preserve the current local appearance for each toolkit.
-[gtk2]
-gtk-cursor-theme-name = "Qogir-Dark"
-gtk-cursor-theme-size = 24
-
-[xsettings]
-icon-theme-name = "Qogir-dark"
 
 # Cursor size follows the display: the laptop panel is HiDPI.
 [cursor.laptop]
