@@ -1,90 +1,36 @@
 # dotfiles
 
-macOSとEndeavourOSの環境を[`chezmoi`](https://www.chezmoi.io/)で管理する個人用dotfilesです。
-シェル・Git・tmux・Neovimなどは共通化し、デスクトップ環境とパッケージ導入はOSごとに分離しています。
+macOS と EndeavourOS の環境を [chezmoi](https://www.chezmoi.io/) で管理する個人用 dotfiles。
 
-## 管理対象
+- 共通: Zsh (zinit)、Git / GitHub CLI、tmux、Neovim (LazyVim)、Starship、mise
+- macOS: Homebrew、AeroSpace + borders、Ghostty、Cursor / VS Code、macOS の主要設定
+- Linux: i3 / sway、i3blocks、Rofi、Picom、Dunst、Kitty、fcitx5
 
-### 共通
-
-- Zsh + zinit
-- Git / GitHub CLI
-- tmux
-- Neovim (LazyVim)
-- Starship
-- mise
-
-### macOS
-
-- Homebrewのformula・cask・tap
-- AeroSpace + borders
-- Ghostty
-- Cursor / VS Codeの汎用設定と拡張
-- Dock、Finder、キー入力の主要設定
-
-### Linux
-
-- EndeavourOS + i3
-- Polybar、Rofi、Picom、Dunst、i3blocks
-- KittyとX11用スクリプト
-
-`.chezmoiignore.tmpl`がOSを判定するため、macOSへi3設定を配置したり、LinuxへAeroSpaceやBrewfileを配置したりすることはありません。
-
-## 新しいmacOSをセットアップする
-
-### 1. chezmoiで適用する
-
-Homebrewがなくても、chezmoiの公式インストーラーから初期化できます。
+## セットアップ
 
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply fuyu28/dotfiles
-```
-
-適用時に次の処理が実行されます。
-
-1. Homebrewをインストール
-2. `Brewfile`のformula・caskをインストール
-3. dotfilesを配置
-4. `mise install`で言語・ツールチェインを導入
-5. Cursor / VS CodeのCLIがあれば拡張を導入
-6. 主要なmacOS設定を反映
-
-すでにchezmoiがある場合:
-
-```sh
+# chezmoi がすでにある場合
 chezmoi init --apply fuyu28/dotfiles
 ```
 
-### 2. 手動で戻すもの
+macOS では Homebrew と `Brewfile` のパッケージ、mise のツール、エディタ拡張、macOS の設定まで入る。
 
-認証情報はリポジトリに保存していません。必要なものだけ再認証してください。
+Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる。初回の init で次を聞かれ、`~/.config/chezmoi/chezmoi.toml` に保存される。
 
-```sh
-gh auth login
-```
+| キー | 内容 |
+|---|---|
+| `role` | `desktop` / `laptop`。電源管理やバッテリー表示などの切り替えに使う |
+| `skk` | 日本語入力に SKK を使うか（false なら mozc） |
+| `private` | private リポジトリ `fuyu28/dotfiles-private` を使うか（要 `gh auth login`） |
 
-- SSH鍵を新規作成または安全なバックアップから復元
-- GitHub、Cursor、各アプリへログイン
-- Visual Studio Code、Google Chrome、SlackなどHomebrew管理外だったアプリを必要に応じて導入
-- フォント（HackGen Console NF）を導入
-- FileVaultとファイアウォールを用途に合わせて有効化
+テンプレートに項目が増えたら `chezmoi init` を実行し直す。既存の値は聞かれない。
 
-`~/.config/gh/hosts.yml`、SSH秘密鍵、Keychain、シェル履歴、エディタ履歴は意図的に管理していません。
+認証情報は管理しないので、`gh auth login`、SSH 鍵、各アプリへのログイン、フォント（HackGen Console NF）は手動で戻す。
 
-## Linuxで使う
+## 公開しないもの
 
-```sh
-chezmoi init --apply fuyu28/dotfiles
-```
-
-初期値はlaptopです。desktopへ切り替える場合は、`~/.config/chezmoi/chezmoi.toml`を変更します。
-
-```toml
-[data]
-role = "desktop"
-```
-
-EndeavourOS の明示インストール済み pacman パッケージと AUR パッケージは適用時に導入します。AUR は EndeavourOS リポジトリから導入される `paru` を使うため、i3 周辺を含め Arch / EndeavourOS を前提にしています。
+このリポジトリは公開前提なので、秘密情報は置かない。再配布できない素材など公開できないものは `fuyu28/dotfiles-private` に置き、`private = true` の端末でだけ external として clone して使う。
 
 ## 更新
 
@@ -92,71 +38,20 @@ EndeavourOS の明示インストール済み pacman パッケージと AUR パ�
 chezmoi update
 ```
 
-Homebrewパッケージを変更した場合は`~/.Brewfile`ではなく、chezmoi source stateの`dot_Brewfile`を編集します。内容が変わると次回適用時に`brew bundle`が再実行されます。
+パッケージや mise のツールは、`dot_Brewfile`、Linux のパッケージスクリプト、`dot_config/mise/config.toml` を変更すると次回の適用時に入る。
 
-miseのバージョン指定は`~/.config/mise/config.toml`で管理され、変更時に`mise install`が再実行されます。
+## OS ごとの設定
 
-## 主な構成
+- OS 専用のファイルは、配置先のパスを `.chezmoitemplates/ignore/darwin` か `ignore/linux` に追加する。ディレクトリは `dir/**` ではなく `dir` と書く（`dir/**` だと空のディレクトリが作られる）。
+- OS 専用のスクリプトは `.chezmoiscripts/darwin/` か `linux/` に置く。
+- 数行の差分はテンプレート内で分岐し、大きな差分は `.chezmoitemplates/` に切り出す。
 
-```text
-.
-├── .chezmoi.toml.tmpl
-├── .chezmoiignore.tmpl
-├── .chezmoiscripts/{darwin,linux}/
-├── .chezmoitemplates/
-│   ├── ignore/{darwin,linux}
-│   └── zsh/{darwin,linux}
-├── dot_Brewfile
-├── dot_config/
-│   ├── aerospace/
-│   ├── ghostty/
-│   ├── i3/
-│   ├── mise/
-│   ├── nvim/
-│   └── polybar/
-├── Library/Application Support/
-├── dot_gitconfig
-├── dot_latexmkrc
-├── dot_tmux.conf
-├── dot_xprofile
-├── dot_zprofile
-└── dot_zshrc.tmpl
-```
+## Linux の外観
 
-## OS ごとの設定を追加する
+値は `.chezmoidata.toml` にまとめている。
 
-共通設定は `dot_config/` などの配置先に対応するファイルで管理します。差分が数行なら Ghostty のようにテンプレート内で分岐し、まとまった差分は `.chezmoitemplates/` に切り出します。Zsh は `dot_zshrc.tmpl` が共通設定を持ち、`zsh/darwin` または `zsh/linux` を適用時に埋め込みます。
+- `[gtk]`: GTK 3・4 と `~/.Xresources` のテーマ・フォント・ダークモード。i3 / sway の起動時に GSettings へ同期する。
+- `[cursor]`: カーソルテーマと論理サイズ。画面の倍率をかけて使う。
+- `[[monitors]]`: モニタごとの倍率とモード。載っていないモニタは倍率 1。`make` / `model` / `serial` は `swaymsg -t get_outputs` の表記に合わせる。sway は output 設定を生成し、i3 は `display-scale` が EDID で照合して DPI とカーソルサイズを決める。
 
-OS 専用のファイルを追加したら、`.chezmoitemplates/ignore/darwin` または `ignore/linux` に**配置先のパス**を追加します（例: `dot_aerospace.toml` → `.aerospace.toml`）。ディレクトリは `dir/**` ではなく `dir` で書きます。`dir/**` だと中身だけが除外され、空のディレクトリが作られます。OS 専用の run スクリプトは `.chezmoiscripts/darwin/` または `.chezmoiscripts/linux/` に置けば、もう一方の OS では丸ごと除外されます。`.chezmoiignore.tmpl` が現在の OS に不要な一覧を読み込みます。共通ファイルには登録不要です。
-
-パッケージ導入スクリプトは OS ごとに分けています。Linux のパッケージ一覧には EndeavourOS 固有のパッケージも含むため、自動導入は EndeavourOS のみに限定しています。`role` と壁紙のパスは引き続き各端末の `~/.config/chezmoi/chezmoi.toml` で指定します。
-
-## 秘密情報の方針
-
-このリポジトリは公開を前提としています。秘密情報は直接追加せず、`gh auth login`、SSH鍵、macOS Keychainなど各サービスの安全な認証フローで復元します。
-
-## GTKの外観設定
-
-GTK 3・4 と `~/.Xresources` の共通値は `.chezmoidata.toml` の `[gtk]` で管理します。カーソル（`[cursor]`）のサイズは倍率をかける前の論理サイズです。`~/.icons/default` もこのテーマを継承します。
-
-カーソルテーマ Kiritan は再配布禁止の素材から作るため、このリポジトリには変換スクリプト `install-kiritan-cursor` だけを置きます。素材は private リポジトリ `fuyu28/dotfiles-private` にあり、`chezmoi init` で `private` を true にした端末では次のように動きます。
-
-1. `.chezmoiexternal.toml.tmpl` が `~/.local/share/dotfiles-private` に clone する（gh の認証を使います）
-2. `run_onchange_after_60-install-kiritan-cursor.sh` が素材か変換スクリプトの変更時に `~/.local/share/icons/Kiritan` を作り直す
-
-X11 と sway の両方で使えます。private リポジトリを使わない端末では、zip を手元に置いて直接変換できます。
-
-```sh
-install-kiritan-cursor ~/Downloads/cursors/きりたんカーソル.zip
-```
-
-i3・sway の起動時は GTK 3 設定から GSettings へフォント・テーマ・カーソル（サイズを含む）とダークモード（`color-scheme`）を同期し、`~/.Xresources` を読み込みます。
-
-## 画面の倍率とモード
-
-倍率は端末ではなくモニタごとに、`.chezmoidata.toml` の `[[monitors]]` へ書きます。`make`・`model`・`serial` は `swaymsg -t get_outputs` の表記に合わせます。載っていないモニタは倍率 1、推奨モードのままです。
-
-- sway: 各モニタに `output "<make> <model> <serial>" mode … scale …` を生成します。カーソルや GTK も sway 側で拡大されます。
-- i3（X11）: `~/.config/i3/scripts/display-scale` が EDID の model（と serial）でモニタを照合してモードを設定し、primary のモニタの倍率から `Xft.dpi` とカーソルサイズを決めます。X11 は DPI が全画面で共通です。
-
-モニタを追加するときは、そのモニタをつないだ状態で `swaymsg -t get_outputs` か `xrandr --props` の EDID から model を確認します。テーマ・アイコン・フォント自体は各端末にインストールする必要があります。`nwg-look` で変更した場合は、対応するデータにも反映してください。
+テーマ・アイコン・フォント自体は各端末にインストールしておく。
