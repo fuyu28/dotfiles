@@ -3,6 +3,10 @@ README.md
 # Installed to /etc/X11/xorg.conf.d by .chezmoiscripts/linux/run_onchange_after_50-install-xorg-config.sh
 xorg.conf.d/**
 
+{{ if not .private -}}
+# 壁紙は private リポジトリにある
+Pictures
+{{ end -}}
 {{ if not .skk -}}
 # SKK を使わないマシンでは設定・辞書を置かない
 .config/fcitx5/conf/skk.conf

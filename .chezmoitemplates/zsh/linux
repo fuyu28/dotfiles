@@ -7,7 +7,7 @@ change_bg() {
 
   if [[ -z "$1" ]]; then
     echo "usage: change_bg <fullpath>"
-    echo "example: change_bg ~/Pictures/Wallpapers/01.jpg"
+    echo "example: change_bg ~/Pictures/Wallpaper/frieren.png"
     echo "example: change_bg /mnt/storage/wp/01.webp"
     return 1
   fi
