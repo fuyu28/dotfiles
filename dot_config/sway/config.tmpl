@@ -48,9 +48,10 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     xkb_layout jp
 }
 
-seat * xcursor_theme Kiritan 48
 exec_always ~/.config/sway/keyboard-layouts
 {{ end }}
+
+seat * xcursor_theme {{ (index .cursor .role).theme }} {{ (index .cursor .role).size }}
 
 bindsym $mod+u border none
 bindsym $mod+y border pixel 1

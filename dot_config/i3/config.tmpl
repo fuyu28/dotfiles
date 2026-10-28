@@ -286,10 +286,10 @@ exec_always --no-startup-id xrandr --output eDP-1 --mode 2880x1800 --rate 60.00
 # Load the 150% HiDPI text/UI scaling from ~/.Xresources.
 exec_always --no-startup-id xrdb -merge ~/.Xresources
 
-# Cursor
-exec_always --no-startup-id env XCURSOR_THEME=Kiritan XCURSOR_SIZE=48 xsetroot -cursor_name left_ptr
-
 {{ end -}}
+# Cursor
+exec_always --no-startup-id env XCURSOR_THEME={{ (index .cursor .role).theme }} XCURSOR_SIZE={{ (index .cursor .role).size }} xsetroot -cursor_name left_ptr
+
 ## compositor
 
 # aka transparency

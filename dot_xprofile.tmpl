@@ -7,11 +7,11 @@ export XMODIFIERS=@im=fcitx
 export GTK_USE_PORTAL=1
 
 # XDG_DATA_DIRS の補完（Flatpak / icons / themes の検索パス）
-export XDG_DATA_DIRS="/home/fuyu/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
+export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
 
 # カーソル
-export XCURSOR_THEME=Kiritan
-export XCURSOR_SIZE=48
+export XCURSOR_THEME={{ (index .cursor .role).theme }}
+export XCURSOR_SIZE={{ (index .cursor .role).size }}
 
 # LightDM は Wayland セッションでもこのファイルを読む。その時点では DISPLAY が空。
 # X11 専用の処理はそこで止める。xrdb は Xsession ラッパーも呼ぶので、画面が無いときは無効化する。

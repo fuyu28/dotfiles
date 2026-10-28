@@ -10,9 +10,7 @@ export XDG_SESSION_DESKTOP=sway
 # ~/.xprofile sets this for kitty on X11. On Wayland it bypasses fcitx.
 unset GLFW_IM_MODULE
 export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
-{{ if eq .role "laptop" -}}
-export XCURSOR_THEME=Kiritan
-export XCURSOR_SIZE=48
-{{ end -}}
+export XCURSOR_THEME={{ (index .cursor .role).theme }}
+export XCURSOR_SIZE={{ (index .cursor .role).size }}
 exec sway "$@"
 {{ end }}

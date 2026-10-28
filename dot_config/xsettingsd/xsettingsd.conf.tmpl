@@ -1,6 +1,6 @@
 Net/ThemeName {{ index .gtk "gtk-theme-name" | quote }}
 Net/IconThemeName {{ index .xsettings "icon-theme-name" | quote }}
-Gtk/CursorThemeName {{ index .xsettings "cursor-theme-name" | quote }}
+Gtk/CursorThemeName {{ (index .cursor .role).theme | quote }}
 Net/EnableEventSounds {{ index .gtk "gtk-enable-event-sounds" }}
 EnableInputFeedbackSounds {{ index .gtk "gtk-enable-input-feedback-sounds" }}
 Xft/Antialias {{ index .gtk "gtk-xft-antialias" }}

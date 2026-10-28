@@ -23,10 +23,14 @@ gtk-application-prefer-dark-theme = 1
 gtk-cursor-theme-name = "Qogir-Dark"
 gtk-cursor-theme-size = 24
 
-[gtk3]
-gtk-cursor-theme-name = "Kiritan"
-gtk-cursor-theme-size = 48
-
 [xsettings]
 icon-theme-name = "Qogir-dark"
-cursor-theme-name = "Qogir-dark"
+
+# Cursor size follows the display: the laptop panel is HiDPI.
+[cursor.laptop]
+theme = "Kiritan"
+size = 48
+
+[cursor.desktop]
+theme = "Qogir-Dark"
+size = 24
