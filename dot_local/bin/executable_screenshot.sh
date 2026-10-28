@@ -43,6 +43,31 @@ print(f'{rect["x"]},{rect["y"]} {rect["width"]}x{rect["height"]}')
 PY
 }
 
+focused_output() {
+  swaymsg -t get_outputs | python3 -c '
+import json, sys
+print(next(o["name"] for o in json.load(sys.stdin) if o["focused"]))
+'
+}
+
+# On Wayland, region mode opens the focused output in satty with the crop
+# tool selected. The crop can be adjusted before Enter writes the result to
+# the given file; Enter without a crop keeps the full screen. Escape leaves
+# the file empty, which main treats as a cancel. Only a grim failure fails.
+edit_capture() {
+  local output
+  output="$(focused_output)" || return 1
+  grim -o "$output" - | {
+    satty --filename - \
+      --fullscreen current-screen \
+      --initial-tool crop \
+      --output-filename - \
+      --actions-on-enter save-to-file,exit \
+      --actions-on-escape exit \
+      --disable-notifications >"$1" || true
+  }
+}
+
 prepare_capture() {
   local backend=x11 geometry window
   [[ -z ${WAYLAND_DISPLAY:-} ]] || backend=wayland
@@ -59,11 +84,8 @@ prepare_capture() {
 
   case "$backend:$mode" in
   wayland:region)
-    if ! geometry="$(slurp)" || [[ -z $geometry ]]; then
-      notify "Selection cancelled or unavailable"
-      exit 0
-    fi
-    capture=(grim -g "$geometry")
+    capture=(edit_capture)
+    interactive=1
     ;;
   wayland:full)
     capture=(grim)
@@ -115,6 +137,7 @@ PY_CLEANUP
 
 main() {
   mode="${1:-}"
+  interactive=0
   prepare_capture
 
   local shots="$HOME/Pictures/Screenshots" file
@@ -122,9 +145,18 @@ main() {
   temporary="$(mktemp --suffix=.png)" || fail "Could not create a temporary image."
   trap cleanup EXIT
 
-  # Publish only successful captures. The random suffix prevents collisions.
-  file="$shots/$(date +%F_%H-%M-%S)_${temporary##*/}"
-  capture_with_retry || fail "Capture failed after two attempts. No image was saved."
+  # Publish only successful captures. Milliseconds keep names unique.
+  file="$shots/$(date +%F_%H-%M-%S-%3N).png"
+  if ((interactive)); then
+    # Retrying would reopen the editor, so an interactive capture runs once.
+    "${capture[@]}" "$temporary" || fail "Capture failed. No image was saved."
+    if [[ ! -s $temporary ]]; then
+      notify "Selection cancelled"
+      exit 0
+    fi
+  else
+    capture_with_retry || fail "Capture failed after two attempts. No image was saved."
+  fi
   mv -- "$temporary" "$file" || fail "Could not save the screenshot."
   copy_png "$file" || fail "Image saved as ${file##*/}, but copying to the clipboard failed."
   notify "$label"$'\n'"${file##*/}" -i "$file"
