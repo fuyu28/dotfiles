@@ -1,3 +1,7 @@
+# Defaults for keys that `chezmoi init` asks for. An old config without
+# them still applies; values in chezmoi.toml take precedence.
+skk = true
+
 # Shared GTK appearance settings; toolkit-specific values follow below.
 # DPI stays machine-specific.
 [gtk]
