@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+"""Pick or set the wallpaper on i3 and sway.
+
+    wallpaper              choose from ~/Pictures/Wallpaper in rofi
+    wallpaper <name|path>  set by name (extension optional) or by path
+    wallpaper --random     set a random one
+    wallpaper --current    print the current one
+    wallpaper --list       print the names (used for completion)
+
+~/Pictures/bg.png links to the choice and set-wallpaper draws it, so the
+choice survives logins on both window managers.
+"""
+
+import os
+import pathlib
+import random
+import subprocess
+import sys
+from concurrent.futures import ProcessPoolExecutor
+
+HOME = pathlib.Path.home()
+DIRECTORY = HOME / "Pictures/Wallpaper"
+LINK = HOME / "Pictures/bg.png"
+THUMBNAILS = HOME / ".cache/wallpaper-thumbnails"
+THUMBNAIL_SIZE = (320, 180)
+EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
+
+
+def wallpapers():
+    return sorted(p for p in DIRECTORY.iterdir() if p.suffix.lower() in EXTENSIONS)
+
+
+def current():
+    try:
+        return LINK.resolve(strict=True)
+    except OSError:
+        return None
+
+
+def thumbnail(source):
+    target = THUMBNAILS / f"{source.stem}.png"
+    if target.exists() and target.stat().st_mtime >= source.stat().st_mtime:
+        return target
+    from PIL import Image
+
+    with Image.open(source) as image:
+        image.thumbnail(THUMBNAIL_SIZE)
+        image.save(target)
+    return target
+
+
+def pick():
+    images = wallpapers()
+    THUMBNAILS.mkdir(parents=True, exist_ok=True)
+    # Thumbnails are built once; later runs only check mtimes.
+    with ProcessPoolExecutor() as pool:
+        thumbs = list(pool.map(thumbnail, images))
+    entries = "".join(f"{p.stem}\0icon\x1f{t}\n" for p, t in zip(images, thumbs))
+    selected = current()
+    row = next((i for i, p in enumerate(images) if p.resolve() == selected), 0)
+    result = subprocess.run(
+        ["rofi", "-dmenu", "-i", "-show-icons", "-p", "wallpaper",
+         "-selected-row", str(row),
+         "-theme", str(HOME / ".config/rofi/wallpaper.rasi")],
+        input=entries, capture_output=True, text=True,
+    )
+    name = result.stdout.strip()
+    return resolve(name) if name else None
+
+
+def resolve(name):
+    path = pathlib.Path(name).expanduser()
+    if path.is_file():
+        return path.absolute()
+    for candidate in (DIRECTORY / name, *(DIRECTORY / f"{name}{ext}" for ext in EXTENSIONS)):
+        if candidate.is_file():
+            return candidate
+    sys.exit(f"wallpaper: not found: {name}")
+
+
+def apply(path):
+    # Link through ~/Pictures/Wallpaper, not the resolved clone, so the link
+    # keeps working if the private repository moves.
+    LINK.unlink(missing_ok=True)
+    LINK.symlink_to(path)
+    subprocess.run([str(HOME / ".local/bin/set-wallpaper")], check=True)
+    print(path.name)
+
+
+def main():
+    args = sys.argv[1:]
+    if args == ["--list"]:
+        print("\n".join(p.stem for p in wallpapers()))
+    elif args == ["--current"]:
+        selected = current()
+        print(selected.name if selected else "")
+    elif args == ["--random"]:
+        choices = [p for p in wallpapers() if p.resolve() != current()]
+        apply(random.choice(choices))
+    elif len(args) == 1 and not args[0].startswith("-"):
+        apply(resolve(args[0]))
+    elif not args:
+        path = pick()
+        if path:
+            apply(path)
+    else:
+        sys.exit(__doc__.strip())
+
+
+if __name__ == "__main__":
+    main()

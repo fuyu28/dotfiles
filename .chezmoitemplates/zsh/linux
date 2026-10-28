@@ -1,23 +1,5 @@
 export TERMINAL=kitty
 alias kitty='GLFW_IM_MODULE=ibus kitty'
 
-# 壁紙切り替え
-change_bg() {
-  local link="$HOME/Pictures/bg.png"
-
-  if [[ -z "$1" ]]; then
-    echo "usage: change_bg <fullpath>"
-    echo "example: change_bg ~/Pictures/Wallpaper/frieren.png"
-    echo "example: change_bg /mnt/storage/wp/01.webp"
-    return 1
-  fi
-
-  local src="${1:A}"
-  if [[ ! -f "$src" ]]; then
-    echo "change_bg: no such file: $src"
-    return 1
-  fi
-
-  ln -sf "$src" "$link"
-  (( $+commands[set-wallpaper] )) && set-wallpaper
-}
+# 壁紙切り替え（wallpaper）などの補完。compinit より前に追加する
+fpath=("$HOME/.local/share/zsh/site-functions" $fpath)

@@ -55,3 +55,5 @@ chezmoi update
 - `[[monitors]]`: モニタごとの倍率とモード。載っていないモニタは倍率 1。`make` / `model` / `serial` は `swaymsg -t get_outputs` の表記に合わせる。sway は output 設定を生成し、i3 は `display-scale` が EDID で照合して DPI とカーソルサイズを決める。
 
 テーマ・アイコン・フォント自体は各端末にインストールしておく。
+
+壁紙は `wallpaper`（`$mod+Shift+w`）で `~/Pictures/Wallpaper` から rofi で選ぶ。`wallpaper <名前>` や `wallpaper --random` でも変えられる。

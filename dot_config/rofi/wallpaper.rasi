@@ -1,0 +1,68 @@
+/* Wallpaper picker for ~/.local/bin/wallpaper: a grid of thumbnails. */
+@import "~/.config/rofi/config.rasi"
+
+configuration {
+    font:       "Noto Sans Regular 10";
+    show-icons: true;
+}
+
+window {
+    width:            1400px;
+    background-color: @background;
+    border:           0;
+    padding:          20px;
+}
+mainbox {
+    children:         [ inputbar, listview ];
+    spacing:          12px;
+    background-color: @background;
+}
+inputbar {
+    children:         [ prompt, textbox-prompt-colon, entry ];
+    background-color: @background;
+    text-color:       @normal-foreground;
+}
+prompt, entry {
+    background-color: transparent;
+    text-color:       @normal-foreground;
+}
+textbox-prompt-colon {
+    expand:           false;
+    background-color: transparent;
+    str:        ":";
+    margin:     0px 0.3em 0em 0em;
+    text-color: @normal-foreground;
+}
+listview {
+    columns:      4;
+    flow:         horizontal;
+    lines:        3;
+    fixed-height: true;
+    spacing:      12px;
+    scrollbar:    false;
+    border:       0;
+    background-color: @background;
+}
+element {
+    orientation: vertical;
+    padding:     8px;
+    spacing:     6px;
+}
+element-icon {
+    size:             300px;
+    horizontal-align: 0.5;
+    background-color: transparent;
+}
+element-text {
+    horizontal-align: 0.5;
+    background-color: inherit;
+    text-color:       inherit;
+}
+element.normal.normal, element.alternate.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}

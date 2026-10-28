@@ -1,0 +1,7 @@
+#compdef wallpaper
+
+_arguments \
+  '(-)--random[set a random wallpaper]' \
+  '(-)--current[print the current wallpaper]' \
+  '(-)--list[print the wallpaper names]' \
+  '1:wallpaper:{compadd -- ${(f)"$(wallpaper --list 2>/dev/null)"}; _files}'
