@@ -1,6 +1,7 @@
 # Defaults for keys that `chezmoi init` asks for. An old config without
 # them still applies; values in chezmoi.toml take precedence.
 skk = true
+private = false
 
 # Shared GTK appearance settings. Cursor and scaling follow below.
 [gtk]

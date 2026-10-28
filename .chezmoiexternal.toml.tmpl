@@ -1,0 +1,8 @@
+{{- if and .private (eq .chezmoi.os "linux") }}
+# Assets that may not be redistributed (see README). Authenticates with the
+# gh credential helper from .gitconfig.
+[".local/share/dotfiles-private"]
+type = "git-repo"
+url = "https://github.com/fuyu28/dotfiles-private.git"
+refreshPeriod = "168h"
+{{- end }}

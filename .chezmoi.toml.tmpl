@@ -1,9 +1,11 @@
 {{- /* 解像度などマシン固有の値は role で切り替える */ -}}
 {{- $role := promptChoiceOnce . "role" "Machine role" (list "desktop" "laptop") -}}
 {{- $skk := promptBoolOnce . "skk" "Use SKK for Japanese input (false: mozc)" true -}}
+{{- $private := promptBoolOnce . "private" "Clone fuyu28/dotfiles-private (needs gh auth)" true -}}
 [data]
 role = {{ $role | quote }}
 skk = {{ $skk }}
+private = {{ $private }}
 
 [data.wallpaper]
 mode = "fill"

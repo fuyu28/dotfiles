@@ -139,7 +139,12 @@ OS 専用のファイルを追加したら、`.chezmoitemplates/ignore/darwin` �
 
 GTK 3・4 と `~/.Xresources` の共通値は `.chezmoidata.toml` の `[gtk]` で管理します。カーソル（`[cursor]`）のサイズは倍率をかける前の論理サイズです。`~/.icons/default` もこのテーマを継承します。
 
-カーソルテーマ Kiritan は再配布禁止の素材から作るため、このリポジトリには含めません。元の zip を手元に置き、次で `~/.local/share/icons/Kiritan` に変換・インストールします（X11 と sway の両方で使えます）。
+カーソルテーマ Kiritan は再配布禁止の素材から作るため、このリポジトリには変換スクリプト `install-kiritan-cursor` だけを置きます。素材は private リポジトリ `fuyu28/dotfiles-private` にあり、`chezmoi init` で `private` を true にした端末では次のように動きます。
+
+1. `.chezmoiexternal.toml.tmpl` が `~/.local/share/dotfiles-private` に clone する（gh の認証を使います）
+2. `run_onchange_after_60-install-kiritan-cursor.sh` が素材か変換スクリプトの変更時に `~/.local/share/icons/Kiritan` を作り直す
+
+X11 と sway の両方で使えます。private リポジトリを使わない端末では、zip を手元に置いて直接変換できます。
 
 ```sh
 install-kiritan-cursor ~/Downloads/cursors/きりたんカーソル.zip

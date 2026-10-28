@@ -1,0 +1,19 @@
+{{- if .private -}}
+{{- $zip := joinPath .chezmoi.homeDir ".local/share/dotfiles-private/cursors/kiritan-cursor.zip" -}}
+#!/bin/sh
+# Rebuild the cursor theme when the pack or the converter changes.
+# zip: {{ if stat $zip }}{{ include $zip | sha256sum }}{{ end }}
+# converter: {{ include "dot_local/bin/executable_install-kiritan-cursor" | sha256sum }}
+set -eu
+
+zip={{ $zip | quote }}
+if [ ! -f "$zip" ]; then
+  echo "kiritan cursor skipped: $zip not found" >&2
+  exit 0
+fi
+if ! python3 -c 'import PIL' 2>/dev/null; then
+  echo "kiritan cursor skipped: python-pillow is not installed" >&2
+  exit 0
+fi
+"$HOME/.local/bin/install-kiritan-cursor" "$zip"
+{{- end }}
