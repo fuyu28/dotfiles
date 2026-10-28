@@ -103,15 +103,18 @@ interval=30
 # where SENSOR_CHIP can be find with sensors output
 # can be used also for GPU temperature or other temperature sensors lm-sensors detects.
 
+{{ if eq .role "laptop" -}}
 # Connected Wi-Fi SSID (use cached scan results).
 [net]
 command=~/.config/i3blocks/scripts/wifi-ssid
 markup=none
 interval=10
-
-#[bandwidth]
-#command=~/.config/i3blocks/scripts/bandwidth2
-#interval=persist
+{{- else -}}
+# Wired desktop: show throughput of the default route interface.
+[bandwidth]
+command=~/.config/i3blocks/scripts/bandwidth2
+interval=persist
+{{- end }}
 
 [vpn]
 command=~/.config/i3blocks/scripts/vpn
@@ -125,7 +128,7 @@ interval=5
 command=~/.config/i3blocks/scripts/battery
 # change this to battery-pinebook-pro if you are running on pinebook-pro
 label=
-interval=30nterval=5
+interval=30
 {{ end }}
 
 [simple-2]
