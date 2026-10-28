@@ -53,7 +53,7 @@ input "1:1:AT_Translated_Set_2_keyboard" {
 exec_always ~/.config/sway/keyboard-layouts
 {{ end }}
 
-seat * xcursor_theme {{ index .cursor.theme .role }} {{ .cursor.size }}
+seat * xcursor_theme {{ .cursor.theme }} {{ .cursor.size }}
 
 bindsym $mod+u border none
 bindsym $mod+y border pixel 1

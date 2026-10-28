@@ -18,6 +18,8 @@
 .config/swaylock
 .config/xdg-desktop-portal
 .gtkrc-2.0
+.icons/default
+.local/bin/install-kiritan-cursor
 .local/bin/rofi-launcher.sh
 .local/bin/rofi-powermenu.sh
 .local/bin/screenshot.sh

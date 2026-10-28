@@ -20,12 +20,10 @@ gtk-xft-rgba = "rgb"
 gtk-application-prefer-dark-theme = 1
 
 # The cursor size is logical: the output scale below multiplies it.
+# Kiritan is built locally by install-kiritan-cursor (see README).
 [cursor]
+theme = "Kiritan"
 size = 32
-
-[cursor.theme]
-laptop = "Kiritan"
-desktop = "Qogir-Dark"
 
 # Per-monitor preferences shared by sway and i3, keyed by the monitor rather
 # than the machine. make/model/serial follow `swaymsg -t get_outputs`.

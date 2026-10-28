@@ -10,7 +10,7 @@ export GTK_USE_PORTAL=1
 export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
 
 # カーソル
-export XCURSOR_THEME={{ index .cursor.theme .role }}
+export XCURSOR_THEME={{ .cursor.theme }}
 # XCURSOR_SIZE would override Xcursor.size, which display-scale sets per screen.
 unset XCURSOR_SIZE
 

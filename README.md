@@ -137,7 +137,13 @@ OS 専用のファイルを追加したら、`.chezmoitemplates/ignore/darwin` �
 
 ## GTKの外観設定
 
-GTK 3・4 と `~/.Xresources` の共通値は `.chezmoidata.toml` の `[gtk]` で管理します。カーソルのサイズ（`[cursor]`）は倍率をかける前の論理サイズで、テーマは `[cursor.theme]` で role ごとに選びます。
+GTK 3・4 と `~/.Xresources` の共通値は `.chezmoidata.toml` の `[gtk]` で管理します。カーソル（`[cursor]`）のサイズは倍率をかける前の論理サイズです。`~/.icons/default` もこのテーマを継承します。
+
+カーソルテーマ Kiritan は再配布禁止の素材から作るため、このリポジトリには含めません。元の zip を手元に置き、次で `~/.local/share/icons/Kiritan` に変換・インストールします（X11 と sway の両方で使えます）。
+
+```sh
+install-kiritan-cursor ~/Downloads/cursors/きりたんカーソル.zip
+```
 
 i3・sway の起動時は GTK 3 設定から GSettings へフォント・テーマ・カーソル（サイズを含む）とダークモード（`color-scheme`）を同期し、`~/.Xresources` を読み込みます。
 
