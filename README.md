@@ -137,6 +137,15 @@ OS 専用のファイルを追加したら、`.chezmoitemplates/ignore/darwin` �
 
 ## GTKの外観設定
 
-GTK 3・4 の共通値は `.chezmoidata.toml` の `[gtk]` で管理します。カーソルは画面に依存するため、`[cursor.<role>]` で role ごとに切り替えます。DPI は端末固有のため管理しません。
+GTK 3・4 と `~/.Xresources` の共通値は `.chezmoidata.toml` の `[gtk]` で管理します。カーソルのサイズ（`[cursor]`）は倍率をかける前の論理サイズで、テーマは `[cursor.theme]` で role ごとに選びます。
 
-i3・sway の起動時は GTK 3 設定から GSettings へフォント・テーマ・カーソル（サイズを含む）とダークモード（`color-scheme`）を同期します。テーマ・アイコン・フォント自体は各端末にインストールする必要があります。`nwg-look` で変更した場合は、対応するデータにも反映してください。
+i3・sway の起動時は GTK 3 設定から GSettings へフォント・テーマ・カーソル（サイズを含む）とダークモード（`color-scheme`）を同期し、`~/.Xresources` を読み込みます。
+
+## 画面の倍率とモード
+
+倍率は端末ではなくモニタごとに、`.chezmoidata.toml` の `[[monitors]]` へ書きます。`make`・`model`・`serial` は `swaymsg -t get_outputs` の表記に合わせます。載っていないモニタは倍率 1、推奨モードのままです。
+
+- sway: 各モニタに `output "<make> <model> <serial>" mode … scale …` を生成します。カーソルや GTK も sway 側で拡大されます。
+- i3（X11）: `~/.config/i3/scripts/display-scale` が EDID の model（と serial）でモニタを照合してモードを設定し、primary のモニタの倍率から `Xft.dpi` とカーソルサイズを決めます。X11 は DPI が全画面で共通です。
+
+モニタを追加するときは、そのモニタをつないだ状態で `swaymsg -t get_outputs` か `xrandr --props` の EDID から model を確認します。テーマ・アイコン・フォント自体は各端末にインストールする必要があります。`nwg-look` で変更した場合は、対応するデータにも反映してください。

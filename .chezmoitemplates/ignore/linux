@@ -25,4 +25,5 @@
 .local/bin/start-sway
 .local/share/fcitx5
 .local/share/wayland-sessions
+.Xresources
 .xprofile

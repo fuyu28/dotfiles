@@ -2,8 +2,7 @@
 # them still applies; values in chezmoi.toml take precedence.
 skk = true
 
-# Shared GTK appearance settings. The cursor depends on the display and
-# lives under [cursor.<role>].
+# Shared GTK appearance settings. Cursor and scaling follow below.
 [gtk]
 gtk-theme-name = "Arc-Dark"
 gtk-icon-theme-name = "Qogir-Dark"
@@ -20,11 +19,20 @@ gtk-xft-hintstyle = "hintslight"
 gtk-xft-rgba = "rgb"
 gtk-application-prefer-dark-theme = 1
 
-# Cursor size follows the display: the laptop panel is HiDPI.
-[cursor.laptop]
-theme = "Kiritan"
-size = 48
+# The cursor size is logical: the output scale below multiplies it.
+[cursor]
+size = 32
 
-[cursor.desktop]
-theme = "Qogir-Dark"
-size = 24
+[cursor.theme]
+laptop = "Kiritan"
+desktop = "Qogir-Dark"
+
+# Per-monitor preferences shared by sway and i3, keyed by the monitor rather
+# than the machine. make/model/serial follow `swaymsg -t get_outputs`.
+# Unlisted monitors keep scale 1 and their preferred mode.
+[[monitors]]
+make = "Samsung Display Corp."
+model = "ATNA40HQ02-0"
+serial = "Unknown"
+scale = 1.25
+mode = "2880x1800@60Hz"

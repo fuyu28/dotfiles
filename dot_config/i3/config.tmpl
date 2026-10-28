@@ -276,16 +276,11 @@ for_window [window_role="pop-up" title="Bitwarden"] focus
 # autostart applications/services on login: #
 #############################################
 
-# make sure it loads gtk configs
-exec_always $HOME/.config/i3/scripts/import-gsettings
+# make sure it loads gtk configs, then apply per-monitor mode, DPI and cursor
+# size. display-scale overrides the cursor size import-gsettings sets, so they
+# run in order.
+exec_always --no-startup-id sh -c '$HOME/.config/i3/scripts/import-gsettings; xrdb -merge ~/.Xresources; $HOME/.config/i3/scripts/display-scale'
 
-{{ if eq .role "laptop" -}}
-# Built-in display: keep the panel at native resolution and use its 60 Hz mode.
-exec_always --no-startup-id xrandr --output eDP-1 --mode 2880x1800 --rate 60.00
-# Load the 150% HiDPI text/UI scaling from ~/.Xresources.
-exec_always --no-startup-id xrdb -merge ~/.Xresources
-
-{{ end -}}
 ## compositor
 
 # aka transparency

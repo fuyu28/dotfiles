@@ -2,8 +2,8 @@
 gtk-theme-name={{ index .gtk "gtk-theme-name" }}
 gtk-icon-theme-name={{ index .gtk "gtk-icon-theme-name" }}
 gtk-font-name={{ index .gtk "gtk-font-name" }}
-gtk-cursor-theme-name={{ (index .cursor .role).theme }}
-gtk-cursor-theme-size={{ (index .cursor .role).size }}
+gtk-cursor-theme-name={{ index .cursor.theme .role }}
+gtk-cursor-theme-size={{ .cursor.size }}
 gtk-toolbar-style={{ index .gtk "gtk-toolbar-style" }}
 gtk-toolbar-icon-size={{ index .gtk "gtk-toolbar-icon-size" }}
 gtk-button-images={{ index .gtk "gtk-button-images" }}

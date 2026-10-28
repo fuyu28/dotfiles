@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""Apply the per-monitor preferences from .chezmoidata.toml on X11.
+
+sway reads the same [[monitors]] entries from its config. X11 has one DPI for
+every screen, so the primary output decides Xft.dpi and the cursor size.
+Monitors are matched by their EDID model (and serial when it is known), the
+same strings `swaymsg -t get_outputs` shows.
+"""
+
+import json
+import re
+import subprocess
+
+MONITORS = json.loads(r'''{{ .monitors | toJson }}''')
+CURSOR_SIZE = {{ .cursor.size }}
+BASE_DPI = 96
+
+
+def edid_strings(edid):
+    """Return (model, serial) from the EDID display descriptors."""
+    name = serial = None
+    text = []
+    for offset in range(54, 126, 18):
+        block = edid[offset:offset + 18]
+        if block[:3] != b"\0\0\0":
+            continue
+        value = block[5:].split(b"\n")[0].decode("ascii", "replace").strip()
+        if block[3] == 0xFC:
+            name = value
+        elif block[3] == 0xFF:
+            serial = value
+        elif block[3] == 0xFE:
+            text.append(value)
+    # Laptop panels often have no name descriptor; sway then reports the
+    # last alphanumeric string instead.
+    model = name or (text[-1] if text else None)
+    return model, serial or "Unknown"
+
+
+def connected_outputs():
+    props = subprocess.check_output(["xrandr", "--props"], text=True)
+    outputs = []
+    current = None
+    edid_hex = None
+    for line in props.splitlines():
+        match = re.match(r"^(\S+) connected( primary)?", line)
+        if match:
+            current = {"name": match.group(1), "primary": bool(match.group(2)), "edid": b""}
+            outputs.append(current)
+            edid_hex = None
+            continue
+        if current is None:
+            continue
+        if line.strip() == "EDID:":
+            edid_hex = ""
+            continue
+        if edid_hex is not None:
+            if re.fullmatch(r"\s+[0-9a-f]{32}", line):
+                edid_hex += line.strip()
+                continue
+            current["edid"] = bytes.fromhex(edid_hex)
+            edid_hex = None
+    if current is not None and edid_hex:
+        current["edid"] = bytes.fromhex(edid_hex)
+    return outputs
+
+
+def preference(output):
+    if not output["edid"]:
+        return None
+    model, serial = edid_strings(output["edid"])
+    for monitor in MONITORS:
+        if monitor["model"] != model:
+            continue
+        if monitor.get("serial", "Unknown") not in ("Unknown", serial):
+            continue
+        return monitor
+    return None
+
+
+def main():
+    outputs = connected_outputs()
+    scale = 1.0
+    primary = next((o for o in outputs if o["primary"]), outputs[0] if outputs else None)
+    for output in outputs:
+        monitor = preference(output)
+        if monitor is None:
+            continue
+        if "mode" in monitor:
+            size, _, rate = monitor["mode"].partition("@")
+            command = ["xrandr", "--output", output["name"], "--mode", size]
+            if rate:
+                command += ["--rate", rate.removesuffix("Hz")]
+            subprocess.run(command, check=False)
+        if output is primary:
+            scale = float(monitor.get("scale", 1))
+
+    dpi = round(BASE_DPI * scale)
+    cursor = round(CURSOR_SIZE * scale)
+    subprocess.run(
+        ["xrdb", "-merge"],
+        input=f"Xft.dpi: {dpi}\nXcursor.size: {cursor}\n",
+        text=True,
+        check=True,
+    )
+    subprocess.run(
+        ["gsettings", "set", "org.gnome.desktop.interface", "cursor-size", str(cursor)],
+        check=False,
+    )
+
+
+if __name__ == "__main__":
+    main()

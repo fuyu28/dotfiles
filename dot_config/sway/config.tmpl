@@ -31,10 +31,12 @@ focus_follows_mouse no
 # HDMI blank, and reload does not invent a background for it.
 output * bg {{ .wallpaper.path | quote }} {{ .wallpaper.mode }}
 
-{{ if eq .role "laptop" }}
-# Built-in panel: native resolution, 60 Hz, 125% (Xft.dpi 120).
-output eDP-1 mode 2880x1800@60Hz scale 1.25
+# Per-monitor mode and scale from [[monitors]] in .chezmoidata.toml.
+{{- range .monitors }}
+output "{{ .make }} {{ .model }} {{ .serial }}" mode {{ .mode }} scale {{ .scale }}
+{{- end }}
 
+{{ if eq .role "laptop" }}
 # /etc/X11/xorg.conf.d/30-touchpad.conf and 90-touchpad.conf.
 # Tapping comes from the distro libinput snippet.
 input type:touchpad {
@@ -51,7 +53,7 @@ input "1:1:AT_Translated_Set_2_keyboard" {
 exec_always ~/.config/sway/keyboard-layouts
 {{ end }}
 
-seat * xcursor_theme {{ (index .cursor .role).theme }} {{ (index .cursor .role).size }}
+seat * xcursor_theme {{ index .cursor.theme .role }} {{ .cursor.size }}
 
 bindsym $mod+u border none
 bindsym $mod+y border pixel 1
@@ -188,6 +190,9 @@ for_window [window_role="pop-up" title="Bitwarden"] border pixel 2
 for_window [window_role="pop-up" title="Bitwarden"] focus
 
 exec_always $HOME/.config/i3/scripts/import-gsettings
+# Xwayland apps share the font rendering in ~/.Xresources. The output scale
+# enlarges them, so no Xft.dpi is set here.
+exec_always xrdb -merge ~/.Xresources
 exec ~/.config/i3/scripts/block-plasma
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec nm-applet

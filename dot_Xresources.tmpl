@@ -1,0 +1,11 @@
+! Managed by chezmoi: values come from .chezmoidata.toml.
+! xrdb runs this through cpp, so keep comments free of quote characters.
+! On i3, display-scale adds Xft.dpi and Xcursor.size for the primary screen.
+
+Xcursor.theme: {{ index .cursor.theme .role }}
+Xcursor.size: {{ .cursor.size }}
+
+Xft.antialias: {{ index .gtk "gtk-xft-antialias" }}
+Xft.hinting: {{ index .gtk "gtk-xft-hinting" }}
+Xft.hintstyle: {{ index .gtk "gtk-xft-hintstyle" }}
+Xft.rgba: {{ index .gtk "gtk-xft-rgba" }}
