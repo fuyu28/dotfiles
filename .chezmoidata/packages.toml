@@ -155,6 +155,7 @@ required = [
   "noto-fonts-emoji",
   "noto-fonts-extra",
   "otf-ipafont",
+  "ttf-noto-nerd",
   "ttf-bitstream-vera",
   "ttf-dejavu",
   "ttf-liberation",
@@ -240,9 +241,7 @@ required = [
 ]
 
 [packages.aur]
-required = [
-  "nerd-fonts-noto-sans-mono",
-]
+required = []
 
 # GUI apps
 [packages.groups.apps]
