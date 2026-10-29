@@ -194,7 +194,9 @@ exec_always $HOME/.config/i3/scripts/import-gsettings
 # Xwayland apps share the font rendering in ~/.Xresources. The output scale
 # enlarges them, so no Xft.dpi is set here.
 exec_always xrdb -merge ~/.Xresources
+{{- if has "kde" .desktops }}
 exec ~/.config/i3/scripts/block-plasma
+{{- end }}
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec nm-applet
 exec xdg-user-dirs-update

@@ -2,6 +2,8 @@
 # them still applies; values in chezmoi.toml take precedence.
 skk = true
 private = false
+desktops = ["i3", "sway"]
+packageGroups = ["apps", "dev", "android", "cli", "tex"]
 
 # Shared GTK appearance settings. Cursor and scaling follow below.
 [gtk]

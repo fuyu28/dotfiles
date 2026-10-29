@@ -14,6 +14,36 @@ Pictures
 .local/share/fcitx5/skk
 {{- end }}
 
+{{- $i3 := has "i3" .desktops -}}
+{{- $sway := has "sway" .desktops -}}
+{{- $kde := has "kde" .desktops -}}
+{{ if not $i3 -}}
+# sway も ~/.config/i3/scripts を使うので、i3 本体の設定だけ外す
+.config/i3/config
+.config/i3/keybindings
+.config/picom
+{{ end -}}
+{{ if not $sway -}}
+.config/sway
+.config/swaylock
+.config/xdg-desktop-portal
+.local/bin/start-sway
+.local/share/wayland-sessions
+{{ end -}}
+{{ if not (or $i3 $sway) -}}
+.config/i3
+.config/i3blocks
+.config/dunst
+{{ end -}}
+{{ if not $kde -}}
+.config/autostart/baloo_file.desktop
+{{ end -}}
+{{ if not (and $kde (or $i3 $sway)) -}}
+# i3 / sway と Plasma を併用するときだけ、Plasma のユニットを止めて戻す
+.config/autostart/restore-plasma-units.desktop
+.config/i3/scripts/block-plasma
+.config/i3/scripts/restore-plasma-units
+{{ end }}
 {{ if ne .chezmoi.os "linux" -}}
 {{ template "ignore/linux" . }}
 {{- end }}

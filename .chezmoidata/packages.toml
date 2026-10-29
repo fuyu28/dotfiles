@@ -1,0 +1,391 @@
+# Packages for EndeavourOS, installed by run_onchange_before_15-install-arch-packages.
+# required is always installed. packages.desktops.<name> is installed for each
+# name in desktops, and packages.groups.<name> for each name in packageGroups;
+# both are chosen at `chezmoi init`.
+
+[packages.pacman]
+required = [
+  # base system
+  "accountsservice",
+  "acpi",
+  "alsa-firmware",
+  "alsa-plugins",
+  "alsa-utils",
+  "b43-fwcutter",
+  "base",
+  "base-devel",
+  "bluez",
+  "bluez-utils",
+  "btrfs-progs",
+  "cryptsetup",
+  "device-mapper",
+  "dmidecode",
+  "dmraid",
+  "dnsmasq",
+  "dosfstools",
+  "dracut",
+  "e2fsprogs",
+  "efibootmgr",
+  "efitools",
+  "ethtool",
+  "exfatprogs",
+  "f2fs-tools",
+  "firewalld",
+  "grub",
+  "haveged",
+  "hdparm",
+  "intel-ucode",
+  "iptables",
+  "iwd",
+  "jfsutils",
+  "linux",
+  "linux-firmware",
+  "linux-headers",
+  "logrotate",
+  "lsscsi",
+  "lvm2",
+  "mdadm",
+  "modemmanager",
+  "mtools",
+  "netctl",
+  "networkmanager",
+  "networkmanager-openconnect",
+  "networkmanager-openvpn",
+  "nfs-utils",
+  "nilfs-utils",
+  "nss-mdns",
+  "ntfs-3g",
+  "ntp",
+  "os-prober",
+  "pipewire-alsa",
+  "pipewire-jack",
+  "pipewire-pulse",
+  "power-profiles-daemon",
+  "rtkit",
+  "sg3_utils",
+  "smartmontools",
+  "sof-firmware",
+  "sudo",
+  "sysfsutils",
+  "systemd-sysvcompat",
+  "upower",
+  "usb_modeswitch",
+  "usbutils",
+  "wireplumber",
+  "wpa_supplicant",
+  "xfsprogs",
+  "xl2tpd",
+
+  # EndeavourOS
+  "endeavouros-branding",
+  "endeavouros-keyring",
+  "endeavouros-mirrorlist",
+  "endeavouros-xfce4-terminal-colors",
+  "eos-apps-info",
+  "eos-dracut",
+  "eos-hooks",
+  "eos-lightdm-slick-theme",
+  "eos-log-tool",
+  "eos-packagelist",
+  "eos-qogir-icons",
+  "eos-quickstart",
+  "eos-rankmirrors",
+  "hwdetect",
+  "pacman-contrib",
+  "paru",
+  "rebuild-detector",
+  "reflector",
+  "reflector-simple",
+  "welcome",
+
+  # desktop (shared by every session)
+  "arc-gtk-theme-eos",
+  "archlinux-xdg-menu",
+  "brightnessctl",
+  "copyq",
+  "dex",
+  "ffmpegthumbnailer",
+  "gvfs",
+  "gvfs-afc",
+  "gvfs-gphoto2",
+  "gvfs-mtp",
+  "gvfs-nfs",
+  "gvfs-smb",
+  "libgsf",
+  "libopenraw",
+  "lightdm",
+  "lightdm-slick-greeter",
+  "nwg-look",
+  "pavucontrol",
+  "playerctl",
+  "poppler-glib",
+  "rofi",
+  "thunar",
+  "thunar-archive-plugin",
+  "thunar-volman",
+  "tumbler",
+  "xarchiver",
+  "xclip",
+  "xdg-user-dirs",
+  "xdg-user-dirs-gtk",
+  "xdg-utils",
+  "xf86-input-libinput",
+  "xorg-server",
+  "xorg-xdpyinfo",
+  "xorg-xev",
+  "xorg-xinit",
+  "xorg-xinput",
+  "xorg-xkill",
+  "xorg-xrandr",
+  "xorg-xrdb",
+
+  # Japanese input
+  "fcitx5",
+  "fcitx5-configtool",
+  "fcitx5-gtk",
+  "fcitx5-mozc",
+  "fcitx5-qt",
+  "fcitx5-skk",
+
+  # fonts
+  "awesome-terminal-fonts",
+  "cantarell-fonts",
+  "noto-fonts",
+  "noto-fonts-cjk",
+  "noto-fonts-emoji",
+  "noto-fonts-extra",
+  "otf-ipafont",
+  "ttf-bitstream-vera",
+  "ttf-dejavu",
+  "ttf-liberation",
+  "ttf-opensans",
+
+  # terminal and shell
+  "bash-completion",
+  "ghostty",
+  "kitty",
+  "starship",
+  "tmux",
+  "xfce4-terminal",
+  "xterm",
+  "zsh",
+
+  # CLI tools used by the dotfiles
+  "7zip",
+  "aspell",
+  "bat",
+  "bind",
+  "btop",
+  "chezmoi",
+  "diffutils",
+  "downgrade",
+  "duf",
+  "dust",
+  "ex-vi-compat",
+  "eza",
+  "ghq",
+  "git",
+  "github-cli",
+  "hwinfo",
+  "inetutils",
+  "inxi",
+  "jq",
+  "lazygit",
+  "less",
+  "lsb-release",
+  "man-db",
+  "man-pages",
+  "mesa-utils",
+  "mise",
+  "nano",
+  "nano-syntax-highlighting",
+  "neovim",
+  "openssh",
+  "perl",
+  "pkgfile",
+  "plocate",
+  "procs",
+  "rsync",
+  "s-nail",
+  "sysstat",
+  "texinfo",
+  "tldr",
+  "tree",
+  "unrar",
+  "unzip",
+  "wget",
+  "which",
+  "whois",
+  "zip",
+  "zoxide",
+
+  # python (install-kiritan-cursor needs pillow)
+  "python",
+  "python-defusedxml",
+  "python-jinja",
+  "python-packaging",
+  "python-pillow",
+  "python-pyqt6",
+
+  # apps
+  "firefox",
+  "gst-libav",
+  "gst-plugin-pipewire",
+  "gst-plugins-bad",
+  "gst-plugins-ugly",
+  "libdvdcss",
+  "mpv",
+  "zathura",
+  "zathura-pdf-poppler",
+]
+
+[packages.aur]
+required = [
+  "nerd-fonts-noto-sans-mono",
+]
+
+# GUI apps
+[packages.groups.apps]
+pacman = [
+  "bitwarden",
+  "chromium",
+  "discord",
+  "galculator",
+  "gimp",
+  "inkscape",
+  "libreoffice-fresh",
+  "meld",
+  "obsidian",
+  "solaar",
+  "sqlitebrowser",
+  "tigervnc",
+  "xed",
+]
+aur = [
+  "smoothcsv-bin",
+  "zoom",
+]
+
+# development tools and editors
+[packages.groups.dev]
+pacman = [
+  "clang",
+  "devtools",
+  "docker",
+  "docker-compose",
+  "doxygen",
+  "extra-cmake-modules",
+  "libwnck3",
+  "strace",
+]
+aur = [
+  "cursor-bin",
+  "visual-studio-code-bin",
+]
+
+# Android / Flutter
+[packages.groups.android]
+pacman = [
+  "fvm",
+]
+aur = [
+  "android-studio",
+]
+
+# extra CLI tools
+[packages.groups.cli]
+pacman = [
+  "binwalk",
+  "evtest",
+  "flatpak",
+  "fq",
+  "gdu",
+  "glances",
+  "gnuplot",
+  "gping",
+  "httpie",
+  "img2pdf",
+  "picocom",
+  "pv",
+  "rbw",
+  "rclone",
+  "sl",
+  "squashfs-tools",
+  "tailscale",
+  "termdown",
+  "termshark",
+  "tokei",
+  "visidata",
+]
+aur = [
+  "dtop-bin",
+  "neofetch",
+  "sabiql",
+  "sc-im",
+]
+
+# TeX Live
+[packages.groups.tex]
+pacman = [
+  "texlive-basic",
+  "texlive-binextra",
+  "texlive-fontsextra",
+  "texlive-fontsrecommended",
+  "texlive-langjapanese",
+  "texlive-latex",
+  "texlive-latexextra",
+  "texlive-luatex",
+  "texlive-mathscience",
+]
+aur = []
+
+
+# desktops: a package listed in more than one is installed once
+[packages.desktops.i3]
+pacman = [
+  "arandr",
+  "dmenu",
+  "dunst",
+  "eos-settings-i3wm",
+  "feh",
+  "i3-wm",
+  "i3blocks",
+  "i3status",
+  "maim",
+  "network-manager-applet",
+  "numlockx",
+  "picom",
+  "polkit-gnome",
+  "scrot",
+  "xbindkeys",
+  "xss-lock",
+]
+aur = [
+  "betterlockscreen",
+  "xidlehook",
+]
+
+[packages.desktops.sway]
+pacman = [
+  "dunst",
+  "grim",
+  "i3blocks",
+  "network-manager-applet",
+  "polkit-gnome",
+  "slurp",
+  "sway",
+  "swaybg",
+  "swayidle",
+  "swaylock",
+  "wl-clipboard",
+  "xdg-desktop-portal-gtk",
+  "xdg-desktop-portal-wlr",
+  "xorg-xwayland",
+]
+aur = []
+
+[packages.desktops.kde]
+pacman = [
+  "plasma-meta",
+]
+aur = []

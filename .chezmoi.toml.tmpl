@@ -2,10 +2,15 @@
 {{- $role := promptChoiceOnce . "role" "Machine role" (list "desktop" "laptop") -}}
 {{- $skk := promptBoolOnce . "skk" "Use SKK for Japanese input (false: mozc)" true -}}
 {{- $private := promptBoolOnce . "private" "Clone fuyu28/dotfiles-private (needs gh auth)" true -}}
+{{- /* 選択肢は .chezmoidata/packages.toml の packages.desktops / packages.groups に合わせる */ -}}
+{{- $desktops := promptMultichoiceOnce . "desktops" "Desktops to set up" (list "i3" "sway" "kde") (list "i3" "sway") -}}
+{{- $packageGroups := promptMultichoiceOnce . "packageGroups" "Package groups to install on Arch" (list "apps" "dev" "android" "cli" "tex") (list "apps" "dev" "android" "cli" "tex") -}}
 [data]
 role = {{ $role | quote }}
 skk = {{ $skk }}
 private = {{ $private }}
+desktops = {{ $desktops | toToml }}
+packageGroups = {{ $packageGroups | toToml }}
 
 [data.wallpaper]
 mode = "fill"

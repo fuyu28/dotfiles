@@ -23,6 +23,10 @@ Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる
 | `role` | `desktop` / `laptop`。電源管理やバッテリー表示などの切り替えに使う |
 | `skk` | 日本語入力に SKK を使うか（false なら mozc） |
 | `private` | private リポジトリ `fuyu28/dotfiles-private` を使うか（要 `gh auth login`） |
+| `desktops` | 使うデスクトップ（複数選択）。`i3`、`sway`、`kde` から選ぶ。選ばなかったものはパッケージも設定ファイルも入れない |
+| `packageGroups` | 追加で入れるパッケージのグループ（複数選択）。`apps`、`dev`、`android`、`cli`、`tex` から選ぶ |
+
+パッケージの中身は `.chezmoidata/packages.toml` にある。
 
 テンプレートに項目が増えたら `chezmoi init` を実行し直す。既存の値は聞かれない。
 
@@ -38,7 +42,7 @@ Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる
 chezmoi update
 ```
 
-パッケージや mise のツールは、`dot_Brewfile`、Linux のパッケージスクリプト、`dot_config/mise/config.toml` を変更すると次回の適用時に入る。
+パッケージや mise のツールは、`dot_Brewfile`、`.chezmoidata/packages.toml`、`dot_config/mise/config.toml` を変更すると次回の適用時に入る。
 
 ## OS ごとの設定
 
