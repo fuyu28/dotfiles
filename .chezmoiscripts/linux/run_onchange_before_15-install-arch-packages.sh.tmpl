@@ -27,6 +27,18 @@ aur_pkgs=(
 {{- end }}
 )
 
-sudo pacman -S --needed --noconfirm "${pacman_pkgs[@]}"
-paru -S --needed --noconfirm "${aur_pkgs[@]}"
+# pacman -T prints only the packages that are not installed yet.
+missing_pacman=$(pacman -T "${pacman_pkgs[@]}" || true)
+missing_aur=$(pacman -T "${aur_pkgs[@]}" || true)
+
+# -Syu instead of -S: a stale sync database fetches removed versions (404),
+# and -Sy alone would be a partial upgrade.
+if [[ -n $missing_pacman ]]; then
+  # shellcheck disable=SC2086
+  sudo pacman -Syu --needed --noconfirm $missing_pacman
+fi
+if [[ -n $missing_aur ]]; then
+  # shellcheck disable=SC2086
+  paru -S --needed --noconfirm $missing_aur
+fi
 {{- end }}
