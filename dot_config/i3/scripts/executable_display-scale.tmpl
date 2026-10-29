@@ -70,7 +70,8 @@ def preference(output):
         return None
     model, serial = edid_strings(output["edid"])
     for monitor in MONITORS:
-        if monitor["model"] != model:
+        # sway keeps the EDID padding in model; the EDID parse above strips it.
+        if monitor["model"].strip() != model:
             continue
         if monitor.get("serial", "Unknown") not in ("Unknown", serial):
             continue

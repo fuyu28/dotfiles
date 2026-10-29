@@ -29,11 +29,13 @@ theme = "Kiritan"
 size = 32
 
 # Per-monitor preferences shared by sway and i3, keyed by the monitor rather
-# than the machine. make/model/serial follow `swaymsg -t get_outputs`.
+# than the machine. make/model/serial follow `swaymsg -t get_outputs` exactly,
+# trailing spaces included: sway matches the joined string, so a dropped space
+# misses the output and sway falls back to its own scale.
 # Unlisted monitors keep scale 1 and their preferred mode.
 [[monitors]]
 make = "Samsung Display Corp."
-model = "ATNA40HQ02-0"
+model = "ATNA40HQ02-0 "
 serial = "Unknown"
 scale = 1.25
 mode = "2880x1800@60Hz"
