@@ -237,7 +237,7 @@ required = [
   "libdvdcss",
   "mpv",
   "zathura",
-  "zathura-pdf-poppler",
+  "zathura-pdf-mupdf",
 ]
 
 [packages.aur]
