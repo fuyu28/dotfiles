@@ -4,10 +4,12 @@ README.md
 xorg.conf.d/**
 
 {{ if not .private -}}
-# 壁紙とエージェントのスキルは private リポジトリにある
+# 壁紙とエージェントのスキル・共通指示は private リポジトリにある
 Pictures
 .agents
 .claude/skills
+.claude/CLAUDE.md
+.codex/AGENTS.md
 {{ end -}}
 {{ if not .skk -}}
 # SKK を使わないマシンでは設定・辞書を置かない

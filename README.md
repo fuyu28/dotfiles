@@ -35,7 +35,7 @@ Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる
 
 ## 公開しないもの
 
-このリポジトリは公開前提なので、秘密情報は置かない。再配布できない素材など公開できないものは `fuyu28/dotfiles-private` に置き、`private = true` の端末でだけ external として clone して使う。壁紙（`~/Pictures/Wallpaper`）とエージェントのスキル（`~/.agents`）は、その clone への symlink になる。
+このリポジトリは公開前提なので、秘密情報は置かない。再配布できない素材など公開できないものは `fuyu28/dotfiles-private` に置き、`private = true` の端末でだけ external として clone して使う。壁紙（`~/Pictures/Wallpaper`）とエージェントのスキル（`~/.agents`）は、その clone への symlink になる。エージェント共通の指示 `~/.agents/AGENTS.md` は、`~/.codex/AGENTS.md` と `~/.claude/CLAUDE.md` から symlink で読ませる。
 
 ## 更新
 
