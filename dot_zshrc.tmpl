@@ -72,6 +72,9 @@ unalias z 2>/dev/null
 # mise
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
 
+# direnv
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
+
 
 # =========================
 # alias
