@@ -10,6 +10,10 @@
 	helper = !gh auth git-credential
 [credential]
 	helper = manager
+[core]
+	# git status を速くする（starship のプロンプトが軽くなる）
+	fsmonitor = true
+	untrackedCache = true
 {{- else }}
 [credential "https://github.com"]
 	helper = 
