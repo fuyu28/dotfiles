@@ -1,0 +1,2 @@
+# Windows の core.autocrlf に関係なく LF でチェックアウトし、chezmoi が CRLF で配置しないようにする
+* text=auto eol=lf
