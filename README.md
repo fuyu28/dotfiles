@@ -17,7 +17,7 @@ chezmoi init --apply fuyu28/dotfiles
 
 macOS では Homebrew と `Brewfile` のパッケージ、mise のツール、エディタ拡張、macOS の設定まで入る。
 
-Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる。初回の init で次を聞かれ、`~/.config/chezmoi/chezmoi.toml` に保存される。
+Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる。初回の init で次を聞かれ、`~/.config/chezmoi/chezmoi.toml` に保存される。Linux 以外では聞かれず、`.chezmoidata.toml` の既定値が使われる。ただし `private` は Windows でも聞かれる。
 
 | キー | 内容 |
 |---|---|
@@ -79,7 +79,7 @@ Windows では Git / GitHub CLI、lazygit、Neovim、Starship、mise、PowerShel
 chezmoi init --apply fuyu28/dotfiles
 ```
 
-init で聞かれる項目のうち、Windows で意味があるのは `private` だけ。ほかは何を選んでもよい。
+init で聞かれるのは `private` だけ。
 
 ### mise と Python
 

@@ -1,16 +1,20 @@
-{{- /* 解像度などマシン固有の値は role で切り替える */ -}}
-{{- $role := promptChoiceOnce . "role" "Machine role" (list "desktop" "laptop") -}}
-{{- $skk := promptBoolOnce . "skk" "Use SKK for Japanese input (false: mozc)" true -}}
-{{- $private := promptBoolOnce . "private" "Clone fuyu28/dotfiles-private (needs gh auth)" true -}}
-{{- /* 選択肢は .chezmoidata/packages.toml の packages.desktops / packages.groups に合わせる */ -}}
-{{- $desktops := promptMultichoiceOnce . "desktops" "Desktops to set up" (list "i3" "sway" "kde") (list "i3" "sway") -}}
-{{- $packageGroups := promptMultichoiceOnce . "packageGroups" "Package groups to install on Arch" (list "apps" "dev" "android" "cli" "tex") (list "apps" "dev" "android" "cli" "tex") -}}
+{{- /* 聞かなかった項目は .chezmoidata.toml の既定値を使う */ -}}
+{{- $linux := eq .chezmoi.os "linux" -}}
 [data]
-role = {{ $role | quote }}
-skk = {{ $skk }}
-private = {{ $private }}
-desktops = {{ $desktops | toToml }}
-packageGroups = {{ $packageGroups | toToml }}
+{{- if $linux }}
+{{- /* 解像度などマシン固有の値は role で切り替える */}}
+role = {{ promptChoiceOnce . "role" "Machine role" (list "desktop" "laptop") | quote }}
+skk = {{ promptBoolOnce . "skk" "Use SKK for Japanese input (false: mozc)" true }}
+{{- end }}
+{{- /* private リポジトリは Linux と Windows でだけ clone する（.chezmoiexternal.toml.tmpl） */}}
+{{- if or $linux (eq .chezmoi.os "windows") }}
+private = {{ promptBoolOnce . "private" "Clone fuyu28/dotfiles-private (needs gh auth)" true }}
+{{- end }}
+{{- if $linux }}
+{{- /* 選択肢は .chezmoidata/packages.toml の packages.desktops / packages.groups に合わせる */}}
+desktops = {{ promptMultichoiceOnce . "desktops" "Desktops to set up" (list "i3" "sway" "kde") (list "i3" "sway") | toToml }}
+packageGroups = {{ promptMultichoiceOnce . "packageGroups" "Package groups to install on Arch" (list "apps" "dev" "android" "cli" "tex") (list "apps" "dev" "android" "cli" "tex") | toToml }}
+{{- end }}
 
 [data.wallpaper]
 mode = "fill"
