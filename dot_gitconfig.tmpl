@@ -14,6 +14,17 @@
 	# git status を速くする（starship のプロンプトが軽くなる）
 	fsmonitor = true
 	untrackedCache = true
+{{- else if eq .chezmoi.os "darwin" }}
+{{- /* Homebrew の場所は Apple Silicon と Intel で違う */}}
+{{- $brew := ternary "/opt/homebrew" "/usr/local" (eq .chezmoi.arch "arm64") }}
+[credential "https://github.com"]
+	helper = 
+	helper = !{{ $brew }}/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !{{ $brew }}/bin/gh auth git-credential
+[credential]
+	helper = osxkeychain
 {{- else }}
 [credential "https://github.com"]
 	helper = 
