@@ -121,6 +121,13 @@ command=~/.config/i3blocks/scripts/vpn
 markup=none
 interval=5
 
+# Connected Bluetooth devices (with battery level when reported).
+# Left click opens bluetui.
+[bluetooth]
+command=~/.config/i3blocks/scripts/bluetooth
+markup=none
+interval=5
+
 # Battery indicator
 
 {{ if eq .role "laptop" }}
@@ -138,13 +145,6 @@ color=#717171
 [pavucontrol]
 full_text=♪
 command=pavucontrol
-
-# Connected Bluetooth devices (with battery level when reported).
-# Left click opens bluetui.
-[bluetooth]
-command=~/.config/i3blocks/scripts/bluetooth
-markup=none
-interval=5
 
 # Current default output (Speaker / Headphones / HDMI / Bluetooth device name).
 # Left click cycles outputs via ~/.config/i3/scripts/audio-device-switch.

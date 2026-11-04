@@ -24,7 +24,8 @@ desc=$(prop node.description)
 # Bluetooth 機器は description が機器名 (WF-1000XM5 など) になっている。
 case "$api" in
     bluez5)
-        icon=$''   # bluetooth
+        # Bluetooth ブロックと見分けるため、出力先はヘッドホンのアイコンにする
+        icon=$'\uf025'   # headphones
         name=${desc:-$nick}
         ;;
     *)
