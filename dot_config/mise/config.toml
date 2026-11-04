@@ -1,12 +1,12 @@
 [tools]
-claude-code = "latest"
+claude-code = { version = "latest", os = ["unix"] }
 codex = "latest"
-cursor-cli = { version = "latest", bin_path = "dist-package", strip_components = 0, url = 'https://downloads.cursor.com/lab/{{ version }}/{{ os(macos="darwin") }}/{{ arch(x64="x64", arm64="arm64") }}/agent-cli-package.tar.gz', version_list_url = "https://cursor.com/install", version_regex = 'downloads\.cursor\.com/lab/([0-9]{4}\.[0-9]{2}\.[0-9]{2}-[0-9a-f]+)/' }
+cursor-cli = { version = "latest", os = ["unix"], bin_path = "dist-package", strip_components = 0, url = 'https://downloads.cursor.com/lab/{{ version }}/{{ os(macos="darwin") }}/{{ arch(x64="x64", arm64="arm64") }}/agent-cli-package.tar.gz', version_list_url = "https://cursor.com/install", version_regex = 'downloads\.cursor\.com/lab/([0-9]{4}\.[0-9]{2}\.[0-9]{2}-[0-9a-f]+)/' }
 go = "latest"
 node = "latest"
-"pipx:ansible-core" = "latest"
-"pipx:ansible-lint" = "latest"
-rust = "latest"
-shellcheck = "latest"
+"pipx:ansible-core" = { version = "latest", os = ["unix"] }
+"pipx:ansible-lint" = { version = "latest", os = ["unix"] }
+rust = { version = "latest", os = ["unix"] }
+shellcheck = { version = "latest", os = ["unix"] }
 usage = "latest"
 uv = "latest"

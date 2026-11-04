@@ -52,3 +52,9 @@ Pictures
 {{ if ne .chezmoi.os "darwin" -}}
 {{ template "ignore/darwin" . }}
 {{- end }}
+{{ if eq .chezmoi.os "windows" -}}
+{{ template "ignore/unix" . }}
+{{- end }}
+{{ if ne .chezmoi.os "windows" -}}
+{{ template "ignore/windows" . }}
+{{- end }}

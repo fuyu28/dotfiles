@@ -1,0 +1,9 @@
+# Linux / macOS 共通の配置先（Windows では除外）
+# ディレクトリはディレクトリ名ごと除外し、空ディレクトリも作らせない
+.config/btop
+.icons
+.latexmkrc
+.local/bin
+.local/share/editor-profiles
+.tmux.conf
+.zshrc

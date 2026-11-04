@@ -1,0 +1,30 @@
+[user]
+	name = fuyu
+	email = fuyu28.dev@gmail.com
+{{- if eq .chezmoi.os "windows" }}
+[credential "https://github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential]
+	helper = manager
+{{- else }}
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret
+{{- end }}
+[init]
+	defaultBranch = main
+[core]
+	# 日本語のファイル名をエスケープせずに表示する
+	quotepath = false
+# マシン固有の設定（safe.directory やパスなど）は chezmoi で管理しない
+[include]
+	path = ~/.gitconfig.local
