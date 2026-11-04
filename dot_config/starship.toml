@@ -20,7 +20,7 @@ $time\
 [ ](fg:#1d2230)\
 \n$character"""
 
-command_timeout = 1000
+command_timeout = 500
 
 # ─── Character ───────────────────────────────
 [character]
