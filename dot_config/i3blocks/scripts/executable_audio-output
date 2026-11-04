@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# i3blocks block that shows the current PipeWire default output.
+# Left click cycles to the next output.
+
+if [[ "${BLOCK_BUTTON:-}" == 1 ]]; then
+    ~/.config/i3/scripts/audio-device-switch >/dev/null 2>&1
+fi
+
+info=$(wpctl inspect @DEFAULT_AUDIO_SINK@ 2>/dev/null) || {
+    echo "No output"
+    exit 0
+}
+
+prop() {
+    awk -F'"' -v key="$1" '$0 ~ "[ *]" key " = " { print $2; exit }' <<<"$info"
+}
+
+api=$(prop device.api)
+nick=$(prop node.nick)
+desc=$(prop node.description)
+
+# 内蔵カードの description は "Core Ultra 200V ... Speaker" のように長いので、
+# ALSA では短い nick (Speaker, Headphones, HDMI 1) を使う。
+# Bluetooth 機器は description が機器名 (WF-1000XM5 など) になっている。
+case "$api" in
+    bluez5)
+        icon=$''   # bluetooth
+        name=${desc:-$nick}
+        ;;
+    *)
+        name=${nick:-$desc}
+        case "$name" in
+            *Headphone*|*Headset*) icon=$'' ;;  # headphones
+            *HDMI*|*DisplayPort*)  icon=$'' ;;  # desktop
+            *)                     icon=$'' ;;  # laptop
+        esac
+        ;;
+esac
+
+echo "${icon} ${name:-Unknown}"

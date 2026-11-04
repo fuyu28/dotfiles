@@ -139,6 +139,14 @@ color=#717171
 full_text=♪
 command=pavucontrol
 
+# Current default output (Speaker / Headphones / HDMI / Bluetooth device name).
+# Left click cycles outputs via ~/.config/i3/scripts/audio-device-switch.
+[audio-output]
+command=~/.config/i3blocks/scripts/audio-output
+markup=none
+interval=5
+signal=10
+
 [volume]
 command=~/.config/i3blocks/scripts/volume
 interval=2

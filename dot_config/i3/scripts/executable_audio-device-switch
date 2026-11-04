@@ -44,6 +44,8 @@ for index in "${!sinks[@]}"; do
 done
 
 pactl set-default-sink "$next"
+# i3blocks の audio-output / volume ブロック (signal=10) を即時更新する
+pkill -RTMIN+10 -x i3blocks || true
 name=$(LC_ALL=C pactl list sinks | awk -v n="$next" '
   /^\tName: / { found = ($2 == n); next }
   found && /^\tDescription: / { sub(/^\tDescription: /, ""); print; exit }
