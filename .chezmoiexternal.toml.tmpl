@@ -1,4 +1,4 @@
-{{- if and .private (or (eq .chezmoi.os "linux") (eq .chezmoi.os "windows")) }}
+{{- if .private }}
 # Assets that may not be redistributed (see README). Authenticates with the
 # gh credential helper from .gitconfig.
 [".local/share/dotfiles-private"]

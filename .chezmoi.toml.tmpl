@@ -6,10 +6,7 @@
 role = {{ promptChoiceOnce . "role" "Machine role" (list "desktop" "laptop") | quote }}
 skk = {{ promptBoolOnce . "skk" "Use SKK for Japanese input (false: mozc)" true }}
 {{- end }}
-{{- /* private リポジトリは Linux と Windows でだけ clone する（.chezmoiexternal.toml.tmpl） */}}
-{{- if or $linux (eq .chezmoi.os "windows") }}
 private = {{ promptBoolOnce . "private" "Clone fuyu28/dotfiles-private (needs gh auth)" true }}
-{{- end }}
 {{- if $linux }}
 {{- /* 選択肢は .chezmoidata/packages.toml の packages.desktops / packages.groups に合わせる */}}
 desktops = {{ promptMultichoiceOnce . "desktops" "Desktops to set up" (list "i3" "sway" "kde") (list "i3" "sway") | toToml }}

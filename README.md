@@ -3,7 +3,7 @@
 macOS と EndeavourOS の環境を [chezmoi](https://www.chezmoi.io/) で管理する個人用 dotfiles。Windows では一部の設定だけを使う（[Windows](#windows) を参照）。
 
 - 共通: Zsh (zinit)、Git / GitHub CLI、tmux、Neovim (LazyVim)、Starship、mise
-- macOS: Homebrew、AeroSpace + borders、Ghostty、Cursor / VS Code、macOS の主要設定
+- macOS: Homebrew、AeroSpace + borders、Ghostty、Cursor / VS Code、macOS の主要設定、エージェントのスキル
 - Linux: i3 / sway、i3blocks、Rofi、Picom、Dunst、Kitty、fcitx5
 - Windows: Git / GitHub CLI、lazygit、Neovim、Starship、mise、PowerShell、エージェントのスキル
 
@@ -15,9 +15,9 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply fuyu28/dotfiles
 chezmoi init --apply fuyu28/dotfiles
 ```
 
-macOS では Homebrew と `Brewfile` のパッケージ、mise のツール、エディタ拡張、macOS の設定まで入る。
+macOS では Homebrew と `Brewfile` のパッケージ、mise のツール、エディタ拡張、macOS の設定まで入る。`private = true` にするなら、先に `brew install gh` と `gh auth login` を済ませておく（`fuyu28/dotfiles-private` を gh の認証で clone するため）。
 
-Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる。初回の init で次を聞かれ、`~/.config/chezmoi/chezmoi.toml` に保存される。Linux 以外では聞かれず、`.chezmoidata.toml` の既定値が使われる。ただし `private` は Windows でも聞かれる。
+Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる。初回の init で次を聞かれ、`~/.config/chezmoi/chezmoi.toml` に保存される。`private` 以外は Linux でだけ聞かれ、ほかの OS では `.chezmoidata.toml` の既定値が使われる。
 
 | キー | 内容 |
 |---|---|
