@@ -1,10 +1,11 @@
 # dotfiles
 
-macOS と EndeavourOS の環境を [chezmoi](https://www.chezmoi.io/) で管理する個人用 dotfiles。
+macOS と EndeavourOS の環境を [chezmoi](https://www.chezmoi.io/) で管理する個人用 dotfiles。Windows では一部の設定だけを使う（[Windows](#windows) を参照）。
 
 - 共通: Zsh (zinit)、Git / GitHub CLI、tmux、Neovim (LazyVim)、Starship、mise
 - macOS: Homebrew、AeroSpace + borders、Ghostty、Cursor / VS Code、macOS の主要設定
 - Linux: i3 / sway、i3blocks、Rofi、Picom、Dunst、Kitty、fcitx5
+- Windows: Git / GitHub CLI、lazygit、Neovim、Starship、mise、PowerShell、エージェントのスキル
 
 ## セットアップ
 
@@ -46,9 +47,53 @@ chezmoi update
 
 ## OS ごとの設定
 
-- OS 専用のファイルは、配置先のパスを `.chezmoitemplates/ignore/darwin` か `ignore/linux` に追加する。ディレクトリは `dir/**` ではなく `dir` と書く（`dir/**` だと空のディレクトリが作られる）。
+- OS 専用のファイルは、配置先のパスを `.chezmoitemplates/ignore/darwin`、`ignore/linux`、`ignore/windows` のどれかに追加する。Linux と macOS の両方で使い Windows では使わないものは `ignore/unix` に追加する。ディレクトリは `dir/**` ではなく `dir` と書く（`dir/**` だと空のディレクトリが作られる）。
+- mise のツールを OS で絞るときは、chezmoi のテンプレートではなく mise の `os` オプション（例: `os = ["unix"]`）を使う。`config.toml` には mise 自身の `{{ }}` テンプレートがあり、chezmoi の記法とぶつかるため。
 - OS 専用のスクリプトは `.chezmoiscripts/darwin/` か `linux/` に置く。
 - 数行の差分はテンプレート内で分岐し、大きな差分は `.chezmoitemplates/` に切り出す。
+
+## Windows
+
+Windows では Git / GitHub CLI、lazygit、Neovim、Starship、mise、PowerShell のプロファイル、エージェントのスキルだけを使う。Zsh、tmux、デスクトップ環境などは `ignore/unix` などで除外している。
+
+### 事前準備
+
+1. **開発者モードを有効にする**（設定 → システム → 開発者向け）。chezmoi が symlink（`~/.agents` やスキル）を作るのに必要。
+2. **`XDG_CONFIG_HOME` を設定する**。Windows の Neovim、GitHub CLI、lazygit は既定で `AppData` の下を読むので、`~/.config` を読ませるためにユーザー環境変数を設定する。設定したあとに開いたターミナルから有効になる。
+
+   ```powershell
+   [Environment]::SetEnvironmentVariable('XDG_CONFIG_HOME', "$env:USERPROFILE\.config", 'User')
+   ```
+
+3. **winget でツールを入れる**。CLI アプリは Linux の pacman や macOS の Homebrew と同じく winget で管理し、言語ランタイムだけを mise に任せる。
+
+   ```powershell
+   winget install twpayne.chezmoi Git.Git GitHub.cli Neovim.Neovim Starship.Starship JesseDuffield.lazygit jdx.mise
+   ```
+
+4. **`gh auth login` を済ませる**。`private = true` のとき、`fuyu28/dotfiles-private` を gh の認証で clone する。
+
+### 適用
+
+```powershell
+chezmoi init --apply fuyu28/dotfiles
+```
+
+init で聞かれる項目のうち、Windows で意味があるのは `private` だけ。ほかは何を選んでもよい。
+
+### mise と Python
+
+Windows で mise が入れるのは go、node、codex、uv、usage。Windows で動かないものや別の方法で入れるものには `os = ["unix"]` を付けている。
+
+- Claude Code は公式インストーラで入れる。
+- Rust は winget の `Rustlang.Rustup` で入れる。
+- Python は uv で入れる: `uv python install --default`（`~/.local/bin` に `python.exe` が置かれる）。
+
+### Git
+
+credential helper は、github.com と gist.github.com では gh、それ以外では Git Credential Manager（Git for Windows に同梱）を使う。
+
+`ghq.root` などのマシン固有の設定は `~/.gitconfig.local` に書く。これは chezmoi で管理せず、`.gitconfig` から include する。ほかの OS でも同じように使える。
 
 ## Linux の外観
 
