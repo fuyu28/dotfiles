@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# i3blocks block that lists connected Bluetooth devices.
+# Left click opens bluetui in a floating kitty window.
+
+if [[ "${BLOCK_BUTTON:-}" == 1 ]]; then
+    # i3blocks はコマンドの終了を待つので、切り離して起動する
+    setsid -f kitty --class bluetui -e bluetui >/dev/null 2>&1
+fi
+
+ICON=$''   # bluetooth
+DIM='#717171'
+
+if ! bluetoothctl show 2>/dev/null | grep -q 'Powered: yes'; then
+    echo "${ICON} off"
+    echo "${ICON}"
+    echo "$DIM"
+    exit 0
+fi
+
+devices=()
+while read -r _ mac _; do
+    [[ -n "$mac" ]] || continue
+    info=$(bluetoothctl info "$mac")
+    name=$(sed -n 's/^\tAlias: //p' <<<"$info")
+    # Battery Percentage: 0x48 (72)
+    battery=$(sed -n 's/^\tBattery Percentage: .*(\([0-9]*\))$/\1/p' <<<"$info")
+    devices+=("${name:-$mac}${battery:+ ${battery}%}")
+done < <(bluetoothctl devices Connected 2>/dev/null)
+
+if (( ${#devices[@]} == 0 )); then
+    echo "${ICON}"
+    echo "${ICON}"
+    echo "$DIM"
+    exit 0
+fi
+
+joined=$(printf '%s, ' "${devices[@]}")
+echo "${ICON} ${joined%, }"
+# 幅が足りないときは台数だけ出す
+echo "${ICON} ${#devices[@]}"

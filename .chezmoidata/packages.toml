@@ -343,6 +343,7 @@ aur = []
 [packages.desktops.i3]
 pacman = [
   "arandr",
+  "bluetui",
   "dmenu",
   "dunst",
   "eos-settings-i3wm",
@@ -366,6 +367,7 @@ aur = [
 
 [packages.desktops.sway]
 pacman = [
+  "bluetui",
   "dunst",
   "grim",
   "i3blocks",
