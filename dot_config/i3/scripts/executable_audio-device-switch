@@ -3,13 +3,28 @@ set -euo pipefail
 
 # Cycle the PipeWire default output. Existing streams keep their current
 # destination; applications opened afterwards use the new default.
+#
+# 何も挿さっていないヘッドホン端子や HDMI も sink として見えるが、
+# そこへ set-default しても WirePlumber が受け付けず元の出力に戻る。
+# そのため有効なポートを持つ sink だけを巡回する。
 mapfile -t sinks < <(
-  wpctl status -n | awk '
-    /Sinks:/ { in_sinks = 1; next }
-    in_sinks && /Sources:/ { exit }
-    in_sinks && match($0, /[0-9]+\./) {
-      print substr($0, RSTART, RLENGTH - 1)
+  LC_ALL=C pactl list sinks | awk '
+    function flush() {
+      if (name != "" && !(active in unavailable)) print name
+      name = ""; active = ""; delete unavailable
     }
+    /^Sink #/ { flush(); next }
+    /^\tName: / { name = $2; next }
+    # ポート行: "\t\t<port>: <desc> (type: ..., not available)"
+    /^\t\t[^\t]/ && /not available\)$/ {
+      port = $0
+      sub(/^\t\t/, "", port)
+      sub(/: .*/, "", port)
+      unavailable[port] = 1
+      next
+    }
+    /^\tActive Port: / { active = $0; sub(/^\tActive Port: /, "", active); next }
+    END { flush() }
   '
 )
 
@@ -18,14 +33,7 @@ mapfile -t sinks < <(
   exit 1
 }
 
-current=$(wpctl status -n | awk '
-  /Sinks:/ { in_sinks = 1; next }
-  in_sinks && /Sources:/ { exit }
-  in_sinks && /\*/ && match($0, /[0-9]+\./) {
-    print substr($0, RSTART, RLENGTH - 1)
-    exit
-  }
-')
+current=$(pactl get-default-sink)
 
 next=${sinks[0]}
 for index in "${!sinks[@]}"; do
@@ -35,6 +43,9 @@ for index in "${!sinks[@]}"; do
   fi
 done
 
-wpctl set-default "$next"
-name=$(wpctl inspect "$next" | awk -F'"' '/node.description/ { print $2; exit }')
-notify-send -i audio-volume-high "Audio output switched" "${name:-Node $next}"
+pactl set-default-sink "$next"
+name=$(LC_ALL=C pactl list sinks | awk -v n="$next" '
+  /^\tName: / { found = ($2 == n); next }
+  found && /^\tDescription: / { sub(/^\tDescription: /, ""); print; exit }
+')
+notify-send -i audio-volume-high "Audio output switched" "${name:-$next}"
