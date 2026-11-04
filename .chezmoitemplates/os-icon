@@ -1,0 +1,15 @@
+{{- /* .chezmoidata/osicons.toml から、この OS のアイコンを 1 つ出す */ -}}
+{{- $icons := .osIcons -}}
+{{- $keys := list .chezmoi.os -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $id := get .chezmoi.osRelease "id" | default "" -}}
+{{-   $like := get .chezmoi.osRelease "idLike" | default "" | splitList " " -}}
+{{-   $keys = concat (list $id) $like (list "linux") -}}
+{{- end -}}
+{{- $icon := "" -}}
+{{- range $keys -}}
+{{-   if and (not $icon) (hasKey $icons .) -}}
+{{-     $icon = index $icons . -}}
+{{-   end -}}
+{{- end -}}
+{{- $icon | default $icons.unknown -}}
