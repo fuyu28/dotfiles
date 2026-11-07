@@ -64,7 +64,8 @@ unalias z 2>/dev/null
 (( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 
 # starship
-(( $+commands[starship] )) && eval "$(starship init zsh)"
+# TERM=dumb（GUI アプリが PATH を取るために zsh -ilc を起動したときなど）ではエラーを出すので読まない
+[[ $TERM != dumb ]] && (( $+commands[starship] )) && eval "$(starship init zsh)"
 
 # cargo
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
