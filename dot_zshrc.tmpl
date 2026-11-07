@@ -10,8 +10,11 @@ path=(
 )
 export EDITOR=nvim
 export VISUAL=nvim
-export HISTSIZE=1000
-export HISTFILESIZE=2000
+# 履歴（HISTFILE と SAVEHIST を設定しないと zsh はファイルに保存しない）
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
+[[ -d ${HISTFILE:h} ]] || mkdir -p -m 700 "${HISTFILE:h}"
+HISTSIZE=10000
+SAVEHIST=10000
 {{ if eq .chezmoi.os "darwin" -}}
 {{ template "zsh/darwin" . }}
 {{- else if eq .chezmoi.os "linux" -}}
