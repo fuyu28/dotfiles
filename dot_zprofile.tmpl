@@ -1,5 +1,10 @@
+{{ if eq .chezmoi.os "darwin" -}}
 if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[ -x /usr/local/bin/brew ]]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
+
+{{ end -}}
+# zsh は ~/.profile を読まないので、sh として読み込む
+[[ -f ~/.profile ]] && emulate sh -c '. ~/.profile'

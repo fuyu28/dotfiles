@@ -5,5 +5,7 @@
 .latexmkrc
 .local/bin
 .local/share/editor-profiles
+.profile
 .tmux.conf
+.zprofile
 .zshrc

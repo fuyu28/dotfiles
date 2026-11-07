@@ -1,0 +1,14 @@
+# ~/.profile: ログインセッション全体の環境変数（POSIX sh で書く）
+# 読むもの: lightdm の Xsession、~/.zprofile、~/.bash_profile
+{{- if eq .chezmoi.os "linux" }}
+
+export TERMINAL=xfce4-terminal
+#export QT_QPA_PLATFORMTHEME=qt5ct
+{{- end }}
+
+# mise の shims を PATH に通す。
+# mise activate は対話 zsh（~/.zshrc）でしか効かないので、ランチャーから起動した GUI アプリ（T3 Code など）にはこちらが要る。
+case ":$PATH:" in
+  *":$HOME/.local/share/mise/shims:"*) ;;
+  *) export PATH="$HOME/.local/share/mise/shims:$PATH" ;;
+esac
