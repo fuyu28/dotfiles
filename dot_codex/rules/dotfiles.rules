@@ -1,0 +1,43 @@
+# chezmoi で管理するルール。Codex が「常に許可」で書き足すのは default.rules なので、こちらは手で編集する。
+# どのルールにも当たらないコマンドは、approval_policy と sandbox の設定どおりに扱われる。
+
+# Orca のワーカーが使うコマンドはすべて許可する
+prefix_rule(pattern = ["orca"], decision = "allow")
+prefix_rule(pattern = ["orca-ide"], decision = "allow")
+
+# git の read 系
+prefix_rule(
+    pattern = ["git", ["status", "log", "show", "diff", "ls-tree", "ls-files", "blame", "rev-parse", "grep", "reflog", "describe", "shortlog", "cat-file"]],
+    decision = "allow",
+)
+
+# git の書き込み・履歴の書き換え
+prefix_rule(
+    pattern = ["git", ["commit", "push", "reset", "rebase", "merge", "cherry-pick", "revert", "clean", "restore", "checkout", "switch", "stash", "branch", "tag", "am", "apply", "pull", "fetch", "rm", "mv", "add"]],
+    decision = "prompt",
+    justification = "リポジトリの状態を変える git 操作は確認する",
+)
+
+# gh の read 系
+prefix_rule(pattern = ["gh", "pr", ["view", "list", "diff", "checks", "status"]], decision = "allow")
+prefix_rule(pattern = ["gh", "run", ["view", "list"]], decision = "allow")
+prefix_rule(pattern = ["gh", "issue", ["view", "list", "status"]], decision = "allow")
+prefix_rule(pattern = ["gh", "repo", "view"], decision = "allow")
+
+# gh の書き込み系は確認する。当たったルールのうち一番厳しいものが採用されるので、
+# gh 全体を prompt にすると上の allow が効かなくなる。サブコマンドごとに書く。
+# gh api は -f などを渡すと method を書かなくても POST になるので、GET を明示したときだけ許可する。
+# method を書かない gh api はどのルールにも当たらず、approval_policy と sandbox の設定に任せる。
+prefix_rule(pattern = ["gh", "api", ["-X", "--method"], "GET"], decision = "allow")
+prefix_rule(pattern = ["gh", "api", ["-X", "--method"], ["POST", "PUT", "PATCH", "DELETE"]], decision = "prompt", justification = "GitHub に書き込む")
+prefix_rule(pattern = ["gh", "pr", ["create", "merge", "edit", "close", "reopen", "comment", "review", "ready", "checkout", "lock", "unlock", "update-branch"]], decision = "prompt")
+prefix_rule(pattern = ["gh", "issue", ["create", "edit", "close", "reopen", "comment", "delete", "transfer", "pin", "unpin", "lock", "unlock", "develop"]], decision = "prompt")
+prefix_rule(pattern = ["gh", "run", ["rerun", "cancel", "delete", "watch", "download"]], decision = "prompt")
+prefix_rule(pattern = ["gh", "repo", ["create", "delete", "edit", "fork", "clone", "rename", "archive", "unarchive", "sync", "set-default", "deploy-key"]], decision = "prompt")
+prefix_rule(pattern = ["gh", ["release", "workflow", "secret", "variable", "auth", "gist", "label", "ssh-key", "gpg-key", "extension", "codespace", "config", "alias", "cache", "ruleset", "project"]], decision = "prompt")
+
+# ツールのインストール
+prefix_rule(pattern = [["mise", "winget", "brew", "pacman", "yay", "scoop", "choco"]], decision = "prompt", justification = "ツールのインストールや更新は確認する")
+prefix_rule(pattern = [["npm", "pnpm", "bun", "yarn"], ["install", "i", "add", "update", "upgrade", "remove", "uninstall"]], decision = "prompt")
+prefix_rule(pattern = [["pip", "pip3", "pipx", "cargo", "go"], ["install", "uninstall"]], decision = "prompt")
+prefix_rule(pattern = ["uv", ["add", "remove", "pip", "tool", "python"]], decision = "prompt")
