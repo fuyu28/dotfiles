@@ -9,3 +9,63 @@ rust = { version = "latest", os = ["unix"] }
 shellcheck = { version = "latest", os = ["unix"] }
 usage = "latest"
 uv = "latest"
+
+# git worktree を作り、.worktreeinclude に書いたファイル（.env など）を元のチェックアウトからコピーする。
+# Orca や Claude Code の worktree と同じ .worktreeinclude を使う。既定の作成先は ../<repo>.worktrees/<branch>
+[tasks.wt]
+description = "git worktree を作って .worktreeinclude のファイルをコピーする"
+# グローバルなタスクは既定で設定ファイルの場所で動くので、呼び出したディレクトリで動かす
+dir = "{{cwd}}"
+usage = '''
+arg "<branch>" help="ブランチ名。なければ HEAD から作る"
+arg "[path]" help="作成先"
+'''
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+branch=$usage_branch
+root=$(git worktree list --porcelain | sed -n '1s/^worktree //p')
+path=${usage_path:-"$(dirname "$root")/$(basename "$root").worktrees/${branch//\//-}"}
+if git show-ref --verify --quiet "refs/heads/$branch"; then
+  git worktree add "$path" "$branch"
+else
+  git worktree add -b "$branch" "$path"
+fi
+include="$root/.worktreeinclude"
+[ -f "$include" ] || exit 0
+while IFS= read -r line || [ -n "$line" ]; do
+  rel=$(printf '%s' "$line" | tr -d '\r' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+  case $rel in '' | '#'*) continue ;; /* | *..*) echo "skip: $rel" >&2; continue ;; esac
+  if [ -e "$root/$rel" ] && [ ! -e "$path/$rel" ]; then
+    mkdir -p "$(dirname "$path/$rel")"
+    cp -R "$root/$rel" "$path/$rel"
+    echo "copied: $rel"
+  fi
+done < "$include"
+'''
+run_windows = '''
+#!/usr/bin/env pwsh
+$ErrorActionPreference = 'Stop'
+$branch = $env:usage_branch
+$root = (git worktree list --porcelain | Select-Object -First 1) -replace '^worktree ', ''
+$path = if ($env:usage_path) { $env:usage_path } else {
+  Join-Path (Split-Path $root) ("{0}.worktrees/{1}" -f (Split-Path $root -Leaf), ($branch -replace '/', '-'))
+}
+git show-ref --verify --quiet "refs/heads/$branch"
+if ($LASTEXITCODE -eq 0) { git worktree add $path $branch } else { git worktree add -b $branch $path }
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+$include = Join-Path $root '.worktreeinclude'
+if (-not (Test-Path $include)) { exit 0 }
+foreach ($line in Get-Content $include) {
+  $rel = $line.Trim()
+  if (-not $rel -or $rel.StartsWith('#')) { continue }
+  if ([IO.Path]::IsPathRooted($rel) -or $rel.Contains('..')) { Write-Warning "skip: $rel"; continue }
+  $src = Join-Path $root $rel
+  $dst = Join-Path $path $rel
+  if ((Test-Path $src) -and -not (Test-Path $dst)) {
+    New-Item -ItemType Directory -Force (Split-Path $dst) | Out-Null
+    Copy-Item -Recurse $src $dst
+    "copied: $rel"
+  }
+}
+'''
