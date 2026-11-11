@@ -4,5 +4,17 @@
 {{- if .chezmoi.stdin -}}
 {{-   $settings = fromJson .chezmoi.stdin -}}
 {{- end -}}
-{{- $settings = setValueAtPath "permissions" (includeTemplate "claude-permissions.json" . | fromJson) $settings -}}
+{{- $permissions := includeTemplate "claude-permissions.json" . | fromJson -}}
+{{- /* Bash ツールのルールは PowerShell ツールには効かないので、allow と ask の Bash(...) から PowerShell(...) を作る */ -}}
+{{- range $key := list "allow" "ask" -}}
+{{-   $rules := list -}}
+{{-   range get $permissions $key -}}
+{{-     $rules = append $rules . -}}
+{{-     if hasPrefix "Bash(" . -}}
+{{-       $rules = append $rules (printf "PowerShell(%s" (trimPrefix "Bash(" .)) -}}
+{{-     end -}}
+{{-   end -}}
+{{-   $_ := set $permissions $key $rules -}}
+{{- end -}}
+{{- $settings = setValueAtPath "permissions" $permissions $settings -}}
 {{ toPrettyJson "  " $settings }}
