@@ -37,7 +37,7 @@ prefix_rule(pattern = ["gh", "repo", ["create", "delete", "edit", "fork", "clone
 prefix_rule(pattern = ["gh", ["release", "workflow", "secret", "variable", "auth", "gist", "label", "ssh-key", "gpg-key", "extension", "codespace", "config", "alias", "cache", "ruleset", "project"]], decision = "prompt")
 
 # ツールのインストール
-prefix_rule(pattern = [["mise", "winget", "brew", "pacman", "yay", "scoop", "choco"]], decision = "prompt", justification = "ツールのインストールや更新は確認する")
+prefix_rule(pattern = [["mise", "winget", "brew", "pacman", "paru", "yay", "scoop", "choco"]], decision = "prompt", justification = "ツールのインストールや更新は確認する")
 prefix_rule(pattern = [["npm", "pnpm", "bun", "yarn"], ["install", "i", "add", "update", "upgrade", "remove", "uninstall"]], decision = "prompt")
 prefix_rule(pattern = [["pip", "pip3", "pipx", "cargo", "go"], ["install", "uninstall"]], decision = "prompt")
 prefix_rule(pattern = ["uv", ["add", "remove", "pip", "tool", "python"]], decision = "prompt")

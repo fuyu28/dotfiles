@@ -59,6 +59,7 @@
     "Bash(brew:*)",
     "Bash(pacman:*)",
     "Bash(yay:*)",
+    "Bash(paru:*)",
     "Bash(scoop:*)",
     "Bash(npm install:*)",
     "Bash(pnpm add:*)",
