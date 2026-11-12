@@ -1,14 +1,29 @@
 # ~/.profile: ログインセッション全体の環境変数（POSIX sh で書く）
 # 読むもの: lightdm の Xsession、~/.zprofile、~/.bash_profile
+
+export EDITOR=nvim
+export VISUAL=nvim
+export HISTSIZE=1000
+export HISTFILESIZE=2000
 {{- if eq .chezmoi.os "linux" }}
 
-export TERMINAL=xfce4-terminal
+export TERMINAL=kitty
 #export QT_QPA_PLATFORMTHEME=qt5ct
 {{- end }}
 
-# mise の shims を PATH に通す。
+# 自分のコマンドと mise の shims を、システムのコマンドより先に PATH に通す。
 # mise activate は対話 zsh（~/.zshrc）でしか効かないので、ランチャーから起動した GUI アプリ（T3 Code など）にはこちらが要る。
-case ":$PATH:" in
-  *":$HOME/.local/share/mise/shims:"*) ;;
-  *) export PATH="$HOME/.local/share/mise/shims:$PATH" ;;
-esac
+# 何度読み込まれても重複しないようにする。
+path_prepend() {
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) PATH="$1${PATH:+:$PATH}" ;;
+  esac
+}
+
+path_prepend "$HOME/.local/share/mise/shims"
+path_prepend "$HOME/.cargo/bin"
+path_prepend "$HOME/.local/bin"
+export PATH
+
+unset -f path_prepend
