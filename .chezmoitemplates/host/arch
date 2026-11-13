@@ -1,0 +1,6 @@
+{{- /* Arch 系（Arch Linux、EndeavourOS など ID_LIKE に arch を含むもの）なら "true" を出す */ -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $id := get .chezmoi.osRelease "id" | default "" -}}
+{{-   $like := get .chezmoi.osRelease "idLike" | default "" | splitList " " -}}
+{{-   if or (eq $id "arch") (has "arch" $like) }}true{{ end -}}
+{{- end -}}

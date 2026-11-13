@@ -1,4 +1,4 @@
-{{- if .private -}}
+{{- if and .private .gui -}}
 {{- $zip := joinPath .chezmoi.homeDir ".local/share/dotfiles-private/cursors/kiritan-cursor.zip" -}}
 #!/bin/sh
 # Rebuild the cursor theme when the pack or the converter changes.

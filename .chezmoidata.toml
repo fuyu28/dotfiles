@@ -1,5 +1,6 @@
 # Defaults for keys that `chezmoi init` asks for. An old config without
 # them still applies; values in chezmoi.toml take precedence.
+gui = true
 role = "desktop"
 skk = true
 private = false

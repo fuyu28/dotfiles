@@ -1,6 +1,6 @@
 # dotfiles
 
-macOS と EndeavourOS の環境を [chezmoi](https://www.chezmoi.io/) で管理する個人用 dotfiles。Windows では一部の設定だけを使う（[Windows](#windows) を参照）。
+macOS と Linux の環境を [chezmoi](https://www.chezmoi.io/) で管理する個人用 dotfiles。Linux は EndeavourOS / Arch Linux が前提だが、WSL の Ubuntu などほかのディストリビューションでも、パッケージのインストール以外は使える。Windows では一部の設定だけを使う（[Windows](#windows) を参照）。
 
 - 共通: Zsh (zinit)、Git / GitHub CLI、tmux、Neovim (LazyVim)、Starship、mise
 - macOS: Homebrew、AeroSpace + borders、Ghostty、Cursor / VS Code、macOS の主要設定、エージェントのスキル
@@ -17,17 +17,29 @@ chezmoi init --apply fuyu28/dotfiles
 
 macOS では Homebrew と `Brewfile` のパッケージ、mise のツール、エディタ拡張、macOS の設定まで入る。`private = true` にするなら、先に `brew install gh` と `gh auth login` を済ませておく（`fuyu28/dotfiles-private` を gh の認証で clone するため）。
 
-Linux（EndeavourOS 前提）では pacman / paru でパッケージを入れる。初回の init で次を聞かれ、`~/.config/chezmoi/chezmoi.toml` に保存される。`private` 以外は Linux でだけ聞かれ、ほかの OS では `.chezmoidata.toml` の既定値が使われる。
+Linux では初回の init で次を聞かれ、`~/.config/chezmoi/chezmoi.toml` に保存される。聞かれなかった項目は `.chezmoidata.toml` の既定値が使われる。
 
-| キー | 内容 |
-|---|---|
-| `role` | `desktop` / `laptop`。電源管理やバッテリー表示などの切り替えに使う |
-| `skk` | 日本語入力に SKK を使うか（false なら mozc） |
-| `private` | private リポジトリ `fuyu28/dotfiles-private` を使うか（要 `gh auth login`） |
-| `desktops` | 使うデスクトップ（複数選択）。`i3`、`sway`、`kde` から選ぶ。選ばなかったものはパッケージも設定ファイルも入れない |
-| `packageGroups` | 追加で入れるパッケージのグループ（複数選択）。`apps`、`dev`、`android`、`cli`、`tex` から選ぶ |
+| キー | 聞かれる条件 | 内容 |
+|---|---|---|
+| `gui` | Linux | デスクトップ環境を使うか。WSL では既定で false。false なら i3 / sway、fcitx5、GTK、kitty などの設定ファイルとカーソル・xorg のスクリプトを入れず、`role`・`skk`・`desktops` も聞かない |
+| `role` | `gui = true` | `desktop` / `laptop`。電源管理やバッテリー表示などの切り替えに使う |
+| `skk` | `gui = true` | 日本語入力に SKK を使うか（false なら mozc） |
+| `desktops` | `gui = true` | 使うデスクトップ（複数選択）。`i3`、`sway`、`kde` から選ぶ。選ばなかったものはパッケージも設定ファイルも入れない |
+| `private` | すべての OS | private リポジトリ `fuyu28/dotfiles-private` を使うか（要 `gh auth login`） |
+| `packageGroups` | Arch 系 | 追加で入れるパッケージのグループ（複数選択）。`apps`、`dev`、`android`、`cli`、`tex` から選ぶ |
 
-パッケージの中身は `.chezmoidata/packages.toml` にある。
+### Linux のパッケージ
+
+pacman / paru でのインストールは Arch 系（`/etc/os-release` の `ID` が `arch` か、`ID_LIKE` に `arch` を含むもの。EndeavourOS もここに入る）でだけ動く。ほかのディストリビューションではパッケージは入れないので、zsh、mise などは自分で入れる。
+
+パッケージの中身は `.chezmoidata/packages.toml` にあり、端末に合わせて次のように選ぶ。判定は `.chezmoitemplates/host/` にある。
+
+- `packages.base`: Arch 系なら常に入れる
+- `packages.hardware`（カーネル、ブートローダー、ファームウェア、ネットワーク、音声など）: WSL では入れない
+- `packages.desktop` と `packages.desktops.<名前>`: `gui = true` のときだけ入れる
+- 各テーブルの `gui` サブテーブルは `gui = true` のときだけ、`endeavouros` サブテーブルは EndeavourOS でだけ入れる（EndeavourOS のリポジトリにしかないパッケージ）
+
+Arch Linux では paru が公式リポジトリにないので、自分で入れるまで AUR のパッケージは飛ばされる。
 
 テンプレートに項目が増えたら `chezmoi init` を実行し直す。既存の値は聞かれない。
 
@@ -47,9 +59,9 @@ chezmoi update
 
 ## OS ごとの設定
 
-- OS 専用のファイルは、配置先のパスを `.chezmoitemplates/ignore/darwin`、`ignore/linux`、`ignore/windows` のどれかに追加する。Linux と macOS の両方で使い Windows では使わないものは `ignore/unix` に追加する。ディレクトリは `dir/**` ではなく `dir` と書く（`dir/**` だと空のディレクトリが作られる）。
+- OS 専用のファイルは、配置先のパスを `.chezmoitemplates/ignore/darwin`、`ignore/linux`、`ignore/windows` のどれかに追加する。Linux のデスクトップでだけ使うもの（`gui = false` では要らないもの）は `ignore/linux-gui` に追加する。Linux と macOS の両方で使い Windows では使わないものは `ignore/unix` に追加する。ディレクトリは `dir/**` ではなく `dir` と書く（`dir/**` だと空のディレクトリが作られる）。
 - mise のツールを OS で絞るときは、chezmoi のテンプレートではなく mise の `os` オプション（例: `os = ["unix"]`）を使う。`config.toml` には mise 自身の `{{ }}` テンプレートがあり、chezmoi の記法とぶつかるため。
-- OS 専用のスクリプトは `.chezmoiscripts/darwin/` か `linux/` に置く。
+- OS 専用のスクリプトは `.chezmoiscripts/darwin/` か `linux/` に置く。Linux のスクリプトは GUI のない端末でも置かれるので、デスクトップ用なら中身を `{{ if .gui }}` で囲み、Arch 専用なら `includeTemplate "host/arch" .` で判定する。
 - 数行の差分はテンプレート内で分岐し、大きな差分は `.chezmoitemplates/` に切り出す。
 
 ## Windows

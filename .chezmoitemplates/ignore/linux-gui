@@ -1,0 +1,32 @@
+# Linux のデスクトップ用の配置先（macOS と gui = false の Linux では除外）
+# ディレクトリはディレクトリ名ごと除外し、空ディレクトリも作らせない
+.config/autostart
+.config/dunst
+.config/fcitx5
+.config/gtk-3.0
+.config/gtk-4.0
+.config/i3
+.config/i3blocks
+.config/kitty
+.config/libskk
+.config/picom
+.config/polybar
+.config/rofi
+.config/sway
+.config/swaylock
+.config/xdg-desktop-portal
+.gtkrc-2.0
+.icons
+.local/bin/install-kiritan-cursor
+.local/bin/rofi-launcher.sh
+.local/bin/rofi-powermenu.sh
+.local/bin/screenshot.sh
+.local/bin/set-wallpaper
+.local/bin/start-sway
+.local/bin/wallpaper
+.local/share/fcitx5
+.local/share/wayland-sessions
+.local/share/zsh
+.Xresources
+.xprofile
+Pictures

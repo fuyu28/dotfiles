@@ -1,16 +1,26 @@
-{{- if eq .chezmoi.osRelease.id "endeavouros" -}}
-{{- /* パッケージの一覧は .chezmoidata/packages.toml にある */ -}}
-{{- $pacman := .packages.pacman.required -}}
-{{- $aur := .packages.aur.required -}}
-{{- range .desktops -}}
-{{-   $desktop := index $.packages.desktops . -}}
-{{-   $pacman = concat $pacman $desktop.pacman -}}
-{{-   $aur = concat $aur $desktop.aur -}}
+{{- if includeTemplate "host/arch" . | eq "true" -}}
+{{- /* パッケージの一覧と、どのテーブルを入れるかは .chezmoidata/packages.toml にある */ -}}
+{{- $gui := .gui -}}
+{{- $eos := includeTemplate "host/endeavouros" . | eq "true" -}}
+{{- $tables := list .packages.base -}}
+{{- if not (includeTemplate "host/wsl" . | eq "true") -}}
+{{-   $tables = append $tables .packages.hardware -}}
+{{- end -}}
+{{- if $gui -}}
+{{-   $tables = append $tables .packages.desktop -}}
+{{-   range .desktops -}}
+{{-     $tables = append $tables (index $.packages.desktops .) -}}
+{{-   end -}}
 {{- end -}}
 {{- range .packageGroups -}}
-{{-   $group := index $.packages.groups . -}}
-{{-   $pacman = concat $pacman $group.pacman -}}
-{{-   $aur = concat $aur $group.aur -}}
+{{-   $tables = append $tables (index $.packages.groups .) -}}
+{{- end -}}
+{{- $pacman := list -}}
+{{- $aur := list -}}
+{{- range $tables -}}
+{{-   $r := includeTemplate "arch/collect-packages" (dict "table" . "gui" $gui "eos" $eos) | fromJson -}}
+{{-   with $r.pacman }}{{ $pacman = concat $pacman . }}{{ end -}}
+{{-   with $r.aur }}{{ $aur = concat $aur . }}{{ end -}}
 {{- end -}}
 #!/bin/bash
 set -euo pipefail
@@ -38,7 +48,12 @@ if [[ -n $missing_pacman ]]; then
   sudo pacman -Syu --needed --noconfirm $missing_pacman
 fi
 if [[ -n $missing_aur ]]; then
-  # shellcheck disable=SC2086
-  paru -S --needed --noconfirm $missing_aur
+  if command -v paru >/dev/null; then
+    # shellcheck disable=SC2086
+    paru -S --needed --noconfirm $missing_aur
+  else
+    # Arch Linux には paru が公式リポジトリにないので、入れるまで AUR は飛ばす
+    printf '%s\n' "AUR packages skipped: paru is not installed:" "$missing_aur" >&2
+  fi
 fi
 {{- end }}

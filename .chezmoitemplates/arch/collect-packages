@@ -1,0 +1,17 @@
+{{- /*
+  packages.toml の 1 テーブル分のパッケージを {"pacman": [...], "aur": [...]} の JSON で出す。
+  .gui / .eos が真なら、サブテーブル gui / endeavouros の分も足す。
+  includeTemplate はデータを複製して渡すので、結果は出力の JSON で受け取る。
+  呼び出し: includeTemplate "arch/collect-packages" (dict "table" $t "gui" $gui "eos" $eos) | fromJson
+*/ -}}
+{{- $pacman := get .table "pacman" | default list -}}
+{{- $aur := get .table "aur" | default list -}}
+{{- range $sub, $on := dict "gui" .gui "endeavouros" .eos -}}
+{{-   if and $on (hasKey $.table $sub) -}}
+{{-     $r := includeTemplate "arch/collect-packages" (dict "table" (index $.table $sub) "gui" $.gui "eos" $.eos) | fromJson -}}
+{{-     with $r.pacman }}{{ $pacman = concat $pacman . }}{{ end -}}
+{{-     with $r.aur }}{{ $aur = concat $aur . }}{{ end -}}
+{{-   end -}}
+{{- end -}}
+{{- /* 空のリストは JSON で null になることがあるので、受け取る側は with で確かめてから足す */ -}}
+{{- dict "pacman" $pacman "aur" $aur | toJson -}}

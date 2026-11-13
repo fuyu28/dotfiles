@@ -1,15 +1,26 @@
 {{- /* 聞かなかった項目は .chezmoidata.toml の既定値を使う */ -}}
 {{- $linux := eq .chezmoi.os "linux" -}}
+{{- $arch := includeTemplate "host/arch" . | eq "true" -}}
+{{- $wsl := includeTemplate "host/wsl" . | eq "true" -}}
+{{- $gui := true -}}
 [data]
 {{- if $linux }}
+{{- /* WSL やサーバーでは false にして、デスクトップ用の設定・スクリプト・パッケージを入れない */}}
+{{- $gui = promptBoolOnce . "gui" "Set up a graphical desktop (false: CLI only)" (not $wsl) }}
+gui = {{ $gui }}
+{{- if $gui }}
 {{- /* 解像度などマシン固有の値は role で切り替える */}}
 role = {{ promptChoiceOnce . "role" "Machine role" (list "desktop" "laptop") | quote }}
 skk = {{ promptBoolOnce . "skk" "Use SKK for Japanese input (false: mozc)" true }}
+{{- /* 選択肢は .chezmoidata/packages.toml の packages.desktops に合わせる */}}
+desktops = {{ promptMultichoiceOnce . "desktops" "Desktops to set up" (list "i3" "sway" "kde") (list "i3" "sway") | toToml }}
+{{- else }}
+desktops = []
+{{- end }}
 {{- end }}
 private = {{ promptBoolOnce . "private" "Clone fuyu28/dotfiles-private (needs gh auth)" true }}
-{{- if $linux }}
-{{- /* 選択肢は .chezmoidata/packages.toml の packages.desktops / packages.groups に合わせる */}}
-desktops = {{ promptMultichoiceOnce . "desktops" "Desktops to set up" (list "i3" "sway" "kde") (list "i3" "sway") | toToml }}
+{{- if $arch }}
+{{- /* 選択肢は .chezmoidata/packages.toml の packages.groups に合わせる */}}
 packageGroups = {{ promptMultichoiceOnce . "packageGroups" "Package groups to install on Arch" (list "apps" "dev" "android" "cli" "tex") (list "apps" "dev" "android" "cli" "tex") | toToml }}
 {{- end }}
 

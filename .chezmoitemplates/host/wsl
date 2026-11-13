@@ -1,0 +1,2 @@
+{{- /* WSL のカーネルなら "true" を出す */ -}}
+{{- if and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | default "" | lower | contains "microsoft") }}true{{ end -}}

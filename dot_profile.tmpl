@@ -5,7 +5,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 export HISTSIZE=1000
 export HISTFILESIZE=2000
-{{- if eq .chezmoi.os "linux" }}
+{{- if and (eq .chezmoi.os "linux") .gui }}
 
 export TERMINAL=kitty
 #export QT_QPA_PLATFORMTHEME=qt5ct

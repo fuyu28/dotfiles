@@ -32,8 +32,11 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+{{- if .gui }}
+{{- /* libsecret はデスクトップのキーリングを使うので、GUI がない端末では設定しない */}}
 [credential]
 	helper = /usr/lib/git-core/git-credential-libsecret
+{{- end }}
 {{- end }}
 [init]
 	defaultBranch = main

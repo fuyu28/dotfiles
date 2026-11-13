@@ -1,5 +1,7 @@
+{{- if .gui -}}
 export TERMINAL=kitty
 alias kitty='GLFW_IM_MODULE=ibus kitty'
 
 # 壁紙切り替え（wallpaper）などの補完。compinit より前に追加する
 fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
+{{- end }}

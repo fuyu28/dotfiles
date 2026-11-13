@@ -51,6 +51,9 @@ Pictures
 {{ if ne .chezmoi.os "linux" -}}
 {{ template "ignore/linux" . }}
 {{- end }}
+{{ if or (ne .chezmoi.os "linux") (not .gui) -}}
+{{ template "ignore/linux-gui" . }}
+{{- end }}
 {{ if ne .chezmoi.os "darwin" -}}
 {{ template "ignore/darwin" . }}
 {{- end }}

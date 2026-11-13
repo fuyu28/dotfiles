@@ -1,19 +1,111 @@
-# Packages for EndeavourOS, installed by run_onchange_before_15-install-arch-packages.
-# required is always installed. packages.desktops.<name> is installed for each
-# name in desktops, and packages.groups.<name> for each name in packageGroups;
-# both are chosen at `chezmoi init`.
+# Packages for Arch Linux and EndeavourOS, installed by
+# run_onchange_before_15-install-arch-packages. Other distributions install nothing.
+#
+# Which tables are installed:
+#   packages.base             every Arch-based machine
+#   packages.hardware         unless running under WSL (kernel, boot, firmware, network, audio)
+#   packages.desktop          only with gui = true
+#   packages.desktops.<name>  for each name in desktops (only with gui = true)
+#   packages.groups.<name>    for each name in packageGroups
+#
+# Each table has pacman and aur lists, and may have sub-tables that add more:
+#   <table>.gui           only with gui = true
+#   <table>.endeavouros   only on EndeavourOS (its own repository has these)
+# Sub-tables can nest, e.g. packages.desktop.endeavouros.
 
-[packages.pacman]
-required = [
-  # base system
-  "accountsservice",
+[packages.base]
+pacman = [
+  "base",
+  "base-devel",
+  "logrotate",
+  "pacman-contrib",
+  "reflector",
+  "sudo",
+  "systemd-sysvcompat",
+
+  # shell
+  "bash-completion",
+  "starship",
+  "tmux",
+  "zsh",
+
+  # CLI tools used by the dotfiles
+  "7zip",
+  "aspell",
+  "bat",
+  "bind",
+  "btop",
+  "chezmoi",
+  "diffutils",
+  "downgrade",
+  "duf",
+  "dust",
+  "ex-vi-compat",
+  "eza",
+  "ghq",
+  "git",
+  "github-cli",
+  "hwinfo",
+  "inetutils",
+  "inxi",
+  "jq",
+  "lazygit",
+  "less",
+  "lsb-release",
+  "man-db",
+  "man-pages",
+  "mise",
+  "nano",
+  "nano-syntax-highlighting",
+  "neovim",
+  "openssh",
+  "perl",
+  "pkgfile",
+  "plocate",
+  "procs",
+  "rsync",
+  "s-nail",
+  "sysstat",
+  "texinfo",
+  "tldr",
+  "tree",
+  "unrar",
+  "unzip",
+  "wget",
+  "which",
+  "whois",
+  "zip",
+  "zoxide",
+
+  # python
+  "python",
+  "python-defusedxml",
+  "python-jinja",
+  "python-packaging",
+]
+aur = []
+
+# On plain Arch, install paru yourself to get the AUR packages.
+[packages.base.endeavouros]
+pacman = [
+  "endeavouros-keyring",
+  "endeavouros-mirrorlist",
+  "eos-hooks",
+  "eos-log-tool",
+  "eos-packagelist",
+  "eos-rankmirrors",
+  "hwdetect",
+  "paru",
+  "rebuild-detector",
+]
+
+[packages.hardware]
+pacman = [
   "acpi",
   "alsa-firmware",
   "alsa-plugins",
   "alsa-utils",
   "b43-fwcutter",
-  "base",
-  "base-devel",
   "bluez",
   "bluez-utils",
   "btrfs-progs",
@@ -41,7 +133,6 @@ required = [
   "linux",
   "linux-firmware",
   "linux-headers",
-  "logrotate",
   "lsscsi",
   "lvm2",
   "mdadm",
@@ -65,9 +156,7 @@ required = [
   "sg3_utils",
   "smartmontools",
   "sof-firmware",
-  "sudo",
   "sysfsutils",
-  "systemd-sysvcompat",
   "upower",
   "usb_modeswitch",
   "usbutils",
@@ -75,31 +164,18 @@ required = [
   "wpa_supplicant",
   "xfsprogs",
   "xl2tpd",
+]
+aur = []
 
-  # EndeavourOS
-  "endeavouros-branding",
-  "endeavouros-keyring",
-  "endeavouros-mirrorlist",
-  "endeavouros-xfce4-terminal-colors",
-  "eos-apps-info",
+[packages.hardware.endeavouros]
+pacman = [
   "eos-dracut",
-  "eos-hooks",
-  "eos-lightdm-slick-theme",
-  "eos-log-tool",
-  "eos-packagelist",
-  "eos-qogir-icons",
-  "eos-quickstart",
-  "eos-rankmirrors",
-  "hwdetect",
-  "pacman-contrib",
-  "paru",
-  "rebuild-detector",
-  "reflector",
-  "reflector-simple",
-  "welcome",
+]
 
-  # desktop (shared by every session)
-  "arc-gtk-theme-eos",
+# shared by every desktop session
+[packages.desktop]
+pacman = [
+  "accountsservice",
   "archlinux-xdg-menu",
   "brightnessctl",
   "copyq",
@@ -115,6 +191,7 @@ required = [
   "libopenraw",
   "lightdm",
   "lightdm-slick-greeter",
+  "mesa-utils",
   "nwg-look",
   "pavucontrol",
   "playerctl",
@@ -161,70 +238,13 @@ required = [
   "ttf-liberation",
   "ttf-opensans",
 
-  # terminal and shell
-  "bash-completion",
+  # terminals
   "ghostty",
   "kitty",
-  "starship",
-  "tmux",
   "xfce4-terminal",
   "xterm",
-  "zsh",
 
-  # CLI tools used by the dotfiles
-  "7zip",
-  "aspell",
-  "bat",
-  "bind",
-  "btop",
-  "chezmoi",
-  "diffutils",
-  "downgrade",
-  "duf",
-  "dust",
-  "ex-vi-compat",
-  "eza",
-  "ghq",
-  "git",
-  "github-cli",
-  "hwinfo",
-  "inetutils",
-  "inxi",
-  "jq",
-  "lazygit",
-  "less",
-  "lsb-release",
-  "man-db",
-  "man-pages",
-  "mesa-utils",
-  "mise",
-  "nano",
-  "nano-syntax-highlighting",
-  "neovim",
-  "openssh",
-  "perl",
-  "pkgfile",
-  "plocate",
-  "procs",
-  "rsync",
-  "s-nail",
-  "sysstat",
-  "texinfo",
-  "tldr",
-  "tree",
-  "unrar",
-  "unzip",
-  "wget",
-  "which",
-  "whois",
-  "zip",
-  "zoxide",
-
-  # python (install-kiritan-cursor needs pillow)
-  "python",
-  "python-defusedxml",
-  "python-jinja",
-  "python-packaging",
+  # install-kiritan-cursor needs pillow
   "python-pillow",
   "python-pyqt6",
 
@@ -239,12 +259,28 @@ required = [
   "zathura",
   "zathura-pdf-mupdf",
 ]
+aur = []
 
-[packages.aur]
-required = []
+# On plain Arch, arc-gtk-theme and qogir-icon-theme are the counterparts.
+[packages.desktop.endeavouros]
+pacman = [
+  "arc-gtk-theme-eos",
+  "endeavouros-branding",
+  "endeavouros-xfce4-terminal-colors",
+  "eos-apps-info",
+  "eos-lightdm-slick-theme",
+  "eos-qogir-icons",
+  "eos-quickstart",
+  "reflector-simple",
+  "welcome",
+]
 
 # GUI apps
 [packages.groups.apps]
+pacman = []
+aur = []
+
+[packages.groups.apps.gui]
 pacman = [
   "bitwarden",
   "chromium",
@@ -274,8 +310,13 @@ pacman = [
   "docker-compose",
   "doxygen",
   "extra-cmake-modules",
-  "libwnck3",
   "strace",
+]
+aur = []
+
+[packages.groups.dev.gui]
+pacman = [
+  "libwnck3",
 ]
 aur = [
   "cursor-bin",
@@ -287,6 +328,9 @@ aur = [
 pacman = [
   "fvm",
 ]
+aur = []
+
+[packages.groups.android.gui]
 aur = [
   "android-studio",
 ]
@@ -346,7 +390,6 @@ pacman = [
   "bluetui",
   "dmenu",
   "dunst",
-  "eos-settings-i3wm",
   "feh",
   "i3-wm",
   "i3blocks",
@@ -363,6 +406,11 @@ pacman = [
 aur = [
   "betterlockscreen",
   "xidlehook",
+]
+
+[packages.desktops.i3.endeavouros]
+pacman = [
+  "eos-settings-i3wm",
 ]
 
 [packages.desktops.sway]
