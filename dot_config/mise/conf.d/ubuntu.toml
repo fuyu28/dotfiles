@@ -1,0 +1,5 @@
+# Ubuntu でだけ置く（.chezmoiignore.tmpl を参照）。
+# ほかの OS では pacman / Homebrew / winget で入れるが、Ubuntu の apt にはないか古いので mise で入れる。
+[tools]
+chezmoi = "latest"
+ghq = "latest"

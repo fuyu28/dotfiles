@@ -1,0 +1,2 @@
+{{- /* Ubuntu なら "true" を出す */ -}}
+{{- if and (eq .chezmoi.os "linux") (eq (get .chezmoi.osRelease "id" | default "") "ubuntu") }}true{{ end -}}

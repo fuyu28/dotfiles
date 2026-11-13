@@ -61,6 +61,7 @@ chezmoi update
 
 - OS 専用のファイルは、配置先のパスを `.chezmoitemplates/ignore/darwin`、`ignore/linux`、`ignore/windows` のどれかに追加する。Linux のデスクトップでだけ使うもの（`gui = false` では要らないもの）は `ignore/linux-gui` に追加する。Linux と macOS の両方で使い Windows では使わないものは `ignore/unix` に追加する。ディレクトリは `dir/**` ではなく `dir` と書く（`dir/**` だと空のディレクトリが作られる）。
 - mise のツールを OS で絞るときは、chezmoi のテンプレートではなく mise の `os` オプション（例: `os = ["unix"]`）を使う。`config.toml` には mise 自身の `{{ }}` テンプレートがあり、chezmoi の記法とぶつかるため。
+- mise の `os` オプションではディストリビューションまでは絞れない。ディストリビューション専用のツールは `dot_config/mise/conf.d/<名前>.toml` に分けて、`.chezmoiignore.tmpl` でほかの環境では置かないようにする。今は Ubuntu 用の `conf.d/ubuntu.toml`（chezmoi、ghq）がある。ほかの OS ではパッケージマネージャーで入れる。
 - OS 専用のスクリプトは `.chezmoiscripts/darwin/` か `linux/` に置く。Linux のスクリプトは GUI のない端末でも置かれるので、デスクトップ用なら中身を `{{ if .gui }}` で囲み、Arch 専用なら `includeTemplate "host/arch" .` で判定する。
 - 数行の差分はテンプレート内で分岐し、大きな差分は `.chezmoitemplates/` に切り出す。
 

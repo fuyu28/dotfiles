@@ -54,6 +54,10 @@ Pictures
 {{ if or (ne .chezmoi.os "linux") (not .gui) -}}
 {{ template "ignore/linux-gui" . }}
 {{- end }}
+{{ if not (includeTemplate "host/ubuntu" . | eq "true") -}}
+# Ubuntu でだけ mise で入れるツール
+.config/mise/conf.d/ubuntu.toml
+{{ end -}}
 {{ if ne .chezmoi.os "darwin" -}}
 {{ template "ignore/darwin" . }}
 {{- end }}
